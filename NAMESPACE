@@ -1,0 +1,6 @@
+useDynLib(btb)
+exportClasses("Carroyage")
+exportMethods("[","[<-")
+export("kernel_smoothing","smoothing_to_grid")
+import(methods,sp)
+importFrom(Rcpp, evalCpp)
