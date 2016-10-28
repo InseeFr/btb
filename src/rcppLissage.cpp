@@ -3,6 +3,12 @@
 #include <iostream>
 using namespace Rcpp;
 
+/*
+ *    date        version         auteur              commentaire
+ * 2016/08/09      0.1.3      Arlindo Dos Santos      remplacement de l'appel a clock_gettime  par clock()
+ *                                                  
+ */
+
 /* 
 *  arguments
 *  vXobservations : vecteur avec les coordonnees x des observations
@@ -37,8 +43,7 @@ NumericMatrix rcppLissage(
 )
 {
   // debut benchmark
-  timespec ts_beg, ts_end;
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_beg);
+  clock_t timeBegin = clock();
   double dTempsPasse;
   double dTempsTotal = 0;
   int iTempsRestant = 0;
@@ -54,7 +59,7 @@ NumericMatrix rcppLissage(
   int iNbCentroidesOrdonnee = mXcentroides.nrow();
   int iNbVars = mVar.ncol();                // nombre de variables a traiter
   int iNbObs = vXobservations.length();     // nombre d'observations
-  long double dRayonCarre = pow(iRayon, 2); // rayon de lissage au carre
+  long double dRayonCarre = pow((long double)iRayon, 2); // rayon de lissage au carre
   long double dDistanceCarre;               // distance au carre entre une observation et un centroide
   long double dSommePonderation;            // double contenant la somme des ponderations qui sont appliquees depuis l'observation consideree
 
@@ -104,20 +109,21 @@ NumericMatrix rcppLissage(
         }
       }
     }
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts_end);
-    dTempsPasse = (ts_end.tv_sec - ts_beg.tv_sec) + (ts_end.tv_nsec - ts_beg.tv_nsec) / 1e9;
+    // debut benchmark
+    dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
     iPourcentageEffectue = 100 * iIndiceObsCourante / iNbObs;
     if(iPourcentageEffectuePrecedent != iPourcentageEffectue)  
     {
       dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
       iTempsRestant = ceil(dTempsTotal - dTempsPasse);
       iPourcentageEffectuePrecedent = iPourcentageEffectue;
-      Rcpp::Rcout << "\rSmoothing progress: " << iPourcentageEffectue << "% - remaining time: " << floor(iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s                     ";
+      Rcpp::Rcout << "\rSmoothing progress: " << iPourcentageEffectue << "% - remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s                     ";
     }
+    // fin benchmark
   }
 
   // debut benchmark
-  Rcpp::Rcout << "\rElapsed time: " << floor(dTempsTotal / 60) << "m " << ((int)dTempsTotal % 60) << "s                                                                                           ";
+  Rcpp::Rcout << "\rElapsed time smoothing: " << floor(dTempsTotal / 60) << "m " << ((int)dTempsTotal % 60) << "s                                                                                           ";
   // fin benchmark
   
   return(mVariablesLissees);

@@ -1,4 +1,4 @@
-2b60923f9b5e72089d8f51f63979668f *DESCRIPTION
+eaef6798fc4f6c4aab9abe910ed8a0d2 *DESCRIPTION
 90873949c28322cf515f3cc0db8bc197 *NAMESPACE
 4ea2ac69992a58ffd3806379bb50c533 *R/Grid.R
 b5ed8cac129709f6d1865a2ae679e2e5 *R/RcppExports.R
@@ -9,5 +9,5 @@ deef761f0b002b71e24e85b48f678345 *man/Grid-class.Rd
 a03b9a11680910f63dbe58d848bac6fb *man/reunion.Rd
 9f85b735c4b6f86848c850267bb0e47a *man/smoothingToGrid.Rd
 6d22f21cc3f5417a43c6ce15421c1c19 *src/RcppExports.cpp
-7d2e6eeaed73071dca13741c8aba5ff9 *src/rcppLissage.cpp
-6114ea13cd2933060269239ce9b1d191 *src/rcppLissageMedian.cpp
+b50f7ad2f1a97adae2f09d957e27958f *src/rcppLissage.cpp
+8abd43f6535f6e9ff41d8e1ee2351c9c *src/rcppLissageMedian.cpp
