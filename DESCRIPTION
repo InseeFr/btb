@@ -1,10 +1,11 @@
+Encoding: UTF-8
 Package: btb
 Type: Package
 Title: Beyond the Border
-Version: 0.1.3
-Date: 2016-10-28
-Author: Psar Analyse Urbaine Insee - Thierry Cornely, Laure Genebes, Arlindo Dos
-    Santos, Cynthia Faivre, Auriane Renaud and Francois Semecurbe
+Version: 0.1.14
+Date: 2017-04-03
+Author: Thierry Cornely, Laure Genebes, Arlindo Dos Santos, Cynthia Faivre,
+    Auriane Renaud, Farida Marouchi and Francois Semecurbe
 Maintainer: Arlindo Dos Santos <Arlindo.Dos-Santos@insee.fr>
 Description: Kernel density estimation dedicated to urban geography.
 Suggests: rgdal, rgeos
@@ -12,7 +13,7 @@ License: GPL (>= 2)
 Imports: methods, Rcpp (>= 0.11.3), sp
 LinkingTo: Rcpp
 NeedsCompilation: yes
-Packaged: 2016-10-28 08:28:20 UTC; S3QCEA
+Packaged: 2017-04-03 14:39:18 UTC; S3QCEA
 RoxygenNote: 5.0.1
 Repository: CRAN
-Date/Publication: 2016-10-28 11:31:17
+Date/Publication: 2017-04-03 15:31:00 UTC

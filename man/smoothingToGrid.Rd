@@ -4,25 +4,38 @@
 
 \title{
 Building of a basemap from smoothed data
+
 (Fonction de transformation d'un lissage en un fond de carte carroye)
 }
 
 \description{
 Transforms smoothed data into grid data for export as cartographical data.
+
 (Transforme un lissage en un carroyage pour export cartographique.)
+
 }
 
 \usage{
-  smoothingToGrid(grid, epsg, cellSize = NULL)
+  smoothingToGrid(grid, epsg, fUpdateProgress = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{grid}{the \code{grid} obtained from the smoothing (le \code{grid} obtenu lors du lissage)}
-  \item{epsg}{EPSG code (code EPSG de projection)}
-  \item{cellSize}{leave empty (ne pas remplir normalement)}
+  \item{grid}{the \code{grid} obtained from the smoothing 
+  
+  (le \code{grid} obtenu lors du lissage)}
+  
+  \item{epsg}{EPSG code 
+  
+  (code EPSG de projection)}
+  
+  \item{fUpdateProgress}{leave empty for the speedest mode; or give a fct to see the compute progress (slower)
+  
+  (ne pas remplir pour utiliser la fonction dans son mode le plus rapide; ou fournir une fonction pour suivre la progresion du traitement (plus lent))}
+  
  }
 \details{
 Returns a \code{spatialPolygonsdataframe}.
+
 (Retourne un \code{spatialPolygonsdataframe}.)
 }  
 
@@ -42,8 +55,8 @@ reunionSmooth <- kernelSmoothing(dfObservations = reunion, cellSize = 200
                                 , bandwidth = 400, vQuantiles = c(0.1, 0.5, 0.9))
 
 # Call mode 3: classic smoothing - user grid
-dfCentroidsUser <- data.frame(x = seq(from = 314508, to = 378708, by = 200)
-                            , y = seq(from = 7634103, to = 7691103, by = 200))
+dfCentroidsUser <- merge( x = seq(from =  314400, to = 378800,  by = 200)
+                        , y = seq(from = 7634000, to = 7691200, by = 200))
 reunionSmooth <- kernelSmoothing(dfObservations = reunion, cellSize = 200
                                 , bandwidth = 400, dfCentroids = dfCentroidsUser)
 

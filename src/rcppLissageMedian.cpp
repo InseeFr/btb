@@ -1,6 +1,8 @@
-#include <Rcpp.h>
-#include <time.h>
-#include <iostream>
+#include <Rcpp.h>       // Rcpp::Rcout
+#include <time.h>       // clock_t, clock, CLOCKS_PER_SEC
+#include <math.h>       // pow 
+#include <utility>      // std::swap
+
 using namespace Rcpp;
 
 /*
@@ -10,7 +12,7 @@ using namespace Rcpp;
  */
 
 /*
- * ATTENTION: effet de bord: les 2 vecteurs en parametre sont modifies par la fonction
+ * ATTENTION: effet de bord: les 2 vecteurs en paramètre sont modifiés par la fonction
  * http://www.algolist.net/Algorithms/Sorting/Quicksort
  * 
  */
@@ -48,8 +50,8 @@ void quickSort(NumericVector vModalites, NumericVector vPonderations, int iLeft,
 /*
  * arguments:
  *    - vModalites:    NumericVector contenant la liste des modalites
- *    - vPonderation:  NumericVector contenant la liste des ponderations
- *    - vQuantiles:    NumericVector contenant la liste des quantiles a determiner
+ *    - vPonderation:  NumericVector contenant la liste des pondérations
+ *    - vQuantiles:    NumericVector contenant la liste des quantiles à déterminer
  * 
  * retourne
  *    - NumericVector contenant les quantiles
@@ -61,16 +63,16 @@ NumericVector calculeQuantiles(NumericVector vModalites, NumericVector vPonderat
   int iNbPonderations = vPonderation.length();
   int iNbQuantiles = vQuantiles.length();
   
-  // debut des controles de validite
+  // debut des controles de validité
   if(iNbModalites != iNbPonderations)
   {
-    Rcpp::Rcerr << "Il doit y avoir autant de modalites que de ponderations. NbModalites: " << iNbModalites << " - NbPonderations" << iNbPonderations << "\n";
+    Rcpp::Rcerr << "Il doit y avoir autant de modalités que de ponderations. NbModalites: " << iNbModalites << " - NbPonderations" << iNbPonderations << "\n";
     throw ""; 
   } 
   
   if(iNbModalites == 0)
   {
-    Rcpp::Rcerr << "Il doit y avoir au moins une modalite";
+    Rcpp::Rcerr << "Il doit y avoir au moins une modalité";
     throw ""; 
   } 
   
@@ -114,7 +116,7 @@ NumericVector calculeQuantiles(NumericVector vModalites, NumericVector vPonderat
           break; 
         }
         else 
-        {// dernier element du tableau
+        {// dernier élément du tableau
           vResultat[iQuantile] = vModalites[iPonderation];
           break; 
         }
@@ -138,12 +140,13 @@ NumericVector calculeQuantiles(NumericVector vModalites, NumericVector vPonderat
 // [[Rcpp::export]]
 NumericMatrix rcppLissageMedianSort(
     NumericVector vXobservations
-  ,NumericVector vYobservations
-  ,int iRayon
-  ,NumericMatrix mVar
-  ,NumericVector vXCentroides
-  ,NumericVector vYCentroides
-  ,NumericVector vQuantiles
+  , NumericVector vYobservations
+  , int iRayon
+  , NumericMatrix mVar
+  , NumericVector vXCentroides
+  , NumericVector vYCentroides
+  , NumericVector vQuantiles
+  , Nullable <Function> updateProgress = R_NilValue
 )
 {
   // debut benchmark
@@ -158,12 +161,12 @@ NumericMatrix rcppLissageMedianSort(
   int i;
   int iVarCourante;
   int iIndiceObsCourante;
-  int iNbVars = mVar.ncol();                // nombre de variables a traiter
+  int iNbVars = mVar.ncol();                // nombre de variables à traiter
   int iNbObs = vXobservations.length();     // nombre d'observations
   int iNbCentroides = vXCentroides.length();     // nombre de centroides
   int iNbQuantiles = vQuantiles.length();
-  long double dRayonCarre = pow((long double)iRayon, 2); // rayon de lissage au carre
-  long double dDistanceCarre;               // distance au carre entre une observation et un centroide
+  long double dRayonCarre = std::pow((long double)iRayon, 2); // rayon de lissage au carre
+  long double dDistanceCarre;               // distance au carré entre une observation et un centroide
   
   long double dPonderation;
   List lResultat(iNbCentroides);
@@ -180,11 +183,11 @@ NumericMatrix rcppLissageMedianSort(
     /* on parcourt toutes les observations */
     for(iIndiceObsCourante = 0; iIndiceObsCourante < iNbObs; ++iIndiceObsCourante)
     {
-      dDistanceCarre = pow(long(vXobservations[iIndiceObsCourante]) - vXCentroides(iIndiceCentroide), 2) + pow(long(vYobservations[iIndiceObsCourante]) - vYCentroides(iIndiceCentroide), 2);
+      dDistanceCarre = std::pow(long(vXobservations[iIndiceObsCourante]) - vXCentroides(iIndiceCentroide), 2) + std::pow(long(vYobservations[iIndiceObsCourante]) - vYCentroides(iIndiceCentroide), 2);
       
       if (dDistanceCarre < dRayonCarre)
       {
-        dPonderation = pow(1 - (dDistanceCarre / dRayonCarre), 2);
+        dPonderation = std::pow(1 - (dDistanceCarre / dRayonCarre), 2);
         vPonderations.push_back(dPonderation);
         vIndiceObservations.push_back(iIndiceObsCourante);
       }
@@ -212,7 +215,13 @@ NumericMatrix rcppLissageMedianSort(
       dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
       iTempsRestant = ceil(dTempsTotal - dTempsPasse);
       iPourcentageEffectuePrecedent = iPourcentageEffectue;
-      Rcpp::Rcout << "\rMedian smoothing progress: " << iPourcentageEffectue << "% - remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s                                                                     ";
+      std::stringstream message;
+      message << "\rMedian smoothing progress: " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s";
+      // if(updateProgress != NULL)
+      //   updateProgress(iPourcentageEffectue, message.str());
+      if(updateProgress.isNotNull())
+        as<Function>(updateProgress)(iPourcentageEffectue, message.str());
+      Rcpp::Rcout << message.str();
     }
     // fin benchmark
   }

@@ -24,7 +24,7 @@ Gridded database with a grid cell resolution of 200 meters. Source : Insee, Loca
 data(reunion)
 # Smoothing of the variable houhold (households) and phouhold (poor households) for Reunion
 # Lissage de la variable houhold(menages) et phouhold(menages pauvres) pour la Reunion
-reunionSmooth <- kernelSmoothing(reunion, 200, 800, c("houhold", "phouhold"))
+reunionSmooth <- kernelSmoothing(reunion, 200, 800)
 
 # Calculating the poverty rate (Calcul du taux de pauvrete)
 reunionSmooth$ratio <- reunionSmooth$phouhold / reunionSmooth$houhold * 100

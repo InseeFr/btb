@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // rcppLissage
-NumericMatrix rcppLissage(NumericVector vXobservations, NumericVector vYobservations, NumericVector vIndicesX, NumericVector vIndicesY, int iPas, int iRayon, NumericMatrix mVar, NumericMatrix mXcentroides, NumericMatrix mYcentroides, NumericMatrix mIcentroides, int iNbCentroides);
-RcppExport SEXP btb_rcppLissage(SEXP vXobservationsSEXP, SEXP vYobservationsSEXP, SEXP vIndicesXSEXP, SEXP vIndicesYSEXP, SEXP iPasSEXP, SEXP iRayonSEXP, SEXP mVarSEXP, SEXP mXcentroidesSEXP, SEXP mYcentroidesSEXP, SEXP mIcentroidesSEXP, SEXP iNbCentroidesSEXP) {
+NumericMatrix rcppLissage(NumericVector vXobservations, NumericVector vYobservations, NumericVector vIndicesX, NumericVector vIndicesY, int iPas, int iRayon, int iNeighbor, NumericMatrix mVar, NumericMatrix mXcentroides, NumericMatrix mYcentroides, NumericMatrix mIcentroides, int iNbCentroides, Nullable <Function> updateProgress);
+RcppExport SEXP btb_rcppLissage(SEXP vXobservationsSEXP, SEXP vYobservationsSEXP, SEXP vIndicesXSEXP, SEXP vIndicesYSEXP, SEXP iPasSEXP, SEXP iRayonSEXP, SEXP iNeighborSEXP, SEXP mVarSEXP, SEXP mXcentroidesSEXP, SEXP mYcentroidesSEXP, SEXP mIcentroidesSEXP, SEXP iNbCentroidesSEXP, SEXP updateProgressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,12 +17,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type vIndicesY(vIndicesYSEXP);
     Rcpp::traits::input_parameter< int >::type iPas(iPasSEXP);
     Rcpp::traits::input_parameter< int >::type iRayon(iRayonSEXP);
+    Rcpp::traits::input_parameter< int >::type iNeighbor(iNeighborSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mVar(mVarSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mXcentroides(mXcentroidesSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mYcentroides(mYcentroidesSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mIcentroides(mIcentroidesSEXP);
     Rcpp::traits::input_parameter< int >::type iNbCentroides(iNbCentroidesSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcppLissage(vXobservations, vYobservations, vIndicesX, vIndicesY, iPas, iRayon, mVar, mXcentroides, mYcentroides, mIcentroides, iNbCentroides));
+    Rcpp::traits::input_parameter< Nullable <Function> >::type updateProgress(updateProgressSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcppLissage(vXobservations, vYobservations, vIndicesX, vIndicesY, iPas, iRayon, iNeighbor, mVar, mXcentroides, mYcentroides, mIcentroides, iNbCentroides, updateProgress));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -40,8 +42,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcppLissageMedianSort
-NumericMatrix rcppLissageMedianSort(NumericVector vXobservations, NumericVector vYobservations, int iRayon, NumericMatrix mVar, NumericVector vXCentroides, NumericVector vYCentroides, NumericVector vQuantiles);
-RcppExport SEXP btb_rcppLissageMedianSort(SEXP vXobservationsSEXP, SEXP vYobservationsSEXP, SEXP iRayonSEXP, SEXP mVarSEXP, SEXP vXCentroidesSEXP, SEXP vYCentroidesSEXP, SEXP vQuantilesSEXP) {
+NumericMatrix rcppLissageMedianSort(NumericVector vXobservations, NumericVector vYobservations, int iRayon, NumericMatrix mVar, NumericVector vXCentroides, NumericVector vYCentroides, NumericVector vQuantiles, Nullable <Function> updateProgress);
+RcppExport SEXP btb_rcppLissageMedianSort(SEXP vXobservationsSEXP, SEXP vYobservationsSEXP, SEXP iRayonSEXP, SEXP mVarSEXP, SEXP vXCentroidesSEXP, SEXP vYCentroidesSEXP, SEXP vQuantilesSEXP, SEXP updateProgressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -52,7 +54,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type vXCentroides(vXCentroidesSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type vYCentroides(vYCentroidesSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type vQuantiles(vQuantilesSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcppLissageMedianSort(vXobservations, vYobservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles));
+    Rcpp::traits::input_parameter< Nullable <Function> >::type updateProgress(updateProgressSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcppLissageMedianSort(vXobservations, vYobservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles, updateProgress));
     return rcpp_result_gen;
 END_RCPP
 }
