@@ -1,5 +1,5 @@
 library(RUnit)
-Rcpp::sourceCpp('btb/src/rcppLissageMedian.cpp')
+Rcpp::sourceCpp('btb/src/lissageMedian.cpp')
 
 test.calculeQuantiles <- function()
 {
@@ -101,34 +101,34 @@ test.calculeQuantiles <- function()
   checkException(calculeQuantiles(c(1), c(1), c(-0.5)))
 }
 
-# test.rcppLissageMedianSort <- function()
-# {
-    # vXObservations <- c(22, 35)
-    # vYObservations <- c(70, 55)
-    # iPas <- 20
-    # iRayon <- 41
-    # mVar <- matrix(c(10, 13, 15, 17), nrow = 2, ncol = 2, byrow = FALSE)
-    # dimnames(mVar) = list( c("row1", "row2"),  c("V1", "V2"))
-    # vXCentroides <- rep(seq(from = 10, to = 90, by = 20), 5)
-    # vYCentroides <- rep(seq(from = 10, to = 90, by = 20), each = 5)
-    # vQuantiles <- c(0.1, 0.5, 0.9)
-#   lissageMedianSort <- rcppLissageMedianSort(vXObservations, vYObservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles )
-#   
-#   mResultatAttendu <- matrix(0, nrow = 25, ncol = 7)
-#   mResultatAttendu[ 6, ] <- c(1, 13, 13, 13, 17, 17, 17)
-#   mResultatAttendu[ 7, ] <- c(2, 13, 13, 13, 17, 17, 17)
-#   mResultatAttendu[ 8, ] <- c(1, 13, 13, 13, 17, 17, 17)
-#   mResultatAttendu[11, ] <- c(2, 10, 10, 13, 15, 15, 17)
-#   mResultatAttendu[12, ] <- c(2, 10, 13, 13, 15, 17, 17)
-#   mResultatAttendu[13, ] <- c(2, 10, 13, 13, 15, 17, 17)
-#   mResultatAttendu[14, ] <- c(1, 13, 13, 13, 17, 17, 17)
-#   mResultatAttendu[16, ] <- c(2, 10, 10, 13, 15, 15, 17)
-#   mResultatAttendu[17, ] <- c(2, 10, 10, 13, 15, 15, 17)
-#   mResultatAttendu[18, ] <- c(2, 10, 13, 13, 15, 17, 17)
-#   mResultatAttendu[19, ] <- c(1, 13, 13, 13, 17, 17, 17)
-#   mResultatAttendu[21, ] <- c(1, 10, 10, 10, 15, 15, 15)
-#   mResultatAttendu[22, ] <- c(2, 10, 10, 13, 15, 15, 17)
-#   mResultatAttendu[23, ] <- c(2, 10, 10, 13, 15, 15, 17)
-# 
-#   checkEquals(lissageMedianSort, mResultatAttendu)
-# }
+test.rcppLissageMedian <- function()
+{
+vXObservations <- c(22, 35)
+vYObservations <- c(70, 55)
+iPas <- 20
+iRayon <- 41
+mVar <- matrix(c(10, 13, 15, 17), nrow = 2, ncol = 2, byrow = FALSE)
+dimnames(mVar) = list( c("row1", "row2"),  c("V1", "V2"))
+vXCentroides <- rep(seq(from = 10, to = 90, by = 20), 5)
+vYCentroides <- rep(seq(from = 10, to = 90, by = 20), each = 5)
+vQuantiles <- c(0.1, 0.5, 0.9)
+  lissageMedian <- rcppLissageMedian(vXObservations, vYObservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles )
+
+  mResultatAttendu <- matrix(0, nrow = 25, ncol = 7)
+  mResultatAttendu[ 6, ] <- c(1, 13, 13, 13, 17, 17, 17)
+  mResultatAttendu[ 7, ] <- c(2, 13, 13, 13, 17, 17, 17)
+  mResultatAttendu[ 8, ] <- c(1, 13, 13, 13, 17, 17, 17)
+  mResultatAttendu[11, ] <- c(2, 10, 10, 13, 15, 15, 17)
+  mResultatAttendu[12, ] <- c(2, 10, 13, 13, 15, 17, 17)
+  mResultatAttendu[13, ] <- c(2, 10, 13, 13, 15, 17, 17)
+  mResultatAttendu[14, ] <- c(1, 13, 13, 13, 17, 17, 17)
+  mResultatAttendu[16, ] <- c(2, 10, 10, 13, 15, 15, 17)
+  mResultatAttendu[17, ] <- c(2, 10, 10, 13, 15, 15, 17)
+  mResultatAttendu[18, ] <- c(2, 10, 13, 13, 15, 17, 17)
+  mResultatAttendu[19, ] <- c(1, 13, 13, 13, 17, 17, 17)
+  mResultatAttendu[21, ] <- c(1, 10, 10, 10, 15, 15, 15)
+  mResultatAttendu[22, ] <- c(2, 10, 10, 13, 15, 15, 17)
+  mResultatAttendu[23, ] <- c(2, 10, 10, 13, 15, 15, 17)
+
+  checkEquals(lissageMedian[, 1:7], mResultatAttendu)
+}

@@ -1,3 +1,17 @@
+0.1.19
+  o improvement: ckecking if NA exists in coordinates and variables with a loops (faster than anyNA)
+  o improvement: two matrix suppressed in parameters sended to rcppLissage
+  o new function : constituerGrappes
+  o new function : constituerMatriceEffectifs
+0.1.18
+  o improvement: kernelSmoothing uses armadillo matrix instead of NumericMatrix
+0.1.17
+  o improvement: kernelSmoothing with quantiles splits computation in parallel clusters (with RcppParallel) 
+0.1.16
+  o improvement: smoothingToGrid uses sf package instead of sp package
+0.1.15
+  o improvement: verbose output to console only if fUpdateProgress is not provided. (if provided, the output must be managed by the calling function)
+  o improvement: use of left-value [, "var"] instead of $var
 0.1.13
   o bug fixed: upper boundary of loop for was underestimated when bandwidth > neighbor * cellSize
   o bug fixed: the offset was wrong when dfCendroids was provided
