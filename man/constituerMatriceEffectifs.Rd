@@ -15,12 +15,12 @@ Function constituting a membership matrix.
 \arguments{
   \item{vLigneObservation}{A \code{vector} containing the line number of each observation
   
-  (Un \code{vector} contenant le numero de ligne de chaque observation.)
+  (Un \code{vector} contenant le numéro de ligne de chaque observation.)
   }
   
   \item{vColonneObservation}{A \code{vector} containing the column number of each observation
   
-  (Un \code{vector} contenant le numero de colonne de chaque observation.)
+  (Un \code{vector} contenant le numéro de colonne de chaque observation.)
   }
   
 }
@@ -28,13 +28,12 @@ Function constituting a membership matrix.
 \value{
 Returns a \code{matrix} with the number of observations for each cell.
 
-(Retourne une \code{matrix} avec le nombre d'observatins pour chaque cellule.)
+(Retourne une \code{matrix} avec le nombre d'observations pour chaque cellule.)
 } 
  
 \author{Psar Analyse Urbaine Insee - Arlindo Dos Santos and Francois Semecurbe}
 
 \examples{
-\dontrun{
 dfObservations <- data.frame(x = c(15, 35, 15, 25, 35, 55, 45, 45, 55, 65, 70, 75, 85, 90,
                                     65, 75, 85, 65, 70, 75, 85, 90, 65, 70, 75)
                           ,  y = c(10, 10, 30, 30, 35, 35, 45, 55, 55, 65, 65, 65, 65, 65,
@@ -53,4 +52,4 @@ dfObservations$row <- as.integer(floor((dfObservations$y) / cellSize)
 
 mEffectifs <- constituerMatriceEffectifs(dfObservations$row - 1, dfObservations$col - 1)
 
-}}
+}

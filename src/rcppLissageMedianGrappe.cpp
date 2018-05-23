@@ -134,7 +134,7 @@ struct LissageMedianGrappe : public Worker
       
       // Rcout << std::endl << "vCoordGrappe: " << iLigneMinCentroideGrappe << " - " << iColonneMinCentroideGrappe << std::endl;
       
-      // coordonnC)es extremes de la grappe considC)rC)e
+      // coordonnées extremes de la grappe considérée
       iCompteur = 0;
       while(   iLigneMinCentroideGrappe + pow(2, iCompteur) < iTailleMatrice
                  && iNoGrappe == (unsigned int)mGrappes(iLigneMinCentroideGrappe + pow(2, iCompteur), iColonneMinCentroideGrappe)
@@ -149,10 +149,10 @@ struct LissageMedianGrappe : public Worker
       
       // Rcout << "grappe " << iNoGrappe << " row: " << iLigneMinCentroideGrappe << "->" << iLigneMaxCentroideGrappe << " - col: " << iColonneMinCentroideGrappe << "->" << iColonneMaxCentroideGrappe << std::endl;
       
-      // compter et rC)cupC)rer les centroides de la grappe
+      // compter et récupérer les centroides de la grappe
       
-      // crC)er les vecteurs de stockage des centroides de la grappe
-      // Remarque: il se peut que nous ne remplissions pas tout le vecteur car certains centroides peuvent C*tre manquants
+      // créer les vecteurs de stockage des centroides de la grappe
+      // Remarque: il se peut que nous ne remplissions pas tout le vecteur car certains centroides peuvent être manquants
       iNbMaxCentroidesGrappe = (iLigneMaxCentroideGrappe - iLigneMinCentroideGrappe + 1) * (iColonneMaxCentroideGrappe - iColonneMinCentroideGrappe + 1);
       
       // Rcout << "iNbMaxCentroidesGrappe: " << iNbMaxCentroidesGrappe << std::endl;
@@ -173,108 +173,108 @@ struct LissageMedianGrappe : public Worker
           // Rcout << "iCompteur: " << iCompteur << " - iNbCentroidesGrappe: " << iNbCentroidesGrappe << std::endl;
         }
         
-        // rC)duire la taille des vecteurs 
-        vXCentroidesGrappe.resize(iNbCentroidesGrappe);
-        vYCentroidesGrappe.resize(iNbCentroidesGrappe);
-        
-        // for(unsigned int i = 0; i < iNbMaxCentroidesGrappe; ++i)
-        //   Rcout << "vXCentroidesGrappe[" << i << "]: " << vXCentroidesGrappe[i] << std::endl;
-        
-        // Rcout << "iNbCentroidesGrappe: " << iNbCentroidesGrappe << std::endl;
-        
-        // C)tendre la grappe C  la zone couverte par le rayon
-        iLigneMinCentroideGrappeEtendue = (unsigned int)max(0, (int)iLigneMinCentroideGrappe - (int)ceil((double)iRayon / iPas - 0.5));
-        iLigneMaxCentroideGrappeEtendue = min(iTailleMatrice - 1, iLigneMaxCentroideGrappe + (int)ceil((double)iRayon / iPas - 0.5));
-        iColonneMinCentroideGrappeEtendue = (unsigned int)max(0, (int)iColonneMinCentroideGrappe - (int)ceil((double)iRayon / iPas - 0.5));
-        iColonneMaxCentroideGrappeEtendue = min(iTailleMatrice - 1, iColonneMaxCentroideGrappe + (int)ceil((double)iRayon / iPas - 0.5));
-        
-        // Rcout << "grappe etendue i: " << iLigneMinCentroideGrappeEtendue << "->" << iLigneMaxCentroideGrappeEtendue << " - j: " << iColonneMinCentroideGrappeEtendue << "->" << iColonneMaxCentroideGrappeEtendue << std::endl;
-        // Rcout << "avant compter le nombre d'observations de la grappe" << std::endl;
-        
-        // compter le nombre d'observations de la grappe C)tendue
-        iNbObsGrappeEtendue = 0;
-        for(iLigneCourante = iLigneMinCentroideGrappeEtendue; iLigneCourante <= iLigneMaxCentroideGrappeEtendue; ++iLigneCourante)
-          for(iColonneCourante = iColonneMinCentroideGrappeEtendue; iColonneCourante <= iColonneMaxCentroideGrappeEtendue; ++iColonneCourante)
-            iNbObsGrappeEtendue += mEffectifs2n(iLigneCourante, iColonneCourante);
-        
-        // Rcout << "iNbObsGrappeEtendue: " << iNbObsGrappeEtendue << std::endl;
-        
-        // crC)er les vecteurs de stockage des observations de la grappe C)tendue
-        std::vector<int> vXObservationsGrappe(iNbObsGrappeEtendue);
-        std::vector<int> vYObservationsGrappe(iNbObsGrappeEtendue);
-        arma::mat mVarGrappe(iNbObsGrappeEtendue, iNbVar);
-        
-        // Rcout << "avant rC)cupC)ration des observations de la grappe C)tendue" << std::endl;
-        // rC)cupC)ration des observations de la grappe C)tendue
-        iObsCourante = 0;
-        for(iCompteur = 0; iCompteur < iNbObs; ++iCompteur)
-          if(  (unsigned int)vLigneObservations[iCompteur] >= iLigneMinCentroideGrappeEtendue
-            && (unsigned int)vLigneObservations[iCompteur] <= iLigneMaxCentroideGrappeEtendue
-            && (unsigned int)vColonneObservations[iCompteur] >= iColonneMinCentroideGrappeEtendue 
-            && (unsigned int)vColonneObservations[iCompteur] <= iColonneMaxCentroideGrappeEtendue)
-          {
-            // Rcout << "iCompteur: " << iCompteur << " - iObsCourante: " << iObsCourante << std::endl;
-            vXObservationsGrappe[iObsCourante] = vXObservations[iCompteur];
-            vYObservationsGrappe[iObsCourante] = vYObservations[iCompteur];
-            for(iVarCourante = 0; iVarCourante < iNbVar; ++iVarCourante)
-              mVarGrappe(iObsCourante, iVarCourante) = mVar(iCompteur, iVarCourante);
-            ++iObsCourante;
-          }
-          
-        // Rcout << "vXObservationsGrappe ";
-        // for(unsigned int i = 0; i < iNbObsGrappeEtendue; ++i)
-        //   Rcout << vXObservationsGrappe[i] << " ";
-        // 
-        // Rcout << std::endl << "vYObservationsGrappe ";
-        // for(unsigned int i = 0; i < iNbObsGrappeEtendue; ++i)
-        //   Rcout << vYObservationsGrappe[i] << " ";
-        // 
-        // Rcout << std::endl << "vXCentroidesGrappe ";
-        // for(unsigned int i = 0; i < iNbCentroidesGrappe; ++i)
-        //   Rcout << vXCentroidesGrappe[i] << " ";
-        // 
-        // Rcout << std::endl << "vYCentroidesGrappe ";
-        // for(unsigned int i = 0; i < iNbCentroidesGrappe; ++i)
-        //   Rcout << vYCentroidesGrappe[i] << " ";
-        // 
-        // Rcout << std::endl << "mVarGrappe ";
-        // for(unsigned int i = 0; i < mVarGrappe.n_rows; ++i)
-        //   Rcout << mVarGrappe[i] << " ";
-        
-        // appel calcul mC)diane
-        arma::mat mResultat = rcppLissageMedian(vXObservationsGrappe, vYObservationsGrappe, iRayon, mVarGrappe, vXCentroidesGrappe, vYCentroidesGrappe, vQuantile);
-        
-        // Rcout << mResultat;
-        
-        unsigned int iColonneX = iNbVar * iNbQuantiles + 1; 
-        unsigned int iColonneY = iColonneX + 1; 
-        
-        // C)crire le rC)sultat partiel dans la matrice finale
-        for(unsigned int iLigneResultat = 0; iLigneResultat < (unsigned int)mResultat.n_rows; ++iLigneResultat)
+      // réduire la taille des vecteurs 
+      vXCentroidesGrappe.resize(iNbCentroidesGrappe);
+      vYCentroidesGrappe.resize(iNbCentroidesGrappe);
+      
+      // for(unsigned int i = 0; i < iNbMaxCentroidesGrappe; ++i)
+      //   Rcout << "vXCentroidesGrappe[" << i << "]: " << vXCentroidesGrappe[i] << std::endl;
+      
+      // Rcout << "iNbCentroidesGrappe: " << iNbCentroidesGrappe << std::endl;
+      
+      // étendre la grappe à la zone couverte par le rayon
+      iLigneMinCentroideGrappeEtendue = (unsigned int)max(0, (int)iLigneMinCentroideGrappe - (int)ceil((double)iRayon / iPas - 0.5));
+      iLigneMaxCentroideGrappeEtendue = min(iTailleMatrice - 1, iLigneMaxCentroideGrappe + (int)ceil((double)iRayon / iPas - 0.5));
+      iColonneMinCentroideGrappeEtendue = (unsigned int)max(0, (int)iColonneMinCentroideGrappe - (int)ceil((double)iRayon / iPas - 0.5));
+      iColonneMaxCentroideGrappeEtendue = min(iTailleMatrice - 1, iColonneMaxCentroideGrappe + (int)ceil((double)iRayon / iPas - 0.5));
+      
+      // Rcout << "grappe etendue i: " << iLigneMinCentroideGrappeEtendue << "->" << iLigneMaxCentroideGrappeEtendue << " - j: " << iColonneMinCentroideGrappeEtendue << "->" << iColonneMaxCentroideGrappeEtendue << std::endl;
+      // Rcout << "avant compter le nombre d'observations de la grappe" << std::endl;
+      
+      // compter le nombre d'observations de la grappe étendue
+      iNbObsGrappeEtendue = 0;
+      for(iLigneCourante = iLigneMinCentroideGrappeEtendue; iLigneCourante <= iLigneMaxCentroideGrappeEtendue; ++iLigneCourante)
+        for(iColonneCourante = iColonneMinCentroideGrappeEtendue; iColonneCourante <= iColonneMaxCentroideGrappeEtendue; ++iColonneCourante)
+          iNbObsGrappeEtendue += mEffectifs2n(iLigneCourante, iColonneCourante);
+      
+      // Rcout << "iNbObsGrappeEtendue: " << iNbObsGrappeEtendue << std::endl;
+      
+      // créer les vecteurs de stockage des observations de la grappe étendue
+      std::vector<int> vXObservationsGrappe(iNbObsGrappeEtendue);
+      std::vector<int> vYObservationsGrappe(iNbObsGrappeEtendue);
+      arma::mat mVarGrappe(iNbObsGrappeEtendue, iNbVar);
+      
+      // Rcout << "avant récupération des observations de la grappe étendue" << std::endl;
+      // récupération des observations de la grappe étendue
+      iObsCourante = 0;
+      for(iCompteur = 0; iCompteur < iNbObs; ++iCompteur)
+        if(  (unsigned int)vLigneObservations[iCompteur] >= iLigneMinCentroideGrappeEtendue
+          && (unsigned int)vLigneObservations[iCompteur] <= iLigneMaxCentroideGrappeEtendue
+          && (unsigned int)vColonneObservations[iCompteur] >= iColonneMinCentroideGrappeEtendue 
+          && (unsigned int)vColonneObservations[iCompteur] <= iColonneMaxCentroideGrappeEtendue)
         {
-          for(unsigned int iLigneResultatFinal = 0; iLigneResultatFinal < (unsigned int)mResultatFinal.n_rows; ++iLigneResultatFinal)
+          // Rcout << "iCompteur: " << iCompteur << " - iObsCourante: " << iObsCourante << std::endl;
+          vXObservationsGrappe[iObsCourante] = vXObservations[iCompteur];
+          vYObservationsGrappe[iObsCourante] = vYObservations[iCompteur];
+          for(iVarCourante = 0; iVarCourante < iNbVar; ++iVarCourante)
+            mVarGrappe(iObsCourante, iVarCourante) = mVar(iCompteur, iVarCourante);
+          ++iObsCourante;
+        }
+        
+      // Rcout << "vXObservationsGrappe ";
+      // for(unsigned int i = 0; i < iNbObsGrappeEtendue; ++i)
+      //   Rcout << vXObservationsGrappe[i] << " ";
+      // 
+      // Rcout << std::endl << "vYObservationsGrappe ";
+      // for(unsigned int i = 0; i < iNbObsGrappeEtendue; ++i)
+      //   Rcout << vYObservationsGrappe[i] << " ";
+      // 
+      // Rcout << std::endl << "vXCentroidesGrappe ";
+      // for(unsigned int i = 0; i < iNbCentroidesGrappe; ++i)
+      //   Rcout << vXCentroidesGrappe[i] << " ";
+      // 
+      // Rcout << std::endl << "vYCentroidesGrappe ";
+      // for(unsigned int i = 0; i < iNbCentroidesGrappe; ++i)
+      //   Rcout << vYCentroidesGrappe[i] << " ";
+      // 
+      // Rcout << std::endl << "mVarGrappe ";
+      // for(unsigned int i = 0; i < mVarGrappe.n_rows; ++i)
+      //   Rcout << mVarGrappe[i] << " ";
+      
+      // appel calcul médiane
+      arma::mat mResultat = rcppLissageMedian(vXObservationsGrappe, vYObservationsGrappe, iRayon, mVarGrappe, vXCentroidesGrappe, vYCentroidesGrappe, vQuantile);
+      
+      // Rcout << mResultat;
+      
+      unsigned int iColonneX = iNbVar * iNbQuantiles + 1; 
+      unsigned int iColonneY = iColonneX + 1; 
+      
+      // écrire le résultat partiel dans la matrice finale
+      for(unsigned int iLigneResultat = 0; iLigneResultat < (unsigned int)mResultat.n_rows; ++iLigneResultat)
+      {
+        for(unsigned int iLigneResultatFinal = 0; iLigneResultatFinal < (unsigned int)mResultatFinal.n_rows; ++iLigneResultatFinal)
+        {
+          if(mResultat(iLigneResultat, iColonneX) == mResultatFinal(iLigneResultatFinal, iColonneX) &&
+             mResultat(iLigneResultat, iColonneY) == mResultatFinal(iLigneResultatFinal, iColonneY) )
           {
-            if(mResultat(iLigneResultat, iColonneX) == mResultatFinal(iLigneResultatFinal, iColonneX) &&
-               mResultat(iLigneResultat, iColonneY) == mResultatFinal(iLigneResultatFinal, iColonneY) )
-            {
-              for(iColonneCourante = 0; iColonneCourante < iColonneX; ++iColonneCourante)
-              {             
-                mResultatFinal(iLigneResultatFinal, iColonneCourante) = mResultat(iLigneResultat, iColonneCourante);
-              }
-              break;
+            for(iColonneCourante = 0; iColonneCourante < iColonneX; ++iColonneCourante)
+            {             
+              mResultatFinal(iLigneResultatFinal, iColonneCourante) = mResultat(iLigneResultat, iColonneCourante);
             }
+            break;
           }
         }
-        // debut benchmark
-        ++iCompteurAvancement;
-        message.str("");
-        iPourcentageEffectue = 100 * iCompteurAvancement / vNoGrappes.size();
-        dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
-        dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
-        iTempsRestant = ceil(dTempsTotal - dTempsPasse);
-        message << "\rMedian smoothing progress (parallel clusters): " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s           ";
-        Rcout << message.str();
-        // fin benchmark
+      }
+      // debut benchmark
+      ++iCompteurAvancement;
+      message.str("");
+      iPourcentageEffectue = 100 * iCompteurAvancement / vNoGrappes.size();
+      dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
+      dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
+      iTempsRestant = ceil(dTempsTotal - dTempsPasse);
+      message << "\rMedian smoothing progress (parallel clusters): " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s           ";
+      Rcout << message.str();
+      // fin benchmark
     }
     // debut benchmark
     if(iPourcentageEffectue == 100)
@@ -292,11 +292,11 @@ struct LissageMedianGrappe : public Worker
 /**
  * arguments
  * 
- * vLigneObservations : indices doivent commencer C  0
- * vColonneObservations : indices doivent commencer C  0
+ * vLigneObservations : indices doivent commencer à 0
+ * vColonneObservations : indices doivent commencer à 0
  * 
- * vLigneCentroides : indices doivent commencer C  0
- * vColonneCentroides : indices doivent commencer C  0
+ * vLigneCentroides : indices doivent commencer à 0
+ * vColonneCentroides : indices doivent commencer à 0
  * 
  * retourne: 
  * matrice 
@@ -374,7 +374,7 @@ NumericMatrix rcppLissageMedianGrappe(
         
     // Rcout << "iNbObs:" << iNbObs << " - iNbCentroides:" << iNbCentroides << " - iNbVar:" << iNbVar << " - iNbQuantiles:" << iNbQuantiles << std::endl;
     
-    // initialiser le tableau rC)sultat avec les coordonnC)es des centroides 
+    // initialiser le tableau résultat avec les coordonnées des centroides 
     unsigned int iColonneX = iNbVar * iNbQuantiles + 1; 
     unsigned int iColonneY = iColonneX + 1; 
     for(unsigned int iLigneCourante = 0; iLigneCourante < iNbCentroides; ++iLigneCourante)
@@ -386,7 +386,7 @@ NumericMatrix rcppLissageMedianGrappe(
     LissageMedianGrappe lmg(vNoGrappe, mGrappes, mEffectifs2n, vXObservations, vYObservations, vLigneObservations, vColonneObservations, iPas, iRayon, mVar, vXCentroides, vYCentroides, vLigneCentroides, vColonneCentroides, vQuantiles, mResultatFinal);
     parallelFor(0, vNoGrappe.size(), lmg);
 
-    // // tracer rC)sultat final
+    // // tracer résultat final
     // Rcout << std::endl << mResultatFinal;
     
     return wrap(lmg.mResultatFinal);

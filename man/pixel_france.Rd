@@ -2,7 +2,7 @@
 \alias{pixel_france}
 \docType{package}
 \title{
-Whole France grid with 1km square tiles (Grille France entière avec des carreaux d'1km de côté) 
+Whole France grid with 1km square tiles (Grille France entiere avec des carreaux d'1km de cote)) 
 }
 
 \description{
@@ -18,7 +18,5 @@ Whole France grid with 1km square tiles. Lambert 93 projection
 
  
 \examples{
-\dontrun{
-data(pixel_france)
-}
+data(pixel_france_1km_2154)
 }

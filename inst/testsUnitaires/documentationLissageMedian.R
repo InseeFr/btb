@@ -23,7 +23,6 @@ sfdf <- st_as_sf(df, wkt = "geom", crs = 2154)
 rgdal::writeOGR(sfdf, paste0("D:/S3QCEA/temp/temp.shp"), "nomCouche", driver = "ESRI Shapefile", overwrite_layer = TRUE)
 sf::write_sf(obj = sfdf, dsn = "D:/S3QCEA/temp/sample.shp")
 
-
 xOffset = 0
 yOffset = 0
 cellSize <- 20
@@ -32,4 +31,3 @@ vQuantiles <- NULL
 dfCentroids = NULL
 fUpdateProgress = NULL
 neighbor = max(0, ceiling(bandwidth / cellSize / 2L) - 1L) 
-

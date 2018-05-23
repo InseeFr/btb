@@ -1,20 +1,33 @@
 Encoding: UTF-8
 Package: btb
 Type: Package
-Title: Beyond the Border
-Version: 0.1.25
+Title: Beyond the Border - Kernel Density Estimation for Urban
+        Geography
+Description: The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
+        The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
+        The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
+        The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
+        The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
+        Geographically weighted summary statistics : a framework for localised exploratory data analysis, C.Brunsdon & al., in Computers, Environment and Urban Systems C.Brunsdon & al. (2002) <doi:10.1016/S0198-9715(01)00009-6>, 
+        Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, pp. 83-86, (2003) <doi:10.1080/13658816.2014.937718>.
+Version: 0.1.30
 Depends: R (>= 3.3.0)
-Date: 2018-05-17
-Author: Thierry Cornely, Laure Genebes, Arlindo Dos Santos, Cynthia Faivre,
-    Auriane Renaud, Farida Marouchi and Francois Semecurbe
-Maintainer: Arlindo Dos Santos <Arlindo.Dos-Santos@insee.fr>
-Description: Kernel density estimation dedicated to urban geography.
+Date: 2018-05-23
 License: GPL (>= 2)
 Imports: methods, Rcpp (>= 0.11.3), sp, sf, RcppParallel
+Suggests: cartography
 LinkingTo: Rcpp, RcppParallel, BH (>= 1.60.0-1), RcppArmadillo
 NeedsCompilation: yes
-Packaged: 2018-05-17 09:25:22 UTC; s3qcea
+Packaged: 2018-05-23 09:16:02 UTC; s3qcea
 RoxygenNote: 5.0.1
 LazyData: true
 Repository: CRAN
-Date/Publication: 2018-05-17 09:51:59 UTC
+Date/Publication: 2018-05-23 11:38:18 UTC
+Author: Arlindo Dos Santos [cre],
+  Francois Semecurbe [drt, aut],
+  Auriane Renaud [ctb],
+  Cynthia Faivre [ctb],
+  Thierry Cornely [ctb],
+  Farida Marouchi [ctb],
+  Farida Marouchi [ctb]
+Maintainer: Arlindo Dos Santos <Arlindo.Dos-Santos@insee.fr>

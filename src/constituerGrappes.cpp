@@ -15,29 +15,29 @@ using namespace Rcpp;
 using namespace std;
 using namespace arma;
 
-/** Fonction rC)cursive mettant C  jour la matrice mGrappe qui contient l'identifiant de grappe pour chaque case 
+/** Fonction récursive mettant à jour la matrice mGrappe qui contient l'identifiant de grappe pour chaque case 
  *      Permet, entre autres, de constituer des grappes respectant le secret statistique
- *  Remarque: les grappes avec 0 observation sont autorisC)es
+ *  Remarque: les grappes avec 0 observation sont autorisées
  *
  * algorithme top-down - variante du quadTree: 
- *  - Si les 4 sous-carrC)s contiennent 
+ *  - Si les 4 sous-carrés contiennent 
  *        -    au moins iNbObsMin observations 
  *        - ou 0 observation
- *      => alors dC)couper en 4
- *  - les zones avec 0 observation portent le numC)ro de grappe "-1"
+ *      => alors découper en 4
+ *  - les zones avec 0 observation portent le numéro de grappe "-1"
  *
  *  arguments
  *    - iNbObsMin          : nombre minimum d'observation que doit contenir chaque grappe. 
- *    - profondeurMax      : nombre de fois maximum que peut C*tre dC)coupC) la matrice mEffectifs2n en 4
- *    - mEffectifs2n       : matrice des effectifs - doit C*tre carrC)e et la longueur de son cC4tC) doit C*tre une puissance de 2
- *    - mGrappe            : matrice destinC) C  recevoir le numC)ro de grappe pour chaque case - cette matrice est de la meme taille que mEffectifs2n
- *    - vNoGrappe          : vecteur destinC) C  recevoir la liste des numC)ros de grappes prC)sents dans la matrice rC)sultat (utile pour un traitement en parallC(le ultC)rieur)
- *    - profondeurCourante : nombre de fois que la sous-zone a C)tC) dC)coupC)e
- *    - iTaille            : longueur en nombre de case du carrC) considC)rC)
- *    - iRowReference      : numC)ro d'indice ligne correspondant C  la case Nord-ouest du sous-carrC) considC)rC)
- *    - iColReference      : numC)ro d'indice colonne correspondant C  la case Nord-ouest du sous-carrC) considC)rC)
+ *    - profondeurMax      : nombre de fois maximum que peut être découpé la matrice mEffectifs2n en 4
+ *    - mEffectifs2n       : matrice des effectifs - doit être carrée et la longueur de son côté doit être une puissance de 2
+ *    - mGrappe            : matrice destiné à recevoir le numéro de grappe pour chaque case - cette matrice est de la meme taille que mEffectifs2n
+ *    - vNoGrappe          : vecteur destiné à recevoir la liste des numéros de grappes présents dans la matrice résultat (utile pour un traitement en parallèle ultérieur)
+ *    - profondeurCourante : nombre de fois que la sous-zone a été découpée
+ *    - iTaille            : longueur en nombre de case du carré considéré
+ *    - iRowReference      : numéro d'indice ligne correspondant à la case Nord-ouest du sous-carré considéré
+ *    - iColReference      : numéro d'indice colonne correspondant à la case Nord-ouest du sous-carré considéré
  *  
- *  retourne : void (le rC)sultat est renseignC) par effet de bord 
+ *  retourne : void (le résultat est renseigné par effet de bord 
  *    - dans la matrice mGrappe 
  *    - dans le vecteur vNoGrappe
  *      
@@ -71,7 +71,7 @@ void quadTree2(  const unsigned int iNbObsMin
   unsigned long int iNbObsClusterSE = 0;
   unsigned long int iRow, iCol, iRowMax, iColMax, iColMin;
   
-  // Etape 1: vC)rifier qu'il y a suffisamment d'observations dans chaque sous-zone pour dC)couper en 4
+  // Etape 1: vérifier qu'il y a suffisamment d'observations dans chaque sous-zone pour découper en 4
   
   // Nord - ouest
   for(iRow = iRowReference; iNbObsClusterNO < iNbObsMin && iRow < iRowReference + iDemiTaille; ++iRow)
@@ -135,7 +135,7 @@ void quadTree2(  const unsigned int iNbObsMin
     
   // Rcout << "vNoGrappe.size(): " << vNoGrappe.size() << " (" << mGrappe(iRowReference, iColReference) << "," << lValNordEst << "," << lValSudOuest << "," << lValSudEst << ")" << std::endl;
   
-  // Etape 4: On renumC)rote les 3 zones
+  // Etape 4: On renumérote les 3 zones
   iRowMax = iRowReference + iTaille;
   iColMax = iColReference + iTaille;
   iColMin = iColReference + iDemiTaille;
@@ -165,7 +165,7 @@ void quadTree2(  const unsigned int iNbObsMin
   
   // Rcout << mGrappe;
   
-  // Etape 5: appels rC)cursifs sur les 4 sous-zones
+  // Etape 5: appels récursifs sur les 4 sous-zones
   if(iNbObsClusterNO != 0)
     quadTree2(iNbObsMin, profondeurMax, mEffectifs2n, mGrappe, vNoGrappe, profondeurCourante + 1, iDemiTaille, iRowReference              , iColReference);
   
@@ -181,20 +181,20 @@ void quadTree2(  const unsigned int iNbObsMin
 
 /** Fonction permettant de constituer des grappes de carreaux
 *  Remarques
-*    - version de la fonction qui crC)C)e une grappe unique, portant le numC)ro -1, pour toutes les cases sans observation
-*    - la taille de la matrice en entrC)e qui doit C*tre carrC)e et la longueur du cC4tC) doit C*tre une puissance de 2 
-*    - la taille de la matrice en entrC)e est limitC)e C  32768 x 32768 pour C)viter l'overflow dans les integer en R 2^32
-*    - utiliser une StringMatrix C  la place d'une IntegerMatrix pour mGrappe n'est pas une bonne idC)e car le traitement est 24 fois plus long
+*    - version de la fonction qui créée une grappe unique, portant le numéro -1, pour toutes les cases sans observation
+*    - la taille de la matrice en entrée qui doit être carrée et la longueur du côté doit être une puissance de 2 
+*    - la taille de la matrice en entrée est limitée à 32768 x 32768 pour éviter l'overflow dans les integer en R 2^32
+*    - utiliser une StringMatrix à la place d'une IntegerMatrix pour mGrappe n'est pas une bonne idée car le traitement est 24 fois plus long
 * 
 *  arguments
 *    - iNbObsMin    : nombre minimum d'observation que doit contenir chaque grappe. 
 *                     Permet de constituer des grappes respectant le secret statistique
-*                     Remarque: les grappes avec 0 observation sont autorisC)es
-*    - mEffectifs2n : matrice des effectifs - doit C*tre carrC)e et la longueur de son cC4tC) doit C*tre une puissance de 2
-*    - vNoGrappe    : vecteur destinC) C  recevoir la liste des numC)ros de grappes prC)sents dans la matrice rC)sultat (utile pour un traitement en parallC(le ultC)rieur)
+*                     Remarque: les grappes avec 0 observation sont autorisées
+*    - mEffectifs2n : matrice des effectifs - doit être carrée et la longueur de son côté doit être une puissance de 2
+*    - vNoGrappe    : vecteur destiné à recevoir la liste des numéros de grappes présents dans la matrice résultat (utile pour un traitement en parallèle ultérieur)
 *  
-*  retourne  : une matrice carree de la meme taille que mEffectifs2n dont chaque case contient l'identifiant de la grappe C  laquelle elle a C)tC) affectC)e
-*              par effet de bord, vNoGrappe est C)galement retournC)
+*  retourne  : une matrice carree de la meme taille que mEffectifs2n dont chaque case contient l'identifiant de la grappe à laquelle elle a été affectée
+*              par effet de bord, vNoGrappe est également retourné
 *  
 */
 arma::Mat<int> constituerGrappes2(const unsigned int iNbObsMin, const arma::Mat<int>& mEffectifs, std::vector<int>& vNoGrappe) 
@@ -228,8 +228,8 @@ arma::Mat<int> constituerGrappes2(const unsigned int iNbObsMin, const arma::Mat<
 /** Fonction permettant de constituer des grappes de carreaux
  * 
  * version :
- *  - destinC)e C  une utilisation depuis R; exposC)e par le package; on ne peut pas rC)cupC)rer la liste des numC)ros de grappe via sa rC)fC)rence
- *  - toutes les cases sans observation ont le mC*me numC)ro de grappe
+ *  - destinée à une utilisation depuis R; exposée par le package; on ne peut pas récupérer la liste des numéros de grappe via sa référence
+ *  - toutes les cases sans observation ont le même numéro de grappe
  * 
  * surcharge makeClusterObsMin1 const unsigned int iNbObsMin const arma::Mat int & mEffectifs std::vector int & vNoGrappe 
  * 
@@ -241,31 +241,31 @@ arma::Mat<int> constituerGrappes2(const unsigned int iNbObsMin, const arma::Mat<
   return constituerGrappes2(iNbObsMin, mEffectifs, vInt);
 }
 
-/** Fonction rC)cursive mettant C  jour la matrice mGrappe qui contient l'identifiant de grappe pour chaque case 
+/** Fonction récursive mettant à jour la matrice mGrappe qui contient l'identifiant de grappe pour chaque case 
  *      Permet, entre autres, de constituer des grappes respectant le secret statistique
- *  Remarque: les grappes avec 0 observation sont autorisC)es
+ *  Remarque: les grappes avec 0 observation sont autorisées
  *
  * algorithme top-down - variante du quadTree: 
- *  - Si les 4 sous-carrC)s contiennent 
+ *  - Si les 4 sous-carrés contiennent 
  *        -    au moins iNbObsMin observations 
  *        - ou 0 observation
- *      => alors dC)couper en 4
- *  - On ne redC)coupe pas les sous-carrC)s  
+ *      => alors découper en 4
+ *  - On ne redécoupe pas les sous-carrés  
  *        -    contenant 0 observation
  *        - ou dont un carreau contient toutes les observations
  *
  *  arguments
  *    - iNbObsMin          : nombre minimum d'observation que doit contenir chaque grappe. 
- *    - profondeurMax      : nombre de fois maximum que peut C*tre dC)coupC) la matrice mEffectifs2n en 4
- *    - mEffectifs2n       : matrice des effectifs - doit C*tre carrC)e et la longueur de son cC4tC) doit C*tre une puissance de 2
- *    - mGrappe            : matrice destinC) C  recevoir le numC)ro de grappe pour chaque case - cette matrice est de la meme taille que mEffectifs2n
- *    - vNoGrappe          : vecteur destinC) C  recevoir la liste des numC)ros de grappes prC)sents dans la matrice rC)sultat (utile pour un traitement en parallC(le ultC)rieur)
- *    - profondeurCourante : nombre de fois que la sous-zone a C)tC) dC)coupC)e
- *    - iTaille            : longueur en nombre de case du carrC) considC)rC)
- *    - iRowReference      : numC)ro d'indice ligne correspondant C  la case Nord-ouest du sous-carrC) considC)rC)
- *    - iColReference      : numC)ro d'indice colonne correspondant C  la case Nord-ouest du sous-carrC) considC)rC)
+ *    - profondeurMax      : nombre de fois maximum que peut être découpé la matrice mEffectifs2n en 4
+ *    - mEffectifs2n       : matrice des effectifs - doit être carrée et la longueur de son côté doit être une puissance de 2
+ *    - mGrappe            : matrice destiné à recevoir le numéro de grappe pour chaque case - cette matrice est de la meme taille que mEffectifs2n
+ *    - vNoGrappe          : vecteur destiné à recevoir la liste des numéros de grappes présents dans la matrice résultat (utile pour un traitement en parallèle ultérieur)
+ *    - profondeurCourante : nombre de fois que la sous-zone a été découpée
+ *    - iTaille            : longueur en nombre de case du carré considéré
+ *    - iRowReference      : numéro d'indice ligne correspondant à la case Nord-ouest du sous-carré considéré
+ *    - iColReference      : numéro d'indice colonne correspondant à la case Nord-ouest du sous-carré considéré
  *  
- *  retourne : void (le rC)sultat est renseignC) par effet de bord 
+ *  retourne : void (le résultat est renseigné par effet de bord 
  *    - dans la matrice mGrappe 
  *    - dans le vecteur vNoGrappe
  *      
@@ -299,7 +299,7 @@ void quadTree( const unsigned int iNbObsMin
   unsigned long int iNbObsClusterSE = 0;
   unsigned long int iRow, iCol, iRowMax, iColMax, iColMin;
   
-  // Etape 1: vC)rifier qu'il y a suffisamment d'observations dans chaque sous-zone pour dC)couper en 4
+  // Etape 1: vérifier qu'il y a suffisamment d'observations dans chaque sous-zone pour découper en 4
   
   // Nord - ouest
   for(iRow = iRowReference; iNbObsClusterNO < iNbObsMin && iRow < iRowReference + iDemiTaille; ++iRow)
@@ -333,7 +333,7 @@ void quadTree( const unsigned int iNbObsMin
   if(iNbObsClusterSE < iNbObsMin && iNbObsClusterSE != 0)
     return;
   
-  // On ne dC)coupe pas les sous-zones contenant 0 obs ou dont un des 4 quartiers contient toutes les observations
+  // On ne découpe pas les sous-zones contenant 0 obs ou dont un des 4 quartiers contient toutes les observations
   const unsigned long int iTotalGrappe = iNbObsClusterNO + iNbObsClusterNE + iNbObsClusterSO + iNbObsClusterSE;
   if(iNbObsClusterNO == iTotalGrappe || iNbObsClusterNE == iTotalGrappe || iNbObsClusterSO == iTotalGrappe || iNbObsClusterSE == iTotalGrappe)
     return;
@@ -357,7 +357,7 @@ void quadTree( const unsigned int iNbObsMin
   
   // Rcout << "vNoGrappe.size(): " << vNoGrappe.size() << " (" << mGrappe(iRowReference, iColReference) << "," << lValNordEst << "," << lValSudOuest << "," << lValSudEst << ")" << std::endl;
   
-  // Etape 4: On renumC)rote les 3 zones
+  // Etape 4: On renumérote les 3 zones
   iRowMax = iRowReference + iTaille;
   iColMax = iColReference + iTaille;
   iColMin = iColReference + iDemiTaille;
@@ -369,7 +369,7 @@ void quadTree( const unsigned int iNbObsMin
       mGrappe(iRow              , iCol              ) = lValSudEst;
     }  
     
-  // Etape 5: appels rC)cursifs sur les 4 sous-zones
+  // Etape 5: appels récursifs sur les 4 sous-zones
   quadTree(iNbObsMin, profondeurMax, mEffectifs2n, mGrappe, vNoGrappe, profondeurCourante + 1, iDemiTaille, iRowReference              , iColReference);
   quadTree(iNbObsMin, profondeurMax, mEffectifs2n, mGrappe, vNoGrappe, profondeurCourante + 1, iDemiTaille, iRowReference              , iColReference + iDemiTaille);
   quadTree(iNbObsMin, profondeurMax, mEffectifs2n, mGrappe, vNoGrappe, profondeurCourante + 1, iDemiTaille, iRowReference + iDemiTaille, iColReference);
@@ -377,19 +377,19 @@ void quadTree( const unsigned int iNbObsMin
 }
 
 /** Fonction permettant de constituer des grappes de carreaux
-*  la taille de la matrice en entrC)e qui doit C*tre carrC)e et dont la longueur du cC4tC) doit C*tre une puissance de 2 
-*  est limitC)e C  32768 x 32768 pour C)viter l'overflow dans les integer en R 2^32
+*  la taille de la matrice en entrée qui doit être carrée et dont la longueur du côté doit être une puissance de 2 
+*  est limitée à 32768 x 32768 pour éviter l'overflow dans les integer en R 2^32
 * 
 *  arguments
 *  iNbObsMin    : nombre minimum d'observation que doit contenir chaque grappe. 
 *                  Permet de constituer des grappes respectant le secret statistique
-*                  Remarque: les grappes avec 0 observation sont autorisC)es
-*  mEffectifs2n : matrice des effectifs - doit C*tre carrC)e et la longueur de son cC4tC) doit C*tre une puissance de 2
+*                  Remarque: les grappes avec 0 observation sont autorisées
+*  mEffectifs2n : matrice des effectifs - doit être carrée et la longueur de son côté doit être une puissance de 2
 *  
 *  retourne  : une matrice carree de la meme taille que mEffectifs2n 
-*              dont chaque case contient l'identifiant de la grappe C  laquelle elle a C)tC) affectC)e
+*              dont chaque case contient l'identifiant de la grappe à laquelle elle a été affectée
 *              
-*  Remarque: utiliser une StringMatrix C  la place d'une IntegerMatrix pour mGrappe n'est pas une bonne idC)e 
+*  Remarque: utiliser une StringMatrix à la place d'une IntegerMatrix pour mGrappe n'est pas une bonne idée 
 *  car le traitement est 24 fois plus long
 */
 arma::Mat<int> constituerGrappes(const unsigned int iNbObsMin, const arma::Mat<int>& mEffectifs, std::vector<int> &vNoGrappe) 
@@ -423,7 +423,7 @@ arma::Mat<int> constituerGrappes(const unsigned int iNbObsMin, const arma::Mat<i
 
 /** Fonction permettant de constituer des grappes de carreaux
  * 
- * version destinC)e C  une utilisation depuis R; exposC)e par le package; on ne peut pas rC)cupC)rer la liste des numC)ros de grappe via sa rC)fC)rence  
+ * version destinée à une utilisation depuis R; exposée par le package; on ne peut pas récupérer la liste des numéros de grappe via sa référence  
  * 
  * surcharge constituerGrappes const unsigned int iNbObsMin const arma::Mat int & mEffectifs std::vector int & vNoGrappe 
  * 
@@ -435,17 +435,17 @@ arma::Mat<int> constituerGrappes(const unsigned int iNbObsMin, const arma::Mat<i
   return constituerGrappes(iNbObsMin, mEffectifs, vInt);
 }
 
-/** Fonction rC)curssive permettant de retrouver les coordonnC)es du point en haut C  gauche (Nord-est) d'un identifiant de grappe en fonction de son numC)ro
+/** Fonction récursive permettant de retrouver les coordonnées du point en haut à gauche (Nord-est) d'un identifiant de grappe en fonction de son numéro
  * 
- * iNiveauMax : entier reprC)sentant l'exposant de la puissance de 2 pour obtenir la taille du cC4tC) de la matrice contenant les numeros de grappe 
+ * iNiveauMax : entier représentant l'exposant de la puissance de 2 pour obtenir la taille du côté de la matrice contenant les numeros de grappe 
  *              exemple: si la matrice est 128 * 128, alors iNiveauMax = log2(128) = 7
- * iNiveaucourant : niveau de dC)composition (valeur comprise entre 1 et iNiveauMax)
- * iNombre : numC)ro de grappe C  dC)composer
- * vIndice : vecteur d'entiers de taille 2 qui contient le rC)sultat 
- *          - Le premier C)lC)ment est la coordonnC)e numC)ro de ligne - commence C  0
- *          - Le deuxiC(me C)lC)ment est la coordonnC)e numC)ro de colonne - commence C  0
+ * iNiveaucourant : niveau de décomposition (valeur comprise entre 1 et iNiveauMax)
+ * iNombre : numéro de grappe à décomposer
+ * vIndice : vecteur d'entiers de taille 2 qui contient le résultat 
+ *          - Le premier élément est la coordonnée numéro de ligne - commence à 0
+ *          - Le deuxième élément est la coordonnée numéro de colonne - commence à 0
  * 
- * retourne : void (rC)sultat dans vIndice modifiC) par effet de bord)
+ * retourne : void (résultat dans vIndice modifié par effet de bord)
  * 
  */
 void decomposer(const int iNiveauMax, const int iNiveaucourant, const int iNombre, std::vector<int> &vIndice)
@@ -469,16 +469,16 @@ void decomposer(const int iNiveauMax, const int iNiveaucourant, const int iNombr
   decomposer(iNiveauMax, iNiveaucourant + 1, iNombre - iPositionNiveau * pow(4, iNiveauMax - iNiveaucourant), vIndice);
 }
 
-/** Fonction permettant de retrouver les coordonnC)es du point en haut C  gauche (Nord-est) d'un identifiant de grappe en fonction de son numC)ro
+/** Fonction permettant de retrouver les coordonnées du point en haut à gauche (Nord-est) d'un identifiant de grappe en fonction de son numéro
  * 
  * arguments
- * iNiveauMax : entier reprC)sentant l'exposant de la puissance de 2 pour obtenir la taille du cC4tC) de la matrice contenant les numeros de grappe 
+ * iNiveauMax : entier représentant l'exposant de la puissance de 2 pour obtenir la taille du côté de la matrice contenant les numeros de grappe 
  *              exemple: si la matrice est 128 * 128, alors iNiveauMax = log2(128) = 7
- * iNoGrappe  : numC)ro de grappe C  dC)composer
+ * iNoGrappe  : numéro de grappe à décomposer
  *  
  * retourne: un vecteur d'entiers de taille 2. 
- *          - Le premier C)lC)ment est la coordonnC)e numC)ro de ligne - commence C  0
- *          - Le deuxiC(me C)lC)ment est la coordonnC)e numC)ro de colonne - commence C  0
+ *          - Le premier élément est la coordonnée numéro de ligne - commence à 0
+ *          - Le deuxième élément est la coordonnée numéro de colonne - commence à 0
  *
  */
 // [[Rcpp::export]]

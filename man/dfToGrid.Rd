@@ -38,7 +38,7 @@ Returns an object of class \code{sf} and \code{data.frame}.
 }
 
 \examples{
-\dontrun{
+library(sf)
 # example 1 - regular grid
 df <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 dfResult <- dfToGrid(df = df, sEPSG = "2154", iCellSize = 200)
@@ -50,4 +50,4 @@ df <- data.frame(x = c(50, 50, 150, 150, 300)
                , iCellSize = c(50, 50, 50, 50, 100))
 dfResult <- dfToGrid(df = df, sEPSG = "2154")
 write_sf(obj = dfResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
-}}
+}

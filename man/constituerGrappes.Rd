@@ -32,7 +32,6 @@ Returns a \code{matrix} with the cluster number for each cell .
 \author{Psar Analyse Urbaine Insee - Arlindo Dos Santos and Francois Semecurbe}
 
 \examples{
-\dontrun{
 dfObservations <- data.frame(x = c(15, 35, 15, 25, 35, 55, 45, 45, 55, 65, 70, 75, 85, 90,
                                     65, 75, 85, 65, 70, 75, 85, 90, 65, 70, 75)
                           ,  y = c(10, 10, 30, 30, 35, 35, 45, 55, 55, 65, 65, 65, 65, 65,
@@ -53,4 +52,4 @@ mEffectifs <- constituerMatriceEffectifs(dfObservations$row - 1, dfObservations$
 
 #### matrice des grappes
 mGrappes <- constituerGrappes(1, mEffectifs)
-}}
+}

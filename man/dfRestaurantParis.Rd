@@ -19,7 +19,5 @@ Parisian restaurants data frame. source : https://opendata.paris.fr
  }
 
 \examples{
-\dontrun{
 data(dfRestaurantParis)
-}
 }
