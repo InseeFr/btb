@@ -10,7 +10,7 @@ Description: The kernelSmoothing() function allows you to square and smooth geol
         The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
         Geographically weighted summary statistics : a framework for localised exploratory data analysis, C.Brunsdon & al., in Computers, Environment and Urban Systems C.Brunsdon & al. (2002) <doi:10.1016/S0198-9715(01)00009-6>, 
         Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, pp. 83-86, (2003) <doi:10.1080/13658816.2014.937718>.
-Version: 0.1.30
+Version: 0.1.30.1
 Depends: R (>= 3.3.0)
 Date: 2018-05-23
 License: GPL (>= 2)
@@ -18,11 +18,11 @@ Imports: methods, Rcpp (>= 0.11.3), sp, sf, RcppParallel
 Suggests: cartography
 LinkingTo: Rcpp, RcppParallel, BH (>= 1.60.0-1), RcppArmadillo
 NeedsCompilation: yes
-Packaged: 2018-05-23 09:16:02 UTC; s3qcea
+Packaged: 2020-05-25 13:51:31 UTC; ripley
 RoxygenNote: 5.0.1
 LazyData: true
 Repository: CRAN
-Date/Publication: 2018-05-23 11:38:18 UTC
+Date/Publication: 2020-05-26 05:13:25 UTC
 Author: Arlindo Dos Santos [cre],
   Francois Semecurbe [drt, aut],
   Auriane Renaud [ctb],

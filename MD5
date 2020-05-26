@@ -1,4 +1,4 @@
-e2db559cada178e94c00381738fc12c0 *DESCRIPTION
+c818b38cc8be68f55315c31f2c97d89f *DESCRIPTION
 602da8d40cbad1debee87c362f056e7b *NAMESPACE
 2732cf8fa77c73cee71f5a95db7291a2 *R/RcppExports.R
 ffce9c4a9d3476920a94a1f6f6799a38 *R/kernelSmoothing.R
@@ -33,7 +33,7 @@ d272b638114ea71961499a10b21592d1 *src/RcppExports.cpp
 f7eed0ba35f7886acff7abc5a5211324 *src/constituerGrappes.h
 84668c4ccf8fcc77f1ae471d3b6e94af *src/constituerMatriceEffectifs.cpp
 456787a759ee019577096d259492fff7 *src/constituerMatriceEffectifs.h
-cb4a17e72adb4fda3f4e6a27bc733448 *src/init.c
+30f6420eb3787d0356654987cbd841a7 *src/init.c
 b19ed07522da670d8f6a4e2009656b89 *src/lissageMedian.cpp
 5a4169c2fd12975ca86bdd6ae0dd3c74 *src/lissageMedian.h
 16aabad59b30b1aaccc5c0069aa9b9fa *src/rcppLissage.cpp

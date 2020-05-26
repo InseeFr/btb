@@ -12,7 +12,7 @@ Check these declarations against the C/Fortran source code.
 extern SEXP btb_constituerMatriceEffectifs(SEXP, SEXP);
 extern SEXP btb_constituerGrappes(SEXP, SEXP);
 //extern SEXP btb_coordonneesGrappe(SEXP, SEXP);
-extern SEXP btb_rcppLissage(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP btb_rcppLissage(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP btb_rcppLissageMedian(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP btb_rcppLissageMedianGrappe(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
