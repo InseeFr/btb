@@ -1,5 +1,5 @@
-c818b38cc8be68f55315c31f2c97d89f *DESCRIPTION
-602da8d40cbad1debee87c362f056e7b *NAMESPACE
+216e88a8fd9eba6b4acc9078e118df80 *DESCRIPTION
+b4df36186b6934561b54b25c6ed76738 *NAMESPACE
 2732cf8fa77c73cee71f5a95db7291a2 *R/RcppExports.R
 ffce9c4a9d3476920a94a1f6f6799a38 *R/kernelSmoothing.R
 a47b0942d8c6ee94b6e209e1177fabce *data/datalist
@@ -21,7 +21,7 @@ c5a70ffe0e70406419fa7031521faf6f *man/constituerGrappes.Rd
 59070c58d9887a0c821441123433150b *man/constituerMatriceEffectifs.Rd
 d246bfe9a9f4bfe7417b5383e9c71e9b *man/dfPrix_SP95_2016.Rd
 bcc9e28230240e4bdc54dc6f437e3e07 *man/dfRestaurantParis.Rd
-3a1108647619db18e010752082802929 *man/dfToGrid.Rd
+4ffe73c81be8b4ddcf39bebe3f199f1e *man/dfToGrid.Rd
 2cd852f0a39eaadd7b0bc7093cf6d2ad *man/figures/Thumbs.db
 b5c5da10a62f0029827703f0b7f414e5 *man/kernelSmoothing.Rd
 01973a232b67be80b09a8f7293d12724 *man/pixel_france.Rd

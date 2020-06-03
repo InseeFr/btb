@@ -42,12 +42,12 @@ library(sf)
 # example 1 - regular grid
 df <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 dfResult <- dfToGrid(df = df, sEPSG = "2154", iCellSize = 200)
-write_sf(obj = dfResult, dsn = "regularGrid.shp", delete_layer = TRUE)
+# write_sf(obj = dfResult, dsn = "regularGrid.shp", delete_layer = TRUE)
 
 # example 2 - irregular grid
 df <- data.frame(x = c(50, 50, 150, 150, 300)
                , y = c(50, 150, 50, 150, 100)
                , iCellSize = c(50, 50, 50, 50, 100))
 dfResult <- dfToGrid(df = df, sEPSG = "2154")
-write_sf(obj = dfResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
+# write_sf(obj = dfResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
 }
