@@ -16,7 +16,7 @@ A partial transposition of the package in Python is also available: [btbpy](http
 
 ## Installation
 
-`diffman` is available on CRAN and can therefore be readily installed
+`btb` is available on CRAN and can therefore be readily installed
 ```
 install.packages("btb")
 ```
