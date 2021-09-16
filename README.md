@@ -29,7 +29,7 @@ devtools::install_github("InseeFrLab/btb")
 
 ## Usage 
 
-Details on how to use the package can be found either in the documentation of the package or in [chapter 8](https://www.insee.fr/en/statistiques/fichier/3635545/imet131-l-chapitre-8.pdf) of the [Handbook of Spatial Analysis](https://www.insee.fr/en/information/3635545) published by Insee.
+Details on how to use the package can be found in its documentation. Some applications for spatial smoothing are presented in [chapter 8](https://www.insee.fr/en/statistiques/fichier/3635545/imet131-l-chapitre-8.pdf) of the [Handbook of Spatial Analysis](https://www.insee.fr/en/information/3635545) published by Insee.
 
 ## Contributions
 
