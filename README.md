@@ -6,6 +6,14 @@ and density estimation using the KDE (kernel density estimator) method.
 
 A partial transposition of the package in Python is also available: [btbpy](https://github.com/InseeFrLab/btbpy).
 
+## Description
+
+ The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
+
+- The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
+- The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
+- The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
+- The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
 
 ## Installation
 
@@ -20,14 +28,9 @@ install.packages("devtools")
 devtools::install_github("InseeFrLab/btb")
 ```
 
-## Description
+## Usage 
 
- The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
-
-- The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
-- The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
-- The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
-- The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
+Details on how to use the package can be found either in the documentation of the package or in chapter 8 of the [Handbook of Spatial Analysis](https://www.insee.fr/en/information/3635545) published by Insee.
 
 ## Contributions
 
