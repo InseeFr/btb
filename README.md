@@ -33,11 +33,11 @@ Details on how to use the package can be found in its [documentation](man). Some
 
 ## Contributions
 
-Maintainer: Arlindo Dos Santos <Arlindo.Dos-Santos@insee.fr>
+Maintainer: Kim Antunez <kim.antunez@insee.fr>
 
 Authors and contributors:
-- Arlindo Dos Santos [cre],
-- François Sémécurbe [drt, aut],
+- Arlindo Dos Santos [aut],
+- François Sémécurbe [aut],
 - Auriane Renaud [ctb],
 - Farida Marouchi [ctb]
 - Joachim Timoteo [ctb]
