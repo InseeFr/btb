@@ -27,12 +27,10 @@ LinkingTo:
     BH (>= 1.60.0-1), 
     RcppArmadillo
 NeedsCompilation: yes
-Packaged: 2020-06-03 15:50:00 UTC; ripley
 RoxygenNote: 5.0.1
 LazyData: true
+URL: https://github.com/InseeFrLab/btb
 BugReports: https://github.com/InseeFrLab/btb/issues
-Repository: CRAN
-Date/Publication: 2020-06-03 14:20:06 UTC
 Author: 
   Arlindo Dos Santos [aut],
   Francois Semecurbe [aut],
