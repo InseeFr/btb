@@ -30,7 +30,7 @@ NeedsCompilation: yes
 Packaged: 2020-06-03 15:50:00 UTC; ripley
 RoxygenNote: 5.0.1
 LazyData: true
-BugReports: https://github.com/InseeFr/btb/issues
+BugReports: https://github.com/InseeFrLab/btb/issues
 Repository: CRAN
 Date/Publication: 2020-06-03 14:20:06 UTC
 Author: 
