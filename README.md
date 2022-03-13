@@ -24,7 +24,7 @@ install.packages("btb")
 It is also possible to install it from the GitHub repository using `devtools`
 ```
 install.packages("devtools")
-devtools::install_github("InseeFrLab/btb")
+devtools::install_github("InseeFr/btb")
 ```
 
 ## Usage 
