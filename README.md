@@ -34,7 +34,7 @@ Details on how to use the package can be found in its [documentation](man). Some
 
 ## Contributions
 
-Maintainer: Kim Antunez <kim.antunez@insee.fr>
+Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 
 Authors and contributors:
 - Arlindo Dos Santos [aut],
