@@ -1,7 +1,8 @@
-# Beyond the Border - Kernel Density Estimation for Urban Geography 
+# Beyond the Border <img src="man/figures/logo.png" width=200 align="right" />
+
 [![CRAN_Status](http://www.r-pkg.org/badges/version/btb)](https://cran.r-project.org/package=btb)
 
-`btb` ("Beyond the Border") is an R package which provides functions dedicated to urban analysis and density estimation using the KDE (kernel density estimator) method. 
+`btb` ("Beyond the Border - Kernel Density Estimation for Urban Geography") is an R package which provides functions dedicated to urban analysis and density estimation using the KDE (kernel density estimator) method. 
 
 A partial transposition of the package in Python is also available: [btbpy](https://github.com/InseeFrLab/btbpy).
 
@@ -24,7 +25,7 @@ install.packages("btb")
 It is also possible to install it from the GitHub repository using `devtools`
 ```
 install.packages("devtools")
-devtools::install_github("InseeFrLab/btb")
+devtools::install_github("InseeFr/btb")
 ```
 
 ## Usage 
@@ -33,7 +34,7 @@ Details on how to use the package can be found in its [documentation](man). Some
 
 ## Contributions
 
-Maintainer: Kim Antunez <kim.antunez@insee.fr>
+Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 
 Authors and contributors:
 - Arlindo Dos Santos [aut],

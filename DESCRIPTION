@@ -28,8 +28,8 @@ LinkingTo:
 NeedsCompilation: yes
 RoxygenNote: 5.0.1
 LazyData: true
-URL: https://github.com/InseeFrLab/btb
-BugReports: https://github.com/InseeFrLab/btb/issues
+URL: https://github.com/InseeFr/btb
+BugReports: https://github.com/InseeFr/btb/issues
 Author: 
   Arlindo Dos Santos [aut],
   Francois Semecurbe [aut],
@@ -39,4 +39,4 @@ Author:
   Farida Marouchi [ctb],
   Institut national de la statistique et des études économiques [cph]
 Maintainer: 
-  Kim Antunez <kim.antunez@insee.fr>
+  Kim Antunez <antuki.kim+cran@gmail.com>
