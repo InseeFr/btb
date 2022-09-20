@@ -1,5 +1,5 @@
 Encoding: UTF-8
-Package: btbis
+Package: btb
 Type: Package
 Title: Beyond the Border - Kernel Density Estimation for Urban Geography
 Description: The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
@@ -20,7 +20,8 @@ Imports:
     sf,
     RcppParallel
 Suggests: 
-    cartography
+    cartography,
+    testthat (>= 3.0.0)
 Author: 
   Arlindo Dos Santos [aut],
   Francois Semecurbe [aut],
@@ -42,3 +43,4 @@ BugReports: https://github.com/InseeFr/btb/issues
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 # NeedsCompilation: yes
+Config/testthat/edition: 3

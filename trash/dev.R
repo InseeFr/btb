@@ -31,11 +31,12 @@ usethis::use_package("purrr")
 #' @importFrom purrr map 
 usethis::use_pipe(export = TRUE) # si besoin
 
-# Pour tester le package avec testthat
-usethis::use_test("mafonction")
-devtools::test()
-covr::package_coverage()
+# Tests
 usethis::use_testthat()
+usethis::use_test("btb_ptsToGrid")
+devtools::test()
+# covr::package_coverage()
+
 
 
 
