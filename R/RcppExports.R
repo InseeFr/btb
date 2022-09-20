@@ -2,30 +2,30 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 constituerGrappes <- function(iNbObsMin, mEffectifs) {
-    .Call("btb_constituerGrappes", PACKAGE = 'btb', iNbObsMin, mEffectifs)
+    .Call(`_btbis_constituerGrappes`, iNbObsMin, mEffectifs)
 }
 
 coordonneesGrappe <- function(iNiveauMax, iNoGrappe) {
-    .Call("btb_coordonneesGrappe", PACKAGE = 'btb', iNiveauMax, iNoGrappe)
+    .Call(`_btbis_coordonneesGrappe`, iNiveauMax, iNoGrappe)
 }
 
 constituerMatriceEffectifs <- function(vLigneObservation, vColonneObservation) {
-    .Call("btb_constituerMatriceEffectifs", PACKAGE = 'btb', vLigneObservation, vColonneObservation)
+    .Call(`_btbis_constituerMatriceEffectifs`, vLigneObservation, vColonneObservation)
 }
 
 calculeQuantiles <- function(vModalites, vPonderation, vQuantiles) {
-    .Call("btb_calculeQuantiles", PACKAGE = 'btb', vModalites, vPonderation, vQuantiles)
+    .Call(`_btbis_calculeQuantiles`, vModalites, vPonderation, vQuantiles)
 }
 
 rcppLissageMedian <- function(vXobservations, vYobservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles) {
-    .Call("btb_rcppLissageMedian", PACKAGE = 'btb', vXobservations, vYobservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles)
+    .Call(`_btbis_rcppLissageMedian`, vXobservations, vYobservations, iRayon, mVar, vXCentroides, vYCentroides, vQuantiles)
 }
 
 rcppLissage <- function(vXObservation, vYObservation, vLigneObservation, vColonneObservation, iPas, iRayon, iNeighbor, mVariables, iNumberCols, iNumberRows, iMinXCentroide, iMinYCentroide, mIcentroide, iNbCentroides, updateProgress = NULL) {
-    .Call("btb_rcppLissage", PACKAGE = 'btb', vXObservation, vYObservation, vLigneObservation, vColonneObservation, iPas, iRayon, iNeighbor, mVariables, iNumberCols, iNumberRows, iMinXCentroide, iMinYCentroide, mIcentroide, iNbCentroides, updateProgress)
+    .Call(`_btbis_rcppLissage`, vXObservation, vYObservation, vLigneObservation, vColonneObservation, iPas, iRayon, iNeighbor, mVariables, iNumberCols, iNumberRows, iMinXCentroide, iMinYCentroide, mIcentroide, iNbCentroides, updateProgress)
 }
 
 rcppLissageMedianGrappe <- function(iMinObsGrappe, vXObservation, vYObservation, vLigneObservation, vColonneObservation, iPas, iRayon, mVariables, vXCentroide, vYCentroide, vLigneCentroide, vColonneCentroide, vQuantile) {
-    .Call("btb_rcppLissageMedianGrappe", PACKAGE = 'btb', iMinObsGrappe, vXObservation, vYObservation, vLigneObservation, vColonneObservation, iPas, iRayon, mVariables, vXCentroide, vYCentroide, vLigneCentroide, vColonneCentroide, vQuantile)
+    .Call(`_btbis_rcppLissageMedianGrappe`, iMinObsGrappe, vXObservation, vYObservation, vLigneObservation, vColonneObservation, iPas, iRayon, mVariables, vXCentroide, vYCentroide, vLigneCentroide, vColonneCentroide, vQuantile)
 }
 
