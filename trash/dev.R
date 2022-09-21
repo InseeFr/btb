@@ -15,6 +15,10 @@ lapply(req_pkgs, function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
 
+pkgs_imports <- c("RcppParallel","rlang")
+lapply(pkgs_imports, function(pkg) {
+  if (system.file(package = pkg) == '') install.packages(pkg)
+})
 
 devtools::check()
 devtools::document()
@@ -63,3 +67,17 @@ devtools::build()
 # Rcpp::compileAttributes()
 
 
+
+
+iCellSize <- 20L
+iBandwidth <- 41L
+dfObservations <- data.frame(x = c(22, 35), y = c(70, 55), V1 = c(10, 13))
+vQuantiles = NULL
+dfCentroids = NULL
+fUpdateProgress = NULL
+iNeighbor = NULL
+iNbObsMin = 250
+
+vXCentroides <- rep(seq(from = 10, to = 50, by = iCellSize), 4)
+vYCentroides <- rep(seq(from = 30, to = 90, by = iCellSize), each = 3)
+dfCentroids <- data.frame(cbind(x = vXCentroides, y = vYCentroides))

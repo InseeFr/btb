@@ -1,57 +1,4 @@
-library(sf)
-########################################################################################################################
-#
-# date          version         auteur                          commentaire
-# 2016/08/09      0.0.5      Francois Semecurbe     
-# 2016/08/11      0.0.7      Francois Semecurbe     première version déployée sur le CRAN
-# 2016/__/__      0.0.8      Arlindo Dos Santos     
-# 2016/08/31      0.0.9      Francois Semecurbe     version diffusée à Audric Sophie et Cacheux Lionel
-# 2016/10/03      0.1.0      Arlindo Dos Santos     version avec la fonction kernelSmoothingMedian
-# 2016/10/04      0.1.1      Arlindo Dos Santos     correction de bugs mineurs
-# 2016/10/14      0.1.2      Arlindo Dos Santos     4 modes d'appels pour kernelSmoothing
-# 2016/12/01      0.1.4      Arlindo Dos Santos     fonction retour updateProgress pour kernelSmoothing
-# 2017/01/01      0.1.6      Arlindo Dos Santos     prise en compte du paramètre iNeighbor si indiqué (et 0 si userGrid fournie)
-# 2017/01/11      0.1.7      Arlindo Dos Santos     fonction retour updateProgress pour smoothingToGrid
-# 2017/01/11      0.1.8      Arlindo Dos Santos     ajout de la colonne iNbObsMin pour le lissage classique
-# 2018/01/04      0.1.8      Arlindo Dos Santos     fusion des fonctions kernelSmoothing et smoothingToGrid
-#
-########################################################################################################################
 
-#' @useDynLib btb
-#' @importFrom Rcpp evalCpp
-#' @import methods sf
-
-############################## carreauxSF() #######################################################################
-# fonction pour transformer une data.frame lissée en un objet sf
-# carreauxSF <- function(df, iCellSize, sEPSG)
-# {
-#   r <- iCellSize / 2
-#   df$geom <- sprintf("POLYGON ((%i %i, %i %i, %i %i, %i %i, %i %i))", df$x-r, df$y+r, df$x+r, df$y+r, df$x+r, df$y-r, df$x-r, df$y-r, df$x-r, df$y+r)
-#   sfdf <- st_as_sf(df, wkt = "geom", crs = as.integer(sEPSG))
-#   return(sfdf)
-# }
-
-############################## dfToGrid() #######################################################################
-# arguments
-# dfObservations  : data.frame comportant les coordonnées géographiques (x,y), ainsi que les variables que l'on souhaite lisser
-# 
-# retourne
-# un objet Grid dont le slot @data contient la valeur des variables lissees
-# 
-#' @export
-dfToGrid <- function(df, sEPSG, iCellSize = NULL)
-{
-  if(!is.null(iCellSize))
-  {
-    r = iCellSize / 2
-    df$geometry <- sprintf("POLYGON ((%f %f, %f %f, %f %f, %f %f, %f %f))", df$x-r, df$y+r, df$x+r, df$y+r, df$x+r, df$y-r, df$x-r, df$y-r, df$x-r, df$y+r)
-  }
-  else
-    df$geometry <- sprintf("POLYGON ((%f %f, %f %f, %f %f, %f %f, %f %f))", df$x-df$iCellSize / 2, df$y+df$iCellSize / 2, df$x+df$iCellSize / 2, df$y+df$iCellSize / 2, df$x+df$iCellSize / 2, df$y-df$iCellSize / 2, df$x-df$iCellSize / 2, df$y-df$iCellSize / 2, df$x-df$iCellSize / 2, df$y+df$iCellSize / 2)
-  
-  sfdf <- st_as_sf(df, wkt = "geometry", crs = as.integer(sEPSG))
-  return(sfdf)
-}
 
 ############################## kernelSmoothing() #######################################################################
 # arguments
@@ -72,8 +19,21 @@ dfToGrid <- function(df, sEPSG, iCellSize = NULL)
 # - la géolocalisation est souvent imprécise en dessous de 1 mètre 
 # - cela permet d'économiser de la mémoire dans les fct développées en C++
 # 
+#' @title btb_smooth 
+#' 
+#' @param dfObservations 
+#'
+#' @param sEPSG 
+#' @param iCellSize 
+#' @param iBandwidth 
+#' @param vQuantiles 
+#' @param dfCentroids 
+#' @param fUpdateProgress 
+#' @param iNeighbor 
+#' @param iNbObsMin 
+#' 
 #' @export
-kernelSmoothing <-
+btb_smooth <-
   function(dfObservations
            , sEPSG
            , iCellSize
@@ -85,10 +45,16 @@ kernelSmoothing <-
            , iNbObsMin = 250
   )
   {
+    # Numeric format
     iCellSize <- as.integer(iCellSize)
     iBandwidth <- as.integer(iBandwidth)
-    dRayonMinimum <- iCellSize * sqrt(2) / 2
     
+    
+    # *************************************************************
+    #                           Checks
+    # *************************************************************
+    
+    # Number of neighbors pixels 
     if(is.null(iNeighbor))
     {
       if (is.null(dfCentroids)) 
@@ -96,13 +62,16 @@ kernelSmoothing <-
       else 
         iNeighbor <- 0
     }
+    #/!\ what if !is.null(dfCentroids) & !is.null(iNeighbor) ?
     
-    if (iBandwidth < dRayonMinimum)
+    # Controling size of iBandwidth
+    if (iBandwidth < iCellSize * sqrt(2) / 2)
       stop("iBandwidth must be greater than iCellSize * sqrt(2) / 2")
     
     if (iCellSize <= 0)
       stop("iCellSize must be greater than 0")
-
+    
+    # No NA values accepted for coordinates
     for(colname in colnames(dfObservations))
     {
       iNbNA <- sum(is.na(dfObservations[, colname]))
@@ -140,6 +109,13 @@ kernelSmoothing <-
       if (min(vQuantiles) <= 0 || max(vQuantiles) >= 1)
         stop("Invalid quantiles values")
     }    
+    
+    
+    
+    # *************************************************************
+    #                         Automatic grid
+    # *************************************************************
+    
     
     if (is.null(dfCentroids))
     { 
@@ -284,3 +260,16 @@ kernelSmoothing <-
 # .onUnload <- function (libpath) {
 #   library.dynam.unload("btb", libpath)
 # }
+
+
+
+############################## carreauxSF() #######################################################################
+# fonction pour transformer une data.frame lissée en un objet sf
+# carreauxSF <- function(df, iCellSize, sEPSG)
+# {
+#   r <- iCellSize / 2
+#   df$geom <- sprintf("POLYGON ((%i %i, %i %i, %i %i, %i %i, %i %i))", df$x-r, df$y+r, df$x+r, df$y+r, df$x+r, df$y-r, df$x-r, df$y-r, df$x-r, df$y+r)
+#   sfdf <- st_as_sf(df, wkt = "geom", crs = as.integer(sEPSG))
+#   return(sfdf)
+# }
+
