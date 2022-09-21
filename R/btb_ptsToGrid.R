@@ -3,14 +3,14 @@
 #' @encoding UTF-8
 #' 
 #' @description 
-#' Function to compute a grid (regular or not) from a data.frame. 
+#' Function to compute a grid (regular or not) from centroid points. 
 #' 
-#' (Fonction permettant de générer une grille (régulière ou non) à partir d'un data.frame.)
+#' (Fonction permettant de générer une grille (régulière ou non) à partir de centroïdes)
 #' 
 #' @param pts 
-#' A `data.frame` with the centroids coordinates of the squares to draw. To generate an irregular grid, a third column wiht each cell size must be provided. (x, y, iCellSize)
+#' A simple `data.frame` with the centroids coordinates of the squares to draw, or a `sf` object of centroides. To generate an irregular grid, a column with each cell size must be provided and named `iCellSize`.
 #' 
-#' (Un \code{data.frame} comportant les coordonnées des carrés à dessiner. Pour obtenir une grille irrégulière, il faut fournir une troisième colonne indiquant la taille de chaque carreau. (x, y, iCellSize).)
+#' (Un simple \code{data.frame} comportant les coordonnées des carrés à dessiner, ou un objet `sf` des centroides. Pour obtenir une grille irrégulière, il faut fournir une colonne indiquant la taille de chaque carreau, et nommée `iCellSize`.
 #' 
 #' @param sEPSG 
 #' EPSG code of projection (\code{character}). For example, the RGF93 / Lambert-93 projection has "2154" code.
@@ -29,7 +29,6 @@
 #' (Retourne un objet de classe \code{sf} et \code{data.frame}.)
 #' 
 #' @examples  
-#' library(sf)
 #' # example 1 - regular grid
 #' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
@@ -41,14 +40,37 @@
 #'                  , iCellSize = c(50, 50, 50, 50, 100))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154")
 #' # write_sf(obj = carResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
+#' Exemple 3 : sf points (no epsg)
+#' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
+#' pts <- st_as_sf(pts,coords=c("x","y"))
+#' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
+#' #' Exemple 3 : sf points (no epsg)
+#' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
+#' pts <- st_as_sf(pts,coords=c("x","y"),crs=2154)
+#' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' @export
 
 
-btb_ptsToGrid <- function(pts, sEPSG, iCellSize = NULL)
+btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL)
 {
   # Test of parameters
   stopifnot("pts must be a df object"= is.data.frame(pts))
   stopifnot("No size for cells"= !is.null(iCellSize) | !is.null(pts[["iCellSize"]]))
+  stopifnot("sEPSG not valid "= is.na(sEPSG) | identical(nchar(as.character(sEPSG)),4L))
+  
+  # If pts is an sf objet
+  if("sf" %in% class(pts)){
+    stopifnot("sf pts : geometry type must be POINT"= identical(as.vector(sf::st_geometry_type(pts,by_geometry=F)),"POINT") )
+    
+    # Retrieve epsg code from sf points (or NA)
+    if(is.na(sEPSG)) sEPSG <- (sf::st_crs(pts))$epsg
+    
+    # As df with coordinates
+    pts$x <- st_coordinates(pts)[,1]
+    pts$y <- st_coordinates(pts)[,2]
+    pts <- st_drop_geometry(pts) 
+  }
+
   
   if (!is.null(iCellSize))
   {
@@ -84,6 +106,6 @@ btb_ptsToGrid <- function(pts, sEPSG, iCellSize = NULL)
         pts$y + pts$iCellSize / 2
       )
   
-  sfpts <- st_as_sf(pts, wkt = "geometry", crs = as.integer(sEPSG))
+  sfpts <- sf::st_as_sf(pts, wkt = "geometry", crs = as.integer(sEPSG))
   return(sfpts)
 }

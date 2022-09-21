@@ -5,12 +5,12 @@
 \alias{btb_ptsToGrid}
 \title{btb_ptsToGrid}
 \usage{
-btb_ptsToGrid(pts, sEPSG, iCellSize = NULL)
+btb_ptsToGrid(pts, sEPSG = NA, iCellSize = NULL)
 }
 \arguments{
-\item{pts}{A \code{data.frame} with the centroids coordinates of the squares to draw. To generate an irregular grid, a third column wiht each cell size must be provided. (x, y, iCellSize)
+\item{pts}{A simple \code{data.frame} with the centroids coordinates of the squares to draw, or a \code{sf} object of centroides. To generate an irregular grid, a column with each cell size must be provided and named \code{iCellSize}.
 
-(Un \code{data.frame} comportant les coordonnées des carrés à dessiner. Pour obtenir une grille irrégulière, il faut fournir une troisième colonne indiquant la taille de chaque carreau. (x, y, iCellSize).)}
+(Un simple \code{data.frame} comportant les coordonnées des carrés à dessiner, ou un objet \code{sf} des centroides. Pour obtenir une grille irrégulière, il faut fournir une colonne indiquant la taille de chaque carreau, et nommée \code{iCellSize}.}
 
 \item{sEPSG}{EPSG code of projection (\code{character}). For example, the RGF93 / Lambert-93 projection has "2154" code.
 
@@ -26,13 +26,12 @@ Returns an object of class \code{sf} and \code{data.frame}.
 (Retourne un objet de classe \code{sf} et \code{data.frame}.)
 }
 \description{
-Function to compute a grid (regular or not) from a data.frame.
+Function to compute a grid (regular or not) from centroid points.
 
-(Fonction permettant de générer une grille (régulière ou non) à partir d'un data.frame.)
+(Fonction permettant de générer une grille (régulière ou non) à partir de centroïdes)
 }
 \examples{
  
-library(sf)
 # example 1 - regular grid
 pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
@@ -44,4 +43,12 @@ pts <- data.frame(x = c(50, 50, 150, 150, 300)
                  , iCellSize = c(50, 50, 50, 50, 100))
 carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154")
 # write_sf(obj = carResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
+Exemple 3 : sf points (no epsg)
+pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
+pts <- st_as_sf(pts,coords=c("x","y"))
+carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
+#' Exemple 3 : sf points (no epsg)
+pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
+pts <- st_as_sf(pts,coords=c("x","y"),crs=2154)
+carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 }

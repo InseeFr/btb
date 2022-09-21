@@ -18,7 +18,8 @@ Imports:
     Rcpp (>= 1.0.9),
     sp,
     sf,
-    RcppParallel
+    RcppParallel,
+    magrittr
 Suggests: 
     cartography,
     testthat (>= 3.0.0)
