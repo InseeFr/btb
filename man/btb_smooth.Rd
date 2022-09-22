@@ -5,7 +5,7 @@
 \title{btb_smooth}
 \usage{
 # Call mode 1: bisquare kernel smoothing - automatic grid
-kernelSmoothing(  dfObservations
+btb_smooth(  dfObservations
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -17,7 +17,7 @@ kernelSmoothing(  dfObservations
 )
 
 # Call mode 2: median smoothing - automatic grid
-kernelSmoothing(  dfObservations
+btb_smooth(  dfObservations
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -29,7 +29,7 @@ kernelSmoothing(  dfObservations
 )
 
 # Call mode 3: bisquare kernel smoothing - user grid
-kernelSmoothing(  dfObservations
+btb_smooth(  dfObservations
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -41,7 +41,7 @@ kernelSmoothing(  dfObservations
 )
 
 # Call mode 4: median smoothing - user grid
-kernelSmoothing(  dfObservations
+btb_smooth(  dfObservations
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -109,7 +109,7 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 ######### example 1 #########
 data(dfPrix_SP95_2016)
 dfPrix_SP95_2016$nbObs <- 1L
-dfSmoothed <- kernelSmoothing(dfObservations = dfPrix_SP95_2016
+dfSmoothed <- btb_smooth(dfObservations = dfPrix_SP95_2016
                               , sEPSG = "2154"
                               , iCellSize = 5000L
                               , iBandwidth = 30000L)
@@ -127,14 +127,14 @@ library(cartography)
 data(reunion)
 # Smoothing all variables for Reunion (Lissage de toutes les variables pour la Reunion)
 # Call mode 1: classic smoothing - automatic grid
-reunionSmoothed <- kernelSmoothing( dfObservations = reunion
+reunionSmoothed <- btb_smooth( dfObservations = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L)
 # preview (Apercu)
 choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
 # Call mode 2: median smoothing - automatic grid
-reunionSmoothed <- kernelSmoothing( dfObservations = reunion
+reunionSmoothed <- btb_smooth( dfObservations = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L
@@ -144,7 +144,7 @@ choroLayer(reunionSmoothed, var = "houhold_05", nclass = 5, method = "fisher-jen
 # Call mode 3: classic smoothing - user grid
 dfCentroidsUser <- merge( x = seq(from =  314400L, to =  378800L, by = 200L)
                           , y = seq(from = 7634000L, to = 7691200L, by = 200L))
-reunionSmoothed <- kernelSmoothing( dfObservations = reunion
+reunionSmoothed <- btb_smooth( dfObservations = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L
@@ -153,7 +153,7 @@ reunionSmoothed <- kernelSmoothing( dfObservations = reunion
 reunionSmoothed <- reunionSmoothed[reunionSmoothed$houhold > 0, ]
 choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
 # Call mode 4: median smoothing - user grid
-reunionSmoothed <- kernelSmoothing( dfObservations = reunion
+reunionSmoothed <- btb_smooth( dfObservations = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L

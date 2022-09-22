@@ -15,7 +15,7 @@ lapply(req_pkgs, function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
 
-pkgs_imports <- c("RcppParallel","rlang")
+pkgs_imports <- c("RcppParallel")
 lapply(pkgs_imports, function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
@@ -64,8 +64,8 @@ devtools::build()
 
 
 # Volet RCPP
-# Rcpp::Rcpp.package.skeleton("btbis")
-# Rcpp::compileAttributes()
+Rcpp::Rcpp.package.skeleton("btbis")
+Rcpp::compileAttributes()
 
 
 # 
@@ -82,3 +82,11 @@ devtools::build()
 # vXCentroides <- rep(seq(from = 10, to = 50, by = iCellSize), 4)
 # vYCentroides <- rep(seq(from = 30, to = 90, by = iCellSize), each = 3)
 # dfCentroids <- data.frame(cbind(x = vXCentroides, y = vYCentroides))
+
+library(btb)
+data(dfPrix_SP95_2016)
+dfPrix_SP95_2016$nbObs <- 1L
+dfSmoothed <- btb::btb_smooth(dfObservations = dfPrix_SP95_2016, 
+                         sEPSG = "2154", 
+                         iCellSize = 5000L, 
+                         iBandwidth = 30000L)
