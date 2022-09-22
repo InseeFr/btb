@@ -2,10 +2,5 @@
 
 export("%>%")
 export(btb_ptsToGrid)
-export(dfToGrid)
-export(kernelSmoothing)
-import(methods)
-import(sf)
-importFrom(Rcpp,evalCpp)
+export(btb_smooth)
 importFrom(magrittr,"%>%")
-useDynLib(btb)

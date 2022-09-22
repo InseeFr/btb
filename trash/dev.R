@@ -31,6 +31,7 @@ usethis::use_roxygen_md()
 roxygen2md::roxygen2md()
 devtools::document()
 help("btb_ptsToGrid")
+pkgload::dev_help('btb_smooth')
 
 # ************************
 # Développement
@@ -67,17 +68,17 @@ devtools::build()
 # Rcpp::compileAttributes()
 
 
-
-
-iCellSize <- 20L
-iBandwidth <- 41L
-dfObservations <- data.frame(x = c(22, 35), y = c(70, 55), V1 = c(10, 13))
-vQuantiles = NULL
-dfCentroids = NULL
-fUpdateProgress = NULL
-iNeighbor = NULL
-iNbObsMin = 250
-
-vXCentroides <- rep(seq(from = 10, to = 50, by = iCellSize), 4)
-vYCentroides <- rep(seq(from = 30, to = 90, by = iCellSize), each = 3)
-dfCentroids <- data.frame(cbind(x = vXCentroides, y = vYCentroides))
+# 
+# 
+# iCellSize <- 20L
+# iBandwidth <- 41L
+# dfObservations <- data.frame(x = c(22, 35), y = c(70, 55), V1 = c(10, 13))
+# vQuantiles = NULL
+# dfCentroids = NULL
+# fUpdateProgress = NULL
+# iNeighbor = NULL
+# iNbObsMin = 250
+# 
+# vXCentroides <- rep(seq(from = 10, to = 50, by = iCellSize), 4)
+# vYCentroides <- rep(seq(from = 30, to = 90, by = iCellSize), each = 3)
+# dfCentroids <- data.frame(cbind(x = vXCentroides, y = vYCentroides))
