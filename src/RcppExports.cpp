@@ -125,19 +125,3 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-
-static const R_CallMethodDef CallEntries[] = {
-    {"_btb_constituerGrappes", (DL_FUNC) &_btb_constituerGrappes, 2},
-    {"_btb_coordonneesGrappe", (DL_FUNC) &_btb_coordonneesGrappe, 2},
-    {"_btb_constituerMatriceEffectifs", (DL_FUNC) &_btb_constituerMatriceEffectifs, 2},
-    {"_btb_calculeQuantiles", (DL_FUNC) &_btb_calculeQuantiles, 3},
-    {"_btb_rcppLissageMedian", (DL_FUNC) &_btb_rcppLissageMedian, 7},
-    {"_btb_rcppLissage", (DL_FUNC) &_btb_rcppLissage, 15},
-    {"_btb_rcppLissageMedianGrappe", (DL_FUNC) &_btb_rcppLissageMedianGrappe, 13},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_btb(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
-}

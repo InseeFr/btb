@@ -145,6 +145,7 @@
 #' 
 #' @export
 #' 
+#' 
 #' @examples 
 #' \dontrun{
 #' ######### example 1 #########
