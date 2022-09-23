@@ -3,4 +3,7 @@
 export("%>%")
 export(btb_ptsToGrid)
 export(btb_smooth)
+import(Rcpp)
+importFrom(Rcpp,evalCpp)
 importFrom(magrittr,"%>%")
+useDynLib(btb)

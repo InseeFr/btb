@@ -40,7 +40,7 @@
 #'                  , iCellSize = c(50, 50, 50, 50, 100))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154")
 #' # write_sf(obj = carResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
-#' Exemple 3 : sf points (no epsg)
+#' # Exemple 3 : sf points (no epsg)
 #' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 #' pts <- st_as_sf(pts,coords=c("x","y"))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
@@ -49,6 +49,12 @@
 #' pts <- st_as_sf(pts,coords=c("x","y"),crs=2154)
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' @export
+
+#' @import Rcpp
+#' @importFrom Rcpp evalCpp
+#' @useDynLib btb
+
+
 
 
 btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL)
@@ -66,9 +72,9 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL)
     if(is.na(sEPSG)) sEPSG <- (sf::st_crs(pts))$epsg
     
     # As df with coordinates
-    pts$x <- st_coordinates(pts)[,1]
-    pts$y <- st_coordinates(pts)[,2]
-    pts <- st_drop_geometry(pts) 
+    pts$x <- sf::st_coordinates(pts)[,1]
+    pts$y <- sf::st_coordinates(pts)[,2]
+    pts <- sf::st_drop_geometry(pts) 
   }
 
   
