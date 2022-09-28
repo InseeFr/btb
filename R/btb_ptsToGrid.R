@@ -50,9 +50,7 @@
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' @export
 
-#' @import Rcpp
-#' @importFrom Rcpp evalCpp
-#' @useDynLib btb
+
 
 
 

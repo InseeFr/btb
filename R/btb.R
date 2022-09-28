@@ -2,6 +2,6 @@
 #' 
 #' @title btb
 #' @import methods sf RcppParallel 
-#' @importFrom RcppParallel LdFlags
-
+#' @importFrom Rcpp evalCpp
+#' @useDynLib btb
 NULL
