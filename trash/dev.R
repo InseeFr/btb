@@ -47,7 +47,7 @@ usethis::use_pipe(export = TRUE) # si besoin
 # Tests
 # ************************
 usethis::use_testthat()
-usethis::use_test("btb_ptsToGrid")
+usethis::use_test("btb_smooth")
 devtools::test()
 # covr::package_coverage()
 
