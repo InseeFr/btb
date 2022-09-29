@@ -36,8 +36,8 @@ install()
 usethis::use_roxygen_md()
 roxygen2md::roxygen2md()
 devtools::document()
-help("btb_ptsToGrid")
-pkgload::dev_help('btb_smooth')
+help("constituerGrappes")
+pkgload::dev_help('constituerGrappes')
 
 # ************************
 # Développement
