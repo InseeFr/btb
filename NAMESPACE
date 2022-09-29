@@ -3,6 +3,7 @@
 export("%>%")
 export(btb_ptsToGrid)
 export(btb_smooth)
+export(kernelSmoothing)
 import(RcppParallel)
 import(methods)
 import(sf)

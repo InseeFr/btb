@@ -1,22 +1,3 @@
-
-# arguments
-# dfObservations  : data.frame comportant les coordonnées géographiques (x,y), ainsi que les variables que l'on souhaite lisser
-# iCellSize        : Taille des carreaux
-# iBandwidth       : Rayon de lissage
-# iNeighbor        : Paramètre technique pour calculer l'étendue des points d'estimation
-# vQuantiles      : vecteur de quantiles à utiliser pour le lissage median
-# dfCentroids     : data.frame avec deux colonnes, nommées x et y avec les coordonnees des centroides à utiliser
-# fUpdateProgress : fonction permettant d'offrir à l'appelant une estimation de l'avancement du traitement 
-# iNeighbor        : Paramètre technique pour calculer l'étendue des points d'estimations, à ne pas remplir
-# 
-# retourne
-# un objet Grid dont le slot @data contient la valeur des variables lissees
-#
-# Remarque : les coordonnées (x;y) des observations sont implicitements arrondies à l'unité. (lors de l'appel aux fct c++)
-# Ceci est justifié par le fait que :
-# - la géolocalisation est souvent imprécise en dessous de 1 mètre 
-# - cela permet d'économiser de la mémoire dans les fct développées en C++
-# 
 #' @title btb_smooth 
 #' 
 #' @description 
