@@ -26,6 +26,8 @@ library(devtools)
 compileAttributes()
 document()
 check()
+
+load_all()
 install()
 
 # ************************

@@ -10,8 +10,8 @@ kernelSmoothing(...)
 \item{...}{whatever}
 }
 \value{
-nothing
+a warning message
 }
 \description{
-kernelSmoothing
+Function kernelSmoothing has been replaced by \code{btb_smooth}
 }
