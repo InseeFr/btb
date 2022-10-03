@@ -5,7 +5,7 @@
 \alias{btb_ptsToGrid}
 \title{btb_ptsToGrid}
 \usage{
-btb_ptsToGrid(pts, sEPSG = NA, iCellSize = NULL)
+btb_ptsToGrid(pts, sEPSG = NA, iCellSize = NULL, inspire = F)
 }
 \arguments{
 \item{pts}{A simple \code{data.frame} with the centroids coordinates of the squares to draw, or a \code{sf} object of centroides. To generate an irregular grid, a column with each cell size must be provided and named \code{iCellSize}.

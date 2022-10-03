@@ -55,14 +55,14 @@
 
 
 
-btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL)
+btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
 {
   # Test of parameters
   stopifnot("pts must be a df object"= is.data.frame(pts))
   stopifnot("No size for cells"= !is.null(iCellSize) | !is.null(pts[["iCellSize"]]))
   stopifnot("sEPSG not valid "= is.na(sEPSG) | identical(nchar(as.character(sEPSG)),4L))
   
-  # If pts is an sf objet
+  # If pts is a sf objet
   if("sf" %in% class(pts)){
     stopifnot("sf pts : geometry type must be POINT"= identical(as.vector(sf::st_geometry_type(pts,by_geometry=F)),"POINT") )
     
@@ -73,6 +73,16 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL)
     pts$x <- sf::st_coordinates(pts)[,1]
     pts$y <- sf::st_coordinates(pts)[,2]
     pts <- sf::st_drop_geometry(pts) 
+  }
+  
+  # Withdraw iCellSize as vector for iregular grid
+  if(is.null(iCellSize)) iCellSize <- pts$iCellSize
+  
+  
+  # Add Inpire id
+  
+  if(inspire){
+    pts <- add_inspire(pts, sEPSG, iCellSize)
   }
 
   
@@ -111,5 +121,9 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL)
       )
   
   sfpts <- sf::st_as_sf(pts, wkt = "geometry", crs = as.integer(sEPSG))
+  
+  
+  
+  
   return(sfpts)
 }
