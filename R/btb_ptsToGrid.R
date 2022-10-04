@@ -82,7 +82,7 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
   # Add Inpire id
   
   if(inspire){
-    pts <- add_inspire(pts, sEPSG, iCellSize)
+    pts <- btb::btb_add_inspire(pts, sEPSG, iCellSize)
   }
 
   

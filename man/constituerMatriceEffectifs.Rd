@@ -45,6 +45,6 @@ Function constituting a membership matrix (Fonction constituant une matrice des 
 \itemize{
 \item Psar Analyse Urbaine Insee
 \item Arlindo Dos Santos
-\item Francois Semecurbe}
+\item Francois Semecurbe
 }
 }

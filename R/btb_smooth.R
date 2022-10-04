@@ -283,9 +283,10 @@ btb_smooth <-
       dfObservations$row <- as.integer(floor((dfObservations$y - yOffset[1]) / iCellSize) - floor(min(dfObservations$y / iCellSize)) + 1)
       
       # calcul des centroides
-      dfCentroids <- data.frame( x = as.integer(floor(dfObservations$x / iCellSize) * iCellSize + (iCellSize / 2)),
-                                 y = as.integer(floor(dfObservations$y / iCellSize) * iCellSize + (iCellSize / 2))
-      )
+      # dfCentroids <- data.frame( x = as.integer(floor(dfObservations$x / iCellSize) * iCellSize + (iCellSize / 2)),
+      #                            y = as.integer(floor(dfObservations$y / iCellSize) * iCellSize + (iCellSize / 2))
+      # )
+      dfCentroids <- btb::btb_add_centroids(dfObservations,iCellSize,coords_res = c("x","y"),add=F)
       
       # les observations sont positionnées sur une matrice. mIndices[col, row] == 1 indique qu'il y a au moins 1 observation pour le carreau (col, row)
       mIndices <- matrix(0L, max(dfObservations$col), max(dfObservations$row))

@@ -68,7 +68,7 @@ coordonneesGrappe <- function(iNiveauMax, iNoGrappe) {
 #' @author
 #'    - Psar Analyse Urbaine Insee 
 #'    - Arlindo Dos Santos 
-#'    - Francois Semecurbe}
+#'    - Francois Semecurbe
 #'
 #' @examples : 
 #'  dfObservations <- data.frame(x = c(15, 35, 15, 25, 35, 55, 45, 45, 55, 65, 70, 75, 85, 90,

@@ -1,4 +1,4 @@
-#' add_inspire
+#' btb_add_inspire
 #' 
 #' @description 
 #' 
@@ -20,12 +20,12 @@
 #' @param names_centro (**character vector**) : vector of names for longitude/latitude variables
 #'
 #' @return (**df**) pts table with additional *idInspire* variable
-#'
+#' @export
 #' @examples
 #' pts <- data.frame(x_centroide = c(100, 100, 300, 300, 500), y_centroide = c(100, 300, 100, 300, 100))
-#' add_inspire(pts, sEPSG = 2154, iCellSize = 200)
+#' btb_add_inspire(pts, sEPSG = 2154, iCellSize = 200)
 
-add_inspire <- function(pts, sEPSG, iCellSize, names_centro = c("x_centroide","y_centroide")){
+btb_add_inspire <- function(pts, sEPSG, iCellSize, names_centro = c("x_centroide","y_centroide")){
   
   # Checks : 
   stopifnot("Problem with centroid df" = nrow(df)>0) 
