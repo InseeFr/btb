@@ -4,6 +4,7 @@
 * Allow `btb_ptsToGrid` to use simple feature points as input
 * Change `kernelSmoothing` name (to `btb_smooth`)
 * Allow `btb_ptsToGrid` to use simple feature points as input
+* Old functions `dfToGrid` and `kernelSmoothing` replaced by warnings
 * Possibility to use Inspire naming for grid cells (with `add_inspire` function) 
 * Roxygen documentation
 * testthat compatible tests

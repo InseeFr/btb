@@ -86,7 +86,7 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
   }
 
   
-  if (!is.null(iCellSize))
+  if (!is.null(iCellSize)) # if regular grid
   {
     r = iCellSize / 2
     pts$geometry <-
@@ -104,7 +104,7 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
         pts$y + r
       )
   }
-  else
+  else # If irregular grid
     pts$geometry <-
       sprintf(
         "POLYGON ((%f %f, %f %f, %f %f, %f %f, %f %f))",
@@ -121,9 +121,6 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
       )
   
   sfpts <- sf::st_as_sf(pts, wkt = "geometry", crs = as.integer(sEPSG))
-  
-  
-  
   
   return(sfpts)
 }
