@@ -42,8 +42,10 @@ btb_add_centroids <- function(pts,iCellSize,coords=c("x","y"),coords_res=c("x_ce
   # Checks *************
   
   stopifnot("Incorrect cells size"=is.numeric(iCellSize))
+  stopifnot("Cells size non-positive"=iCellSize>0)
   
   if("sf" %in% class(pts)){
+    stopifnot("Polygons must be points !"=unique(as.vector(sf::st_geometry_type(pts)))=="POINT")
     proj_units <- sf::st_crs(pts , parameters = TRUE)$units_gdal
     stopifnot("Coordintates unit must be meters (not degrees)"=identical(proj_units,"metre"))
   }else{
