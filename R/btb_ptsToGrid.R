@@ -22,6 +22,10 @@
 #' Cell size of the grid. If this argument is provided, the grid is regular.
 #' 
 #' (Taille des carreaux de la grille. Si cet argument est fourni, la grille est régulière.)
+#' @param names_centro  (**character vector**)
+#'  - vector of names for longitude/latitude variables. Default c("x_centroide","y_centroide").
+#'  - vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centroide","y_centroide")
+#' @param inspire 
 #'
 #' @return 
 #' Returns an object of class \code{sf} and \code{data.frame}. 
@@ -55,7 +59,7 @@
 
 
 
-btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
+btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_centroide","y_centroide"), inspire = F)
 {
   # Test of parameters
   stopifnot("pts must be a df object"= is.data.frame(pts))
@@ -70,8 +74,8 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
     if(is.na(sEPSG)) sEPSG <- (sf::st_crs(pts))$epsg
     
     # As df with coordinates
-    pts$x <- sf::st_coordinates(pts)[,1]
-    pts$y <- sf::st_coordinates(pts)[,2]
+    pts[[names_centro[1]]] <- sf::st_coordinates(pts)[,1]
+    pts[[names_centro[2]]] <- sf::st_coordinates(pts)[,2]
     pts <- sf::st_drop_geometry(pts) 
   }
   
@@ -82,7 +86,7 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
   # Add Inpire id
   
   if(inspire){
-    pts <- btb::btb_add_inspire(pts, sEPSG, iCellSize)
+    pts <- btb::btb_add_inspire(pts, sEPSG, iCellSize, names_centro = names_centro)
   }
 
   
@@ -92,32 +96,32 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, inspire = F)
     pts$geometry <-
       sprintf(
         "POLYGON ((%f %f, %f %f, %f %f, %f %f, %f %f))",
-        pts$x - r,
-        pts$y + r,
-        pts$x + r,
-        pts$y + r,
-        pts$x + r,
-        pts$y - r,
-        pts$x - r,
-        pts$y - r,
-        pts$x - r,
-        pts$y + r
+        pts[[names_centro[1]]] - r,
+        pts[[names_centro[2]]] + r,
+        pts[[names_centro[1]]] + r,
+        pts[[names_centro[2]]] + r,
+        pts[[names_centro[1]]] + r,
+        pts[[names_centro[2]]] - r,
+        pts[[names_centro[1]]] - r,
+        pts[[names_centro[2]]] - r,
+        pts[[names_centro[1]]] - r,
+        pts[[names_centro[2]]] + r
       )
   }
   else # If irregular grid
     pts$geometry <-
       sprintf(
         "POLYGON ((%f %f, %f %f, %f %f, %f %f, %f %f))",
-        pts$x - pts$iCellSize / 2,
-        pts$y + pts$iCellSize / 2,
-        pts$x + pts$iCellSize / 2,
-        pts$y + pts$iCellSize / 2,
-        pts$x + pts$iCellSize / 2,
-        pts$y - pts$iCellSize / 2,
-        pts$x - pts$iCellSize / 2,
-        pts$y - pts$iCellSize / 2,
-        pts$x - pts$iCellSize / 2,
-        pts$y + pts$iCellSize / 2
+        pts[[names_centro[1]]] - pts$iCellSize / 2,
+        pts[[names_centro[2]]] + pts$iCellSize / 2,
+        pts[[names_centro[1]]] + pts$iCellSize / 2,
+        pts[[names_centro[2]]] + pts$iCellSize / 2,
+        pts[[names_centro[1]]] + pts$iCellSize / 2,
+        pts[[names_centro[2]]] - pts$iCellSize / 2,
+        pts[[names_centro[1]]] - pts$iCellSize / 2,
+        pts[[names_centro[2]]] - pts$iCellSize / 2,
+        pts[[names_centro[1]]] - pts$iCellSize / 2,
+        pts[[names_centro[2]]] + pts$iCellSize / 2
       )
   
   sfpts <- sf::st_as_sf(pts, wkt = "geometry", crs = as.integer(sEPSG))

@@ -8,7 +8,7 @@
 #' @usage 
 #' 
 #' # Call mode 1: bisquare kernel smoothing - automatic grid
-#'btb_smooth(  dfObservations
+#'btb_smooth(  pts
 #'                  , sEPSG
 #'                  , iCellSize
 #'                  , iBandwidth
@@ -20,7 +20,7 @@
 #')
 #'
 #'# Call mode 2: median smoothing - automatic grid
-#'btb_smooth(  dfObservations
+#'btb_smooth(  pts
 #'                  , sEPSG
 #'                  , iCellSize
 #'                  , iBandwidth
@@ -32,7 +32,7 @@
 #')
 #'
 #'# Call mode 3: bisquare kernel smoothing - user grid
-#'btb_smooth(  dfObservations
+#'btb_smooth(  pts
 #'                  , sEPSG
 #'                  , iCellSize
 #'                  , iBandwidth
@@ -44,7 +44,7 @@
 #')
 #'
 #'# Call mode 4: median smoothing - user grid
-#'btb_smooth(  dfObservations
+#'btb_smooth(  pts
 #'                  , sEPSG
 #'                  , iCellSize
 #'                  , iBandwidth
@@ -55,7 +55,7 @@
 #'                  , iNbObsMin = 250
 #')
 #' 
-#' @param dfObservations 
+#' @param pts 
 #' A `data.frame` with cartesian geographical coordinates and variables to smooth. (x, y, var1, var2, ...)
 #'  
 #'  (Un `data.frame` comportant les coordonnées géographiques cartésiennes (x,y), ainsi que les variables que l'on souhaite lisser. (x, y, var1, var2, ...)
@@ -82,9 +82,9 @@
 #' (Vecteur des quantiles à calculer. Par exemple c(0.1, 0.25, 0.5) retournera le premier décile, le premier quartile et la mediane.)`
 #' 
 #' @param dfCentroids
-#' A `data.frame` with two columns (x, y) containing coordinates of the user's centroids. The coordinates must be in the same projection than (`dfObservations`).
+#' A `data.frame` with two columns (x, y) containing coordinates of the user's centroids. The coordinates must be in the same projection than (`pts`).
 #'  
-#' (Un `data.frame` avec deux colonnes (x, y) contenant les coordonnées des centroides de l'utilisateur. Les coordonnées doivent être dans le même système de coordonnées que (`dfObservations`).)
+#' (Un `data.frame` avec deux colonnes (x, y) contenant les coordonnées des centroides de l'utilisateur. Les coordonnées doivent être dans le même système de coordonnées que (`pts`).)
 #'
 #' @param fUpdateProgress
 #' A `function` to see compute progress. 
@@ -129,10 +129,10 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' ######### example 1 #########
+#' Example 1 =============================
 #' data(dfPrix_SP95_2016)
 #' dfPrix_SP95_2016$nbObs <- 1L
-#' dfSmoothed <- btb_smooth(dfObservations = dfPrix_SP95_2016
+#' dfSmoothed <- btb::btb_smooth(pts = dfPrix_SP95_2016
 #'                               , sEPSG = "2154"
 #'                               , iCellSize = 5000L
 #'                               , iBandwidth = 30000L)
@@ -150,14 +150,14 @@
 #' data(reunion)
 #' # Smoothing all variables for Reunion (Lissage de toutes les variables pour la Reunion)
 #' # Call mode 1: classic smoothing - automatic grid
-#' reunionSmoothed <- btb_smooth( dfObservations = reunion
+#' reunionSmoothed <- btb_smooth( pts = reunion
 #'                                     , sEPSG = "32740"
 #'                                     , iCellSize = 200L
 #'                                     , iBandwidth = 400L)
 #' # preview (Apercu)
 #' choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
 #' # Call mode 2: median smoothing - automatic grid
-#' reunionSmoothed <- btb_smooth( dfObservations = reunion
+#' reunionSmoothed <- btb_smooth( pts = reunion
 #'                                     , sEPSG = "32740"
 #'                                     , iCellSize = 200L
 #'                                     , iBandwidth = 400L
@@ -167,7 +167,7 @@
 #' # Call mode 3: classic smoothing - user grid
 #' dfCentroidsUser <- merge( x = seq(from =  314400L, to =  378800L, by = 200L)
 #'                           , y = seq(from = 7634000L, to = 7691200L, by = 200L))
-#' reunionSmoothed <- btb_smooth( dfObservations = reunion
+#' reunionSmoothed <- btb_smooth( pts = reunion
 #'                                     , sEPSG = "32740"
 #'                                     , iCellSize = 200L
 #'                                     , iBandwidth = 400L
@@ -176,7 +176,7 @@
 #' reunionSmoothed <- reunionSmoothed[reunionSmoothed$houhold > 0, ]
 #' choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
 #' # Call mode 4: median smoothing - user grid
-#' reunionSmoothed <- btb_smooth( dfObservations = reunion
+#' reunionSmoothed <- btb_smooth( pts = reunion
 #'                                     , sEPSG = "32740"
 #'                                     , iCellSize = 200L
 #'                                     , iBandwidth = 400L
@@ -191,20 +191,37 @@
 
 
 btb_smooth <-
-  function(dfObservations
-           , sEPSG
-           , iCellSize
-           , iBandwidth
-           , vQuantiles = NULL
-           , dfCentroids = NULL
-           , fUpdateProgress = NULL
-           , iNeighbor = NULL
-           , iNbObsMin = 250
+  function(pts ,
+           sEPSG = NA,
+           iCellSize = NA ,
+           iBandwidth ,
+           vQuantiles = NULL ,
+           dfCentroids = NULL ,
+           fUpdateProgress = NULL ,
+           iNeighbor = NULL,
+           inspire = F,
+           iNbObsMin = 250
   )
   {
     # Numeric format
     iCellSize <- as.integer(iCellSize)
     iBandwidth <- as.integer(iBandwidth)
+    
+    # If pts is a sf objet
+    if("sf" %in% class(pts)){
+      stopifnot("sf pts : geometry type must be POINT"= identical(as.vector(sf::st_geometry_type(pts,by_geometry=F)),"POINT") )
+      
+      # Retrieve epsg code from sf points (or NA)
+      if(is.na(sEPSG)) sEPSG <- (sf::st_crs(pts))$epsg
+      
+      # As df with coordinates
+      pts$x <- sf::st_coordinates(pts)[,1]
+      pts$y <- sf::st_coordinates(pts)[,2]
+      pts <- sf::st_drop_geometry(pts) 
+      
+      stopifnot("sEPSG not found" = !is.na(sEPSG))
+      stopifnot("sEPSG not valid "= identical(nchar(as.character(sEPSG)),4L))
+    }
     
     
     # *************************************************************
@@ -229,9 +246,9 @@ btb_smooth <-
       stop("iCellSize must be greater than 0")
     
     # No NA values accepted for coordinates
-    for(colname in colnames(dfObservations))
+    for(colname in colnames(pts))
     {
-      iNbNA <- sum(is.na(dfObservations[, colname]))
+      iNbNA <- sum(is.na(pts[, colname]))
       if(iNbNA > 0)
       {
         if(colname == "x" || colname == "y")
@@ -279,18 +296,18 @@ btb_smooth <-
     if (is.null(dfCentroids)) # Building automatic grid
     { 
       # calcul de l'indice des observations - on prend le rectangle englobant et on positionne le debut de la numérotation sur la première observation
-      dfObservations$col <- as.integer(floor((dfObservations$x - xOffset[1]) / iCellSize) - floor(min(dfObservations$x / iCellSize)) + 1)
-      dfObservations$row <- as.integer(floor((dfObservations$y - yOffset[1]) / iCellSize) - floor(min(dfObservations$y / iCellSize)) + 1)
+      pts$col <- as.integer(floor((pts$x - xOffset[1]) / iCellSize) - floor(min(pts$x / iCellSize)) + 1)
+      pts$row <- as.integer(floor((pts$y - yOffset[1]) / iCellSize) - floor(min(pts$y / iCellSize)) + 1)
       
       # calcul des centroides
-      # dfCentroids <- data.frame( x = as.integer(floor(dfObservations$x / iCellSize) * iCellSize + (iCellSize / 2)),
-      #                            y = as.integer(floor(dfObservations$y / iCellSize) * iCellSize + (iCellSize / 2))
+      # dfCentroids <- data.frame( x = as.integer(floor(pts$x / iCellSize) * iCellSize + (iCellSize / 2)),
+      #                            y = as.integer(floor(pts$y / iCellSize) * iCellSize + (iCellSize / 2))
       # )
-      dfCentroids <- btb::btb_add_centroids(dfObservations,iCellSize,names_centro = c("x","y"),add=F)
+      dfCentroids <- btb::btb_add_centroids(pts,iCellSize,names_centro = c("x","y"),add=F)
       
       # les observations sont positionnées sur une matrice. mIndices[col, row] == 1 indique qu'il y a au moins 1 observation pour le carreau (col, row)
-      mIndices <- matrix(0L, max(dfObservations$col), max(dfObservations$row))
-      mIndices[cbind(dfObservations$col, dfObservations$row)] <- 1L
+      mIndices <- matrix(0L, max(pts$col), max(pts$row))
+      mIndices[cbind(pts$col, pts$row)] <- 1L
       
       # construction d'une matrice des indices des centroides étendue au voisinage
       mIndicesEtendus <- matrix(0L, nrow(mIndices) + 2 * iNeighbor, ncol(mIndices) + 2 * iNeighbor)
@@ -322,12 +339,12 @@ btb_smooth <-
       # lors du lissage, les observations enverront leur contribution uniquement vers les carreaux fournis
       
       # calcul de l'indice des observations - on commence la numérotation pour la coordonnée minimale (qu'elle soit détenue par une observation ou un centroide)
-      obsEtCentroides <- data.frame(x = c(dfObservations$x, dfCentroids$x), y = c(dfObservations$y, dfCentroids$y))
+      obsEtCentroides <- data.frame(x = c(pts$x, dfCentroids$x), y = c(pts$y, dfCentroids$y))
       indiceMinX <- floor(min(obsEtCentroides$x / iCellSize))
       indiceMinY <- floor(min(obsEtCentroides$y / iCellSize))
       
-      dfObservations$col <- as.integer(floor((dfObservations$x - xOffset[1]) / iCellSize) - indiceMinX + 1)
-      dfObservations$row <- as.integer(floor((dfObservations$y - yOffset[1]) / iCellSize) - indiceMinY + 1)
+      pts$col <- as.integer(floor((pts$x - xOffset[1]) / iCellSize) - indiceMinX + 1)
+      pts$row <- as.integer(floor((pts$y - yOffset[1]) / iCellSize) - indiceMinY + 1)
       
       # calcul de l'indice des centroides
       dfCentroids$col <- as.integer(floor(dfCentroids$x / iCellSize) - indiceMinX + 1)
@@ -338,7 +355,7 @@ btb_smooth <-
     }
     
     # List of numeric variables to smooth
-    nomColonnes <- colnames(dfObservations)
+    nomColonnes <- colnames(pts)
     listVar <- nomColonnes[nomColonnes != "x" & nomColonnes != "y" & nomColonnes != "col" & nomColonnes != "row"]
     
     if (is.null(vQuantiles))
@@ -354,14 +371,14 @@ btb_smooth <-
       dfResultat <- data.frame(dtCentroidesUniques[, c("x", "y")])
       
       mVariablesLissees <- rcppLissage(
-          dfObservations$x
-        , dfObservations$y
-        , dfObservations$row + iNeighbor
-        , dfObservations$col + iNeighbor
+          pts$x
+        , pts$y
+        , pts$row + iNeighbor
+        , pts$col + iNeighbor
         , iCellSize
         , iBandwidth
         , iNeighbor
-        , as.matrix(dfObservations[, listVar])
+        , as.matrix(pts[, listVar])
         , max(dtCentroidesUniques$col)
         , max(dtCentroidesUniques$row)
         , min(dtCentroidesUniques$x)
@@ -371,7 +388,7 @@ btb_smooth <-
         , fUpdateProgress
       )
       
-      rm(list = c("dfObservations", "dtCentroidesUniques", "mIcentroides"))
+      rm(list = c("pts", "dtCentroidesUniques", "mIcentroides"))
       
       dfResultat <- cbind(dfResultat, mVariablesLissees)
       names(dfResultat) <- c("x", "y", listVar)
@@ -379,24 +396,24 @@ btb_smooth <-
       
       rm(mVariablesLissees)
      
-      return(btb::btb_ptsToGrid(dfResultat, sEPSG = sEPSG, iCellSize = iCellSize))
+      return(btb::btb_ptsToGrid(dfResultat, sEPSG = sEPSG, iCellSize = iCellSize,names_centro = c("x","y"), inspire = inspire))
     }else
     {
-      dfObservations$col <- as.integer(floor((dfObservations$x - xOffset[1]) / iCellSize) - floor(min(dfObservations$x / iCellSize)) + 1)
-      dfObservations$row <- as.integer(floor((dfObservations$y - yOffset[1]) / iCellSize) - floor(min(dfObservations$y / iCellSize)) + 1)
+      pts$col <- as.integer(floor((pts$x - xOffset[1]) / iCellSize) - floor(min(pts$x / iCellSize)) + 1)
+      pts$row <- as.integer(floor((pts$y - yOffset[1]) / iCellSize) - floor(min(pts$y / iCellSize)) + 1)
       
       dtCentroidesUniques$col <- as.integer(floor((dtCentroidesUniques$x - xOffset[1]) / iCellSize) - floor(min(dtCentroidesUniques$x / iCellSize)) + 1)
       dtCentroidesUniques$row <- as.integer(floor((dtCentroidesUniques$y - yOffset[1]) / iCellSize) - floor(min(dtCentroidesUniques$y / iCellSize)) + 1)
       
       mMedianes <- rcppLissageMedianGrappe(
           iNbObsMin
-        , dfObservations$x
-        , dfObservations$y
-        , dfObservations$row + iNeighbor
-        , dfObservations$col + iNeighbor
+        , pts$x
+        , pts$y
+        , pts$row + iNeighbor
+        , pts$col + iNeighbor
         , iCellSize
         , iBandwidth
-        , as.matrix(dfObservations[, listVar])
+        , as.matrix(pts[, listVar])
         , dtCentroidesUniques$x
         , dtCentroidesUniques$y
         , dtCentroidesUniques$row - 1L
@@ -404,7 +421,7 @@ btb_smooth <-
         , vQuantiles
       )
       
-      rm(dfObservations)
+      rm(pts)
       rm(dtCentroidesUniques)
       
       vNomQuantiles <- gsub("\\.", "", as.character(vQuantiles))
@@ -414,38 +431,8 @@ btb_smooth <-
       lNewVarNames <- c("nbObs", lNewVarNames, "x", "y")    
       colnames(mMedianes) <- lNewVarNames
       
-      return(btb::btb_ptsToGrid(data.frame(mMedianes), sEPSG = sEPSG, iCellSize = iCellSize))
+      return(btb::btb_ptsToGrid(data.frame(mMedianes), sEPSG = sEPSG, iCellSize = iCellSize,names_centro = c("x","y"), inspire = inspire))
     }
   }
 
-# .onUnload <- function (libpath) {
-#   library.dynam.unload("btb", libpath)
-# }
-
-
-
-############################## carreauxSF() #######################################################################
-# fonction pour transformer une data.frame lissée en un objet sf
-# carreauxSF <- function(df, iCellSize, sEPSG)
-# {
-#   r <- iCellSize / 2
-#   df$geom <- sprintf("POLYGON ((%i %i, %i %i, %i %i, %i %i, %i %i))", df$x-r, df$y+r, df$x+r, df$y+r, df$x+r, df$y-r, df$x-r, df$y-r, df$x-r, df$y+r)
-#   sfdf <- st_as_sf(df, wkt = "geom", crs = as.integer(sEPSG))
-#   return(sfdf)
-# }
-
-
-
-# iCellSize <- 20L
-# iBandwidth <- 41L
-# dfObservations <- data.frame(x = c(22, 35), y = c(70, 55), V1 = c(10, 13))
-# vQuantiles = NULL
-# dfCentroids = NULL
-# fUpdateProgress = NULL
-# iNeighbor = NULL
-# iNbObsMin = 250
-# 
-# vXCentroides <- rep(seq(from = 10, to = 50, by = iCellSize), 4)
-# vYCentroides <- rep(seq(from = 30, to = 90, by = iCellSize), each = 3)
-# dfCentroids <- data.frame(cbind(x = vXCentroides, y = vYCentroides))
 

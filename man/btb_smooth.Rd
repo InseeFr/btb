@@ -5,7 +5,7 @@
 \title{btb_smooth}
 \usage{
 # Call mode 1: bisquare kernel smoothing - automatic grid
-btb_smooth(  dfObservations
+btb_smooth(  pts
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -17,7 +17,7 @@ btb_smooth(  dfObservations
 )
 
 # Call mode 2: median smoothing - automatic grid
-btb_smooth(  dfObservations
+btb_smooth(  pts
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -29,7 +29,7 @@ btb_smooth(  dfObservations
 )
 
 # Call mode 3: bisquare kernel smoothing - user grid
-btb_smooth(  dfObservations
+btb_smooth(  pts
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -41,7 +41,7 @@ btb_smooth(  dfObservations
 )
 
 # Call mode 4: median smoothing - user grid
-btb_smooth(  dfObservations
+btb_smooth(  pts
                  , sEPSG
                  , iCellSize
                  , iBandwidth
@@ -53,7 +53,7 @@ btb_smooth(  dfObservations
 )
 }
 \arguments{
-\item{dfObservations}{A \code{data.frame} with cartesian geographical coordinates and variables to smooth. (x, y, var1, var2, ...)
+\item{pts}{A \code{data.frame} with cartesian geographical coordinates and variables to smooth. (x, y, var1, var2, ...)
 
 (Un \code{data.frame} comportant les coordonnées géographiques cartésiennes (x,y), ainsi que les variables que l'on souhaite lisser. (x, y, var1, var2, ...)}
 
@@ -74,9 +74,9 @@ btb_smooth(  dfObservations
 
 (Vecteur des quantiles à calculer. Par exemple c(0.1, 0.25, 0.5) retournera le premier décile, le premier quartile et la mediane.)`}
 
-\item{dfCentroids}{A \code{data.frame} with two columns (x, y) containing coordinates of the user's centroids. The coordinates must be in the same projection than (\code{dfObservations}).
+\item{dfCentroids}{A \code{data.frame} with two columns (x, y) containing coordinates of the user's centroids. The coordinates must be in the same projection than (\code{pts}).
 
-(Un \code{data.frame} avec deux colonnes (x, y) contenant les coordonnées des centroides de l'utilisateur. Les coordonnées doivent être dans le même système de coordonnées que (\code{dfObservations}).)}
+(Un \code{data.frame} avec deux colonnes (x, y) contenant les coordonnées des centroides de l'utilisateur. Les coordonnées doivent être dans le même système de coordonnées que (\code{pts}).)}
 
 \item{fUpdateProgress}{A \code{function} to see compute progress.
 
@@ -106,10 +106,10 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 }
 \examples{
 \dontrun{
-######### example 1 #########
+Example 1 =============================
 data(dfPrix_SP95_2016)
 dfPrix_SP95_2016$nbObs <- 1L
-dfSmoothed <- btb_smooth(dfObservations = dfPrix_SP95_2016
+dfSmoothed <- btb::btb_smooth(pts = dfPrix_SP95_2016
                               , sEPSG = "2154"
                               , iCellSize = 5000L
                               , iBandwidth = 30000L)
@@ -127,14 +127,14 @@ library(cartography)
 data(reunion)
 # Smoothing all variables for Reunion (Lissage de toutes les variables pour la Reunion)
 # Call mode 1: classic smoothing - automatic grid
-reunionSmoothed <- btb_smooth( dfObservations = reunion
+reunionSmoothed <- btb_smooth( pts = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L)
 # preview (Apercu)
 choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
 # Call mode 2: median smoothing - automatic grid
-reunionSmoothed <- btb_smooth( dfObservations = reunion
+reunionSmoothed <- btb_smooth( pts = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L
@@ -144,7 +144,7 @@ choroLayer(reunionSmoothed, var = "houhold_05", nclass = 5, method = "fisher-jen
 # Call mode 3: classic smoothing - user grid
 dfCentroidsUser <- merge( x = seq(from =  314400L, to =  378800L, by = 200L)
                           , y = seq(from = 7634000L, to = 7691200L, by = 200L))
-reunionSmoothed <- btb_smooth( dfObservations = reunion
+reunionSmoothed <- btb_smooth( pts = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L
@@ -153,7 +153,7 @@ reunionSmoothed <- btb_smooth( dfObservations = reunion
 reunionSmoothed <- reunionSmoothed[reunionSmoothed$houhold > 0, ]
 choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
 # Call mode 4: median smoothing - user grid
-reunionSmoothed <- btb_smooth( dfObservations = reunion
+reunionSmoothed <- btb_smooth( pts = reunion
                                     , sEPSG = "32740"
                                     , iCellSize = 200L
                                     , iBandwidth = 400L

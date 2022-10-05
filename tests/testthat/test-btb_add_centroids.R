@@ -9,7 +9,7 @@ test_that("btb_add_centroids works", {
   res1 <- btb::btb_add_centroids(pts1,100,names_centro = c("centroX","centroY"))
   classe_res1 <- class(res1)
   
-  pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
+  pts2 <- sf::st_as_sf(pts1,coords=c("x","y"),crs=2154)
   res2 <- btb_add_centroids(pts2,50)
   classe_res2 <- class(res2)
   
@@ -38,7 +38,7 @@ test_that("btb_add_centroids works", {
   )
   
   # Only works with points !
-  squares <- btb::pixel_france[1:100,] %>% btb::btb_ptsToGrid(iCellSize = 200, sEPSG = 2154)
+  squares <- btb::pixel_france[1:100,] %>% btb::btb_ptsToGrid(iCellSize = 200, names_centro = c('x','y'), sEPSG = 2154)
   testthat::expect_error(btb::btb_add_centroids(squares,iCellSize = 200))
   
   
