@@ -10,10 +10,10 @@
 #' @param iCellSize : 
 #'   - size of the square cells (**meters**)
 #'   - Taille des côtés des carreaux (**mètres**)
-#' @param coords :
+#' @param names_coords :
 #' - Names of the latitude-longitude variables (**character vector**)
 #' - Noms des variables de latitude-longitude (**vecteur character**) 
-#' @param coords_res 
+#' @param names_centro 
 #'   - Names of the latitude-longitude variables for added centroids  (**character vector**)
 #'   - Noms des variables de latitude-longitude pour les centroïdes ajoutés (**vecteur character**) 
 #' @param add (**boolean**)
@@ -31,13 +31,13 @@
 #' x = c(656913.1 , 348296.3 , 842276.3 , 716750.0 , 667418.2),
 #' y = c(6855995 , 6788073 , 6385680 , 7003984 , 6585793),
 #' val=1:5)
-#' btb_add_centroids(pts,100,coords_res=c("centroX","centroY"))
-#' pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
+#' btb_add_centroids(pts,100,names_centro=c("centroX","centroY"))
+#' pts2 <- sf::st_as_sf(pts,names_coords=c("x","y"),crs=2154)
 #' btb_add_centroids(pts2,50)
 
 
 
-btb_add_centroids <- function(pts,iCellSize,coords=c("x","y"),coords_res=c("x_centro","y_centro"),add=T){
+btb_add_centroids <- function(pts,iCellSize,names_coords=c("x","y"),names_centro=c("x_centro","y_centro"),add=T){
   
   # Checks *************
   
@@ -49,10 +49,10 @@ btb_add_centroids <- function(pts,iCellSize,coords=c("x","y"),coords_res=c("x_ce
     proj_units <- sf::st_crs(pts , parameters = TRUE)$units_gdal
     stopifnot("Coordintates unit must be meters (not degrees)"=identical(proj_units,"metre"))
   }else{
-    stopifnot("Coordinates names not found"=coords %in% colnames(pts))
-    stopifnot("NA values in coordinates"=identical(sum(is.na(pts[,coords])),0L))
+    stopifnot("Coordinates names not found"=names_coords %in% colnames(pts))
+    stopifnot("NA values in coordinates"=identical(sum(is.na(pts[,names_coords])),0L))
   }
-  if(sum(coords_res %in% colnames(pts))>0 & add){
+  if(sum(names_centro %in% colnames(pts))>0 & add){
     warning("Variables names have been duplicated !")
   }
   
@@ -61,12 +61,12 @@ btb_add_centroids <- function(pts,iCellSize,coords=c("x","y"),coords_res=c("x_ce
   if("sf" %in% class(pts)){
     coord_numeric <- sf::st_coordinates(pts)
     pts <- pts %>% cbind(coord_numeric)
-    coords <- colnames(coord_numeric)
+    names_coords <- colnames(coord_numeric)
   }
   
-  centroids <- data.frame(pts[[coords[1]]] - (pts[[coords[1]]] %% iCellSize) + (iCellSize / 2),
-                          pts[[coords[2]]] - (pts[[coords[2]]] %% iCellSize) + (iCellSize / 2))
-  colnames(centroids) <- coords_res
+  centroids <- data.frame(pts[[names_coords[1]]] - (pts[[names_coords[1]]] %% iCellSize) + (iCellSize / 2),
+                          pts[[names_coords[2]]] - (pts[[names_coords[2]]] %% iCellSize) + (iCellSize / 2))
+  colnames(centroids) <- names_centro
   
   if(add){
     return(pts %>% cbind(centroids))

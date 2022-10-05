@@ -6,7 +6,7 @@ test_that("btb_add_centroids works", {
                      y = c(6855995 , 6788073 , 6385680 , 7003984 , 6585793), 
                      val=1:5)
   
-  res1 <- btb::btb_add_centroids(pts1,100,coords_res=c("centroX","centroY"))
+  res1 <- btb::btb_add_centroids(pts1,100,names_centro = c("centroX","centroY"))
   classe_res1 <- class(res1)
   
   pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
@@ -30,11 +30,11 @@ test_that("btb_add_centroids works", {
   
   # Test warnings : duplicated column names
   testthat::expect_warning(
-    btb::btb_add_centroids(pts1, iCellSize = 10 , coords_res = c("x","y"),add = T)
+    btb::btb_add_centroids(pts1, iCellSize = 10 , names_centro =  c("x","y"),add = T)
   )
 
   testthat::expect_silent(
-    btb::btb_add_centroids(pts1, iCellSize = 10 , coords_res = c("x","y"),add = F)
+    btb::btb_add_centroids(pts1, iCellSize = 10 , names_centro = c("x","y"),add = F)
   )
   
   # Only works with points !

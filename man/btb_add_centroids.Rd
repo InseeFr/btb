@@ -7,8 +7,8 @@
 btb_add_centroids(
   pts,
   iCellSize,
-  coords = c("x", "y"),
-  coords_res = c("x_centro", "y_centro"),
+  names_coords = c("x", "y"),
+  names_centro = c("x_centro", "y_centro"),
   add = T
 )
 }
@@ -21,13 +21,13 @@ btb_add_centroids(
 \item Taille des côtés des carreaux (\strong{mètres})
 }}
 
-\item{coords}{:
+\item{names_coords}{:
 \itemize{
 \item Names of the latitude-longitude variables (\strong{character vector})
 \item Noms des variables de latitude-longitude (\strong{vecteur character})
 }}
 
-\item{coords_res}{\itemize{
+\item{names_centro}{\itemize{
 \item Names of the latitude-longitude variables for added centroids  (\strong{character vector})
 \itemize{
 \item Noms des variables de latitude-longitude pour les centroïdes ajoutés (\strong{vecteur character})
@@ -60,7 +60,7 @@ pts <- data.frame(
 x = c(656913.1 , 348296.3 , 842276.3 , 716750.0 , 667418.2),
 y = c(6855995 , 6788073 , 6385680 , 7003984 , 6585793),
 val=1:5)
-btb_add_centroids(pts,100,coords_res=c("centroX","centroY"))
-pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
+btb_add_centroids(pts,100,names_centro=c("centroX","centroY"))
+pts2 <- sf::st_as_sf(pts,names_coords=c("x","y"),crs=2154)
 btb_add_centroids(pts2,50)
 }
