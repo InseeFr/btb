@@ -21,7 +21,6 @@ Imports:
     RcppParallel,
     magrittr
 Suggests: 
-    cartography,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

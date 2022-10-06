@@ -25,7 +25,7 @@
 #' @param names_centro  (**character vector**)
 #'  - vector of names for longitude/latitude variables. Default c("x_centroide","y_centroide").
 #'  - vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centroide","y_centroide")
-#' @param inspire 
+#' @param inspire (boolean) : if TRUE, returns a column for Inspire grid names.
 #'
 #' @return 
 #' Returns an object of class \code{sf} and \code{data.frame}. 
@@ -48,7 +48,7 @@
 #' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 #' pts <- st_as_sf(pts,coords=c("x","y"))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
-#' #' Exemple 3 : sf points (no epsg)
+#' # Exemple 3 : sf points (no epsg)
 #' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
 #' pts <- st_as_sf(pts,coords=c("x","y"),crs=2154)
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)

@@ -17,13 +17,12 @@ using namespace arma;
 //' Function constituting a membership matrix (Fonction constituant une matrice des effectifs)
 //' @usage constituerMatriceEffectifs(vLigneObservation, vColonneObservation)
 //'
-//' @param 
-//'  - vLigneObservation : 
-//'      A \code{vector} containing the line number of each observation
-//'      (Un \code{vector} contenant le numéro de ligne de chaque observation.)
-//'  - vColonneObservation :
-//'      A \code{vector} containing the column number of each observation
-//'      ()Un \code{vector} contenant le numéro de colonne de chaque observation.)
+//' @param vLigneObservation : 
+//'  - A \code{vector} containing the line number of each observation
+//'  - (Un \code{vector} contenant le numéro de ligne de chaque observation.)
+//' @param  vColonneObservation : 
+//'   - A \code{vector} containing the column number of each observation
+//'   - (Un \code{vector} contenant le numéro de colonne de chaque observation.)
 //' @return 
 //'  Returns a \code{matrix} with the number of observations for each cell.
 //'  
@@ -34,7 +33,7 @@ using namespace arma;
 //'    - Arlindo Dos Santos 
 //'    - Francois Semecurbe
 //'
-//' @examples : 
+//' @examples
 //'  dfObservations <- data.frame(x = c(15, 35, 15, 25, 35, 55, 45, 45, 55, 65, 70, 75, 85, 90,
 //'                                     65, 75, 85, 65, 70, 75, 85, 90, 65, 70, 75)
 //'                                 ,  y = c(10, 10, 30, 30, 35, 35, 45, 55, 55, 65, 65, 65, 65, 65,
