@@ -1,0 +1,156 @@
+---
+title: "Spatial smoothing with BTB R package"
+author: "Julien PRAMIL"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Spatial smoothing with BTB R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+
+`btb` is available on CRAN : 
+
+```{r setup , eval = FALSE}
+install.packages("btb")
+```
+
+`btb` is also available on github.com : 
+
+```{r, eval = FALSE}
+install.packages("remotes")
+remotes::install_github("InseeFrLab/btb")
+```
+
+## Trame de la vignette
+
+- careful with protection of personal data 
+- Chargement données points
+- Chargement fonds de cartes ?
+- Formation à l'analyse urbaine (https://inseefrlab.github.io/formation-r-lissage-spatial/tuto.html). Attention, ancienne version de BTB
+- Représentation des points
+- Carroyage des points + aggrégation + représenation des carreaux
+
+Manipulation des donnes de prix : carroyage et krigeage
+
+Décrire les donnes utilises en introduction. Puis...
+
+## Using points data 
+
+The package provides several data tables. Lets's use `dfPrix_SP95_2016`.
+For every gas station in metropolitan France, this data base gives :
+- longitude / latitude coordinates
+- annual mean price for unleaded gasoline in € for (2016) 
+
+# ```{r seepoints , eval = TRUE}
+library(btb)
+data(dfPrix_SP95_2016)
+head(dfPrix_SP95_2016)
+```
+
+```{r cartopoints , eval = FALSE}
+library(sf)
+sfPrix_SP95_2016 <- st_as_sf(dfPrix_SP95_2016,coords = c("x","y"), crs=2154)
+plot(sfPrix_SP95_2016$geometry)
+```
+
+
+```{r, eval = FALSE}
+data(dfPrix_SP95_2016)
+dfObservations <- dfPrix_SP95_2016
+dfObservations$nbObs <- 1L
+dfObservations$SP95 <- as.integer(100*dfObservations$SP95)
+
+#### Affichage des donnes carroyes relles (nouvelle fonction KIM / 
+# devra tre probablement la premire tape de la fonction kernelSmoothing) 
+
+carroyage <- function(dfObservations,xOffset=0,yOffset=0, iCellSize=200L, var){
+  
+  dfSortie <- dfObservations
+  dfSortie$col <- as.integer(floor((dfSortie$x - xOffset[1]) / iCellSize) - floor(min(dfSortie$x / iCellSize)) + 1)
+  dfSortie$row <- as.integer(floor((dfSortie$y - yOffset[1]) / iCellSize) - floor(min(dfSortie$y / iCellSize)) + 1)
+dfSortie <- dfSortie[order(dfSortie$row,dfSortie$col),] #tri par ligne puis col
+  dfCentroids <- data.frame( x = as.integer(floor(dfSortie$x / iCellSize) * iCellSize + (iCellSize / 2)),
+                             y = as.integer(floor(dfSortie$y / iCellSize) * iCellSize + (iCellSize / 2))
+  )
+  
+  # Si on veut faire ajouter la colonne des carreaux, il faut fait cela
+  # dfSortie <- cbind(dfSortie[, !names(dfSortie) %in% c("col","row")], 
+  #               sf::st_geometry(dfToGrid(df = dfCentroids, sEPSG = "2154", iCellSize = iCellSize))
+  # )
+  
+      # Sinon si on veut agreger par carreaux...
+  mEffectifs <- constituerMatriceEffectifs2(dfSortie$row - 1,
+                                              dfSortie$col - 1,
+                                              dfSortie[[var]])
+      
+  dfSortie_mini <- dfToGrid(df = dfCentroids[!duplicated(dfCentroids[,c("x","y")]),],
+           sEPSG = "2154",iCellSize = iCellSize)
+  effectifs <- as.vector(t(mEffectifs)) #transpose quand on remplit par ligne puis colonne
+  dfSortie_mini[[var]] <- effectifs[which(effectifs!=0)]
+  dfSortie_mini <- dfSortie_mini[, !names(dfSortie_mini) %in% c("x","y")]
+  return(dfSortie_mini) 
+  
+}
+
+cellsize = 20000L
+donnees_carroyees <- cbind(carroyage(dfObservations,xOffset=0,yOffset=0, iCellSize=cellsize,var="SP95"),
+      sf::st_drop_geometry(carroyage(dfObservations,xOffset=0,yOffset=0, iCellSize=cellsize,var="nbObs"))
+)
+donnees_carroyees$prix95 <- donnees_carroyees$SP95 / donnees_carroyees$nbObs
+
+library(cartography)
+choroLayer(donnees_carroyees,
+, var = "prix95"
+, nclass = 5
+, method = "fisher-jenks"
+, border = NA
+, legend.title.txt = "prix du SP95 en centimes\n(non liss)")
+
+  
+# Faire des grappes (expliquer ce que c'est... srement en lien avec le krigeage. Reprsenter ce que a veut dire aussi sur une carte)
+mGrappes <- constituerGrappes(1, mEffectifs)
+mGrappes
+
+# Appliquer l'ensemble du krigeage (reprend une partie des fonctions ci-dessus)
+for(bw in c(15000,50000,100000)){
+  dfSmoothed <- kernelSmoothing(dfObservations =dfObservations,
+                                sEPSG = "2154", iCellSize = cellsize,
+                                iBandwidth = bw)
+  dfSmoothed$prix95 <- dfSmoothed$SP95 / dfSmoothed$nbObs
+  library(cartography)
+  choroLayer(dfSmoothed
+             , var = "prix95"
+             , nclass = 5
+             , method = "fisher-jenks"
+             , border = NA
+             , legend.title.txt = paste0("prix du SP95 en centimes\n(liss avec bw=",bw,")"))
+  
+}
+
+
+#### TODO faire des tests avec plusieurs bornes possibles, comme l'exemple qui est fait sur la doc pour la runion. 
+```
+
+## TODO 2
+
+- Penser  reprendre aussi des exemples issus du module `btb` de la formation Analyse Urbaine et les intgrer au fil de la vignette
+- Supprimer le suggest cartography et adopter les exemples en mapsf
+- changer le format des donnes en export pour inciter les utilisateurs  exporter en gpkg et non en shapefiles.
+
+## Quelques exemples d'utilisation de `btb`
+
+- https://mobile.twitter.com/DavidZumbach/status/1373166163497213952
+- http://r.iresmi.net/2019/05/11/kernel-spatial-smoothing-transforming-points-pattern-to-continuous-coverage/
+- https://semba-blog.netlify.app/06/30/2020/kernel-smoothin-of-spatial-data/
+- https://mobile.twitter.com/raffverduzco/status/1128075094524350464?lang=bg
+- https://githubmemory.com/repo/SNStatComp/awesome-official-statistics-software

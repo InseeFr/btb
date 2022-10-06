@@ -8,12 +8,12 @@ A partial transposition of the package in Python is also available: [btbpy](http
 
 ## Description
 
- The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
+ The btb_smooth() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
 
-- The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
-- The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
-- The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
-- The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
+- The first call mode is btb_smooth(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
+- The second call mode is btb_smooth(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
+- The third call mode is btb_smooth(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
+- The fourth call mode is btb_smooth(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
 
 ## Installation
 
@@ -37,11 +37,12 @@ Details on how to use the package can be found in its [documentation](man). Some
 Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 
 Authors and contributors:
-- Arlindo Dos Santos [aut],
-- François Sémécurbe [aut],
-- Auriane Renaud [ctb],
-- Farida Marouchi [ctb]
-- Joachim Timoteo [ctb]
+- Arlindo DOS SANTOS [aut],
+- François SEMECURBE [aut],
+- Auriane RENAUD [ctb],
+- Farida MAROUCHI [ctb]
+- Joachim TIMOTEO [ctb]
+- Julien PRAMIL [ctb]
 
 ## References
 

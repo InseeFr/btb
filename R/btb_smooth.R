@@ -144,6 +144,7 @@
 #'            , method = "fisher-jenks"
 #'            , border = NA
 #'            , legend.title.txt = "prix du SP95 en centimes")
+#'            
 #' ######### example 2 #########
 #' library(sp)
 #' library(cartography)

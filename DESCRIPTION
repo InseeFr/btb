@@ -22,6 +22,8 @@ Imports:
     magrittr
 Suggests: 
     cartography,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Author: 
   Arlindo Dos Santos [aut],
@@ -45,3 +47,4 @@ RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 # NeedsCompilation: yes
 Config/testthat/edition: 3
+VignetteBuilder: knitr

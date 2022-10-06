@@ -73,22 +73,7 @@ devtools::build()
 Rcpp::Rcpp.package.skeleton("btbis")
 Rcpp::compileAttributes()
 
+# Vignette
 
-# 
-# 
-# iCellSize <- 20L
-# iBandwidth <- 41L
-# dfObservations <- data.frame(x = c(22, 35), y = c(70, 55), V1 = c(10, 13))
-# vQuantiles = NULL
-# dfCentroids = NULL
-# fUpdateProgress = NULL
-# iNeighbor = NULL
-# iNbObsMin = 250
-
-# btb::btb_smooth(dfObservations = data.frame(x = c(22, 35), y = c(70, 55), V1 = c(10, 13)),
-#                 iCellSize = 20L,iBandwidth = 41L 
-#                 )
-# 
-# pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
-# btb::btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
-
+usethis::use_vignette("vignette_btb")
+build_rmd("vignettes/vignette_btb.Rmd")
