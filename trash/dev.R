@@ -15,7 +15,7 @@ lapply(req_pkgs, function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
 
-pkgs_imports <- c("RcppParallel")
+pkgs_imports <- c("RcppParallel","mapsf")
 lapply(pkgs_imports, function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })

@@ -63,6 +63,39 @@ sfPrix_SP95_2016 <- st_as_sf(dfPrix_SP95_2016,coords = c("x","y"), crs=2154)
 plot(sfPrix_SP95_2016$geometry)
 ```
 
+```{r, addcentro}
+dfPrix_SP95_2016 <- btb_add_centroids(dfPrix_SP95_2016,iCellSize = 20000,names_coords = c("x","y"))
+head(dfPrix_SP95_2016)
+```
+
+```{r getgrid}
+sf_points_grid <- btb_ptsToGrid(dfPrix_SP95_2016,sEPSG = 2154,iCellSize = 20000,names_centro = c("x_centro","y_centro"),inspire = T)
+nrow(sf_points_grid)
+head(sf_points_grid)
+```
+
+```{r checkgrid}
+library(dplyr)
+centro_values <- dfPrix_SP95_2016 %>% group_by(x_centro,y_centro) %>% summarise(pricemean=mean(SP95,rm.na=T))
+grid_values <- centro_values %>% btb_ptsToGrid(sEPSG = 2154,iCellSize = 20000,names_centro = c("x_centro","y_centro"))
+nrow(centro_values)
+nrow(grid_values)
+head(grid_values)
+
+```
+
+```{r seegrid}
+library(mapsf)
+mapsf::mf_init(x=grid_values,theme = "agolalight")
+mapsf::mf_map(x = grid_values,
+       type = "choro",
+       var="pricemean",
+       breaks = "quantile",
+       nbreaks = 5,
+       lwd=1,
+       leg_val_rnd = 1)
+```
+
 
 ```{r, eval = F}
 data(dfPrix_SP95_2016)
