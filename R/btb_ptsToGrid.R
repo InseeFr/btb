@@ -34,7 +34,8 @@
 #' 
 #' @examples  
 #' # example 1 - regular grid
-#' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
+#' pts <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
+#' y_centroide = c(100, 300, 100, 300, 100))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' # write_sf(obj = carResult, dsn = "regularGrid.shp", delete_layer = TRUE)
 #' 
@@ -42,15 +43,16 @@
 #' pts <- data.frame(x = c(50, 50, 150, 150, 300)
 #'                  , y = c(50, 150, 50, 150, 100)
 #'                  , iCellSize = c(50, 50, 50, 50, 100))
-#' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154")
+#' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154",names_centro=c("x","y"))
 #' # write_sf(obj = carResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
 #' # Exemple 3 : sf points (no epsg)
 #' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
-#' pts <- st_as_sf(pts,coords=c("x","y"))
+#' pts <- sf::st_as_sf(pts,coords=c("x","y"))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' # Exemple 3 : sf points (no epsg)
-#' pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
-#' pts <- st_as_sf(pts,coords=c("x","y"),crs=2154)
+#' pts <- data.frame(x = c(100, 100, 300, 300, 500), 
+#' y = c(100, 300, 100, 300, 100))
+#' pts <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' @export
 
@@ -78,6 +80,8 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_c
     pts[[names_centro[2]]] <- sf::st_coordinates(pts)[,2]
     pts <- sf::st_drop_geometry(pts) 
   }
+  
+  stopifnot("Centroids coordinates names not found"=names_centro %in% colnames(pts))
   
   # Withdraw iCellSize as vector for iregular grid
   if(is.null(iCellSize)) iCellSize <- pts$iCellSize

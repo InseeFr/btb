@@ -4,52 +4,17 @@
 \alias{btb_smooth}
 \title{btb_smooth}
 \usage{
-# Call mode 1: bisquare kernel smoothing - automatic grid
-btb_smooth(  pts
-                 , sEPSG
-                 , iCellSize
-                 , iBandwidth
-                 , vQuantiles = NULL
-                 , dfCentroids = NULL
-                 , fUpdateProgress = NULL
-                 , iNeighbor = NULL
-                 , iNbObsMin = 250
-)
-
-# Call mode 2: median smoothing - automatic grid
-btb_smooth(  pts
-                 , sEPSG
-                 , iCellSize
-                 , iBandwidth
-                 , vQuantiles
-                 , dfCentroids = NULL
-                 , fUpdateProgress = NULL
-                 , iNeighbor = NULL
-                 , iNbObsMin = 250
-)
-
-# Call mode 3: bisquare kernel smoothing - user grid
-btb_smooth(  pts
-                 , sEPSG
-                 , iCellSize
-                 , iBandwidth
-                 , vQuantiles = NULL
-                 , dfCentroids
-                 , fUpdateProgress = NULL
-                 , iNeighbor = NULL
-                 , iNbObsMin = 250
-)
-
-# Call mode 4: median smoothing - user grid
-btb_smooth(  pts
-                 , sEPSG
-                 , iCellSize
-                 , iBandwidth
-                 , vQuantiles
-                 , dfCentroids
-                 , fUpdateProgress = NULL
-                 , iNeighbor = NULL
-                 , iNbObsMin = 250
+btb_smooth(
+  pts,
+  sEPSG = NA,
+  iCellSize = NA,
+  iBandwidth,
+  vQuantiles = NULL,
+  dfCentroids = NULL,
+  fUpdateProgress = NULL,
+  iNeighbor = NULL,
+  inspire = F,
+  iNbObsMin = 250
 )
 }
 \arguments{
@@ -86,6 +51,8 @@ btb_smooth(  pts
 
 (Paramètre technique pour calculer l'étendue des points d'estimations, à ne pas remplir. (\code{integer}))}
 
+\item{inspire}{(boolean) : if TRUE, returns a column for Inspire grid names.}
+
 \item{iNbObsMin}{Minimum size of constituted grappes for median smoothing.  (\code{integer})
 
 (Taille minimale des grappes constituées pour le lissage "médian" (géographiquement pondéré). (\code{integer}))}
@@ -112,7 +79,8 @@ dfPrix_SP95_2016$nbObs <- 1L
 dfSmoothed <- btb::btb_smooth(pts = dfPrix_SP95_2016
                               , sEPSG = "2154"
                               , iCellSize = 5000L
-                              , iBandwidth = 30000L)
+                              , iBandwidth = 30000L, 
+                              inspire = T)
 dfSmoothed$prix95 <- dfSmoothed$SP95 / dfSmoothed$nbObs * 100
 library(cartography)
 choroLayer(dfSmoothed

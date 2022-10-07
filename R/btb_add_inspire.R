@@ -22,7 +22,8 @@
 #' @return (**df**) pts_centro table with additional *idInspire* variable
 #' @export
 #' @examples
-#' pts_centro <- data.frame(x_centroide = c(100, 100, 300, 300, 500), y_centroide = c(100, 300, 100, 300, 100))
+#' pts_centro <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
+#' y_centroide = c(100, 300, 100, 300, 100))
 #' btb_add_inspire(pts_centro, sEPSG = 2154, iCellSize = 200)
 
 btb_add_inspire <- function(pts_centro, sEPSG, iCellSize, names_centro = c("x_centroide","y_centroide")){

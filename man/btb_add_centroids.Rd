@@ -61,6 +61,6 @@ x = c(656913.1 , 348296.3 , 842276.3 , 716750.0 , 667418.2),
 y = c(6855995 , 6788073 , 6385680 , 7003984 , 6585793),
 val=1:5)
 btb_add_centroids(pts,100,names_centro=c("centroX","centroY"))
-pts2 <- sf::st_as_sf(pts,names_coords=c("x","y"),crs=2154)
+pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
 btb_add_centroids(pts2,50)
 }

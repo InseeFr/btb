@@ -21,14 +21,14 @@ knitr::opts_chunk$set(
 `btb` is available on CRAN : 
 
 ```{r setup , eval = FALSE}
-#install.packages("btb")
+install.packages("btb")
 ```
 
 `btb` is also available on github.com : 
 
-```{r, eval = FALSE}
-#install.packages("remotes")
-#remotes::install_github("InseeFrLab/btb")
+```{r, eval = F}
+install.packages("remotes")
+remotes::install_github("InseeFrLab/btb")
 ```
 
 ## Trame de la vignette
@@ -51,20 +51,20 @@ For every gas station in metropolitan France, this data base gives :
 - longitude / latitude coordinates
 - annual mean price for unleaded gasoline in € for (2016) 
 
-```{r seepoints , eval = F}
-#library(btb)
-#data(dfPrix_SP95_2016)
-# head(dfPrix_SP95_2016)
+```{r seepoints , eval = T}
+library(btb)
+data(dfPrix_SP95_2016)
+head(dfPrix_SP95_2016)
 ```
 
-```{r cartopoints , eval = F}
-#library(sf)
-#sfPrix_SP95_2016 <- st_as_sf(dfPrix_SP95_2016,coords = c("x","y"), crs=2154)
-# plot(sfPrix_SP95_2016$geometry)
+```{r cartopoints , eval = T}
+library(sf)
+sfPrix_SP95_2016 <- st_as_sf(dfPrix_SP95_2016,coords = c("x","y"), crs=2154)
+plot(sfPrix_SP95_2016$geometry)
 ```
 
 
-```{r, eval = FALSE}
+```{r, eval = F}
 data(dfPrix_SP95_2016)
 dfObservations <- dfPrix_SP95_2016
 dfObservations$nbObs <- 1L

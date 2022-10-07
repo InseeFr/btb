@@ -39,6 +39,7 @@ Creates Inpire names for a grid defined with :
 }
 }
 \examples{
-pts_centro <- data.frame(x_centroide = c(100, 100, 300, 300, 500), y_centroide = c(100, 300, 100, 300, 100))
+pts_centro <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
+y_centroide = c(100, 300, 100, 300, 100))
 btb_add_inspire(pts_centro, sEPSG = 2154, iCellSize = 200)
 }

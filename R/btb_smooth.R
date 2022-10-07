@@ -5,56 +5,7 @@
 #' 
 #' (Fonction de lissage à partir d'un noyau bisquare ou de la médiane.)
 #' 
-#' @usage 
-#' 
-#' # Call mode 1: bisquare kernel smoothing - automatic grid
-#'btb_smooth(  pts
-#'                  , sEPSG
-#'                  , iCellSize
-#'                  , iBandwidth
-#'                  , vQuantiles = NULL
-#'                  , dfCentroids = NULL
-#'                  , fUpdateProgress = NULL
-#'                  , iNeighbor = NULL
-#'                  , iNbObsMin = 250
-#')
-#'
-#'# Call mode 2: median smoothing - automatic grid
-#'btb_smooth(  pts
-#'                  , sEPSG
-#'                  , iCellSize
-#'                  , iBandwidth
-#'                  , vQuantiles
-#'                  , dfCentroids = NULL
-#'                  , fUpdateProgress = NULL
-#'                  , iNeighbor = NULL
-#'                  , iNbObsMin = 250
-#')
-#'
-#'# Call mode 3: bisquare kernel smoothing - user grid
-#'btb_smooth(  pts
-#'                  , sEPSG
-#'                  , iCellSize
-#'                  , iBandwidth
-#'                  , vQuantiles = NULL
-#'                  , dfCentroids
-#'                  , fUpdateProgress = NULL
-#'                  , iNeighbor = NULL
-#'                  , iNbObsMin = 250
-#')
-#'
-#'# Call mode 4: median smoothing - user grid
-#'btb_smooth(  pts
-#'                  , sEPSG
-#'                  , iCellSize
-#'                  , iBandwidth
-#'                  , vQuantiles
-#'                  , dfCentroids
-#'                  , fUpdateProgress = NULL
-#'                  , iNeighbor = NULL
-#'                  , iNbObsMin = 250
-#')
-#' 
+#'  
 #' @param pts 
 #' A `data.frame` with cartesian geographical coordinates and variables to smooth. (x, y, var1, var2, ...)
 #'  
@@ -100,6 +51,7 @@
 #' Minimum size of constituted grappes for median smoothing.  (`integer`) 
 #'  
 #' (Taille minimale des grappes constituées pour le lissage "médian" (géographiquement pondéré). (`integer`))
+#' @param inspire (boolean) : if TRUE, returns a column for Inspire grid names.
 #' 
 #' @details 
 #' Returns an object inheriting from the `data.frame` class. (Retourne un objet qui se comporte comme un `data.frame`, par heritage.)
@@ -135,7 +87,8 @@
 #' dfSmoothed <- btb::btb_smooth(pts = dfPrix_SP95_2016
 #'                               , sEPSG = "2154"
 #'                               , iCellSize = 5000L
-#'                               , iBandwidth = 30000L)
+#'                               , iBandwidth = 30000L, 
+#'                               inspire = T)
 #' dfSmoothed$prix95 <- dfSmoothed$SP95 / dfSmoothed$nbObs * 100
 #' library(cartography)
 #' choroLayer(dfSmoothed

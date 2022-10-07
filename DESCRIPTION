@@ -16,7 +16,6 @@ Date: 2022-09-20
 Imports: 
     methods,
     Rcpp (>= 1.0.9),
-    sp,
     sf,
     RcppParallel,
     magrittr

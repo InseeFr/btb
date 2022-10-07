@@ -32,7 +32,7 @@ btb_ptsToGrid(
 \item vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centroide","y_centroide")
 }}
 
-\item{inspire}{}
+\item{inspire}{(boolean) : if TRUE, returns a column for Inspire grid names.}
 }
 \value{
 Returns an object of class \code{sf} and \code{data.frame}.
@@ -47,7 +47,8 @@ Function to compute a grid (regular or not) from centroid points.
 \examples{
  
 # example 1 - regular grid
-pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
+pts <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
+y_centroide = c(100, 300, 100, 300, 100))
 carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 # write_sf(obj = carResult, dsn = "regularGrid.shp", delete_layer = TRUE)
 
@@ -55,14 +56,15 @@ carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 pts <- data.frame(x = c(50, 50, 150, 150, 300)
                  , y = c(50, 150, 50, 150, 100)
                  , iCellSize = c(50, 50, 50, 50, 100))
-carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154")
+carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154",names_centro=c("x","y"))
 # write_sf(obj = carResult, dsn = "irregularGrid.shp", delete_layer = TRUE)
 # Exemple 3 : sf points (no epsg)
 pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
-pts <- st_as_sf(pts,coords=c("x","y"))
+pts <- sf::st_as_sf(pts,coords=c("x","y"))
 carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
-#' Exemple 3 : sf points (no epsg)
-pts <- data.frame(x = c(100, 100, 300, 300, 500), y = c(100, 300, 100, 300, 100))
-pts <- st_as_sf(pts,coords=c("x","y"),crs=2154)
+# Exemple 3 : sf points (no epsg)
+pts <- data.frame(x = c(100, 100, 300, 300, 500), 
+y = c(100, 300, 100, 300, 100))
+pts <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
 carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 }
