@@ -86,7 +86,7 @@ head(grid_values)
 
 ```{r seegrid}
 library(mapsf)
-mapsf::mf_init(x=grid_values,theme = "agolalight")
+#mapsf::mf_init(x=grid_values,theme = "agolalight")
 mapsf::mf_map(x = grid_values,
        type = "choro",
        var="pricemean",
@@ -96,6 +96,82 @@ mapsf::mf_map(x = grid_values,
        leg_val_rnd = 1)
 ```
 
+
+```{r smooth_density}
+pts_density <- dfPrix_SP95_2016[,c("x","y")]
+pts_density$stations_density <- 1L
+head(pts_density)
+smooth_density <- btb_smooth(pts = pts_density,sEPSG = 2154,iBandwidth = 60000,iCellSize = 10000)
+head(smooth_density)
+mapsf::mf_map(x = smooth_density,
+       type = "choro",
+       var="stations_density",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+```{r smooth_mean_price}
+pts_meanprice <- dfPrix_SP95_2016[,c("x","y","SP95")]
+pts_meanprice$stations_density <- 1L
+head(pts_meanprice)
+smooth_density <- btb_smooth(pts = pts_meanprice,sEPSG = 2154,iBandwidth = 60000,iCellSize = 10000)
+head(smooth_density)
+smooth_density <- smooth_density %>% mutate(meanprice=SP95/stations_density)
+mapsf::mf_map(x = smooth_density,
+       type = "choro",
+       var="meanprice",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+```{r ratesmooth}
+data("reunion")
+head(reunion)
+
+sfreunion <- sf::st_as_sf(reunion,coords= c("x","y"), crs = 3727)
+plot(sfreunion$geometry)
+
+# btb_smooth works with sf points
+
+smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 2000)
+smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
+
+mapsf::mf_map(x = smooth_reunion,
+       type = "choro",
+       var="prop_poors",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+```{r neighboors}
+smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 2000, iNeighbor = 0)
+smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
+
+mapsf::mf_map(x = smooth_reunion,
+       type = "choro",
+       var="prop_poors",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+```{r inpire}
+smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 2000, iNeighbor = 0,inspire = T)
+smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
+head(smooth_reunion)
+
+```
+
+```{r export, eval=F}
+sf::write_sf("MY/REPOSITORY/myfile.gpkg")
+```
 
 ```{r, eval = F}
 data(dfPrix_SP95_2016)
