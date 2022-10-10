@@ -37,11 +37,6 @@
 #'  
 #' (Un `data.frame` avec deux colonnes (x, y) contenant les coordonnées des centroides de l'utilisateur. Les coordonnées doivent être dans le même système de coordonnées que (`pts`).)
 #'
-#' @param fUpdateProgress
-#' A `function` to see compute progress. 
-#'  
-#' (Une `function` pour voir la progression du calcul.)
-#'
 #' @param iNeighbor
 #' Technical parameter, leave empty. (`integer`) 
 #'  
@@ -151,7 +146,6 @@ btb_smooth <-
            iBandwidth ,
            vQuantiles = NULL ,
            dfCentroids = NULL ,
-           fUpdateProgress = NULL ,
            iNeighbor = NULL,
            inspire = F,
            iNbObsMin = 250
@@ -339,7 +333,7 @@ btb_smooth <-
         , min(dtCentroidesUniques$y)
         , mIcentroides
         , iNbCentroidesUniques
-        , fUpdateProgress
+        , NA #old message update param in rcppLissage
       )
       
       rm(list = c("pts", "dtCentroidesUniques", "mIcentroides"))

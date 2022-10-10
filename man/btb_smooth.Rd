@@ -11,7 +11,6 @@ btb_smooth(
   iBandwidth,
   vQuantiles = NULL,
   dfCentroids = NULL,
-  fUpdateProgress = NULL,
   iNeighbor = NULL,
   inspire = F,
   iNbObsMin = 250
@@ -42,10 +41,6 @@ btb_smooth(
 \item{dfCentroids}{A \code{data.frame} with two columns (x, y) containing coordinates of the user's centroids. The coordinates must be in the same projection than (\code{pts}).
 
 (Un \code{data.frame} avec deux colonnes (x, y) contenant les coordonnées des centroides de l'utilisateur. Les coordonnées doivent être dans le même système de coordonnées que (\code{pts}).)}
-
-\item{fUpdateProgress}{A \code{function} to see compute progress.
-
-(Une \code{function} pour voir la progression du calcul.)}
 
 \item{iNeighbor}{Technical parameter, leave empty. (\code{integer})
 

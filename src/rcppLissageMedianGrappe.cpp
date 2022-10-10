@@ -88,9 +88,9 @@ struct LissageMedianGrappe : public Worker
     // debut benchmark
     std::stringstream message;
     int iPourcentageEffectue = 0;
-    double dTempsPasse;
-    double dTempsTotal = 0;
-    int iTempsRestant;
+    //double dTempsPasse;
+    //double dTempsTotal = 0;
+    //int iTempsRestant;
     // fin benchmark
     
     const unsigned int iNbCentroides = vXCentroides.length(); // nombre de centroides total
@@ -269,19 +269,19 @@ struct LissageMedianGrappe : public Worker
       ++iCompteurAvancement;
       message.str("");
       iPourcentageEffectue = 100 * iCompteurAvancement / vNoGrappes.size();
-      dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
-      dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
-      iTempsRestant = ceil(dTempsTotal - dTempsPasse);
-      message << "\rMedian smoothing progress (parallel clusters): " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s           ";
-      Rcout << message.str();
+      //dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
+      //dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
+      //iTempsRestant = ceil(dTempsTotal - dTempsPasse);
+      //message << "\rMedian smoothing progress (parallel clusters): " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s           ";
+      //Rcout << message.str();
       // fin benchmark
     }
     // debut benchmark
     if(iPourcentageEffectue == 100)
     {   
       message.str("");
-      message << "Elapsed time median smoothing: " << floor(dTempsTotal / 60) << "m " << ((int)dTempsTotal % 60)<< "s                                                                 ";
-      Rcpp::Rcout << "\n" << message.str();
+      //message << "Elapsed time median smoothing: " << floor(dTempsTotal / 60) << "m " << ((int)dTempsTotal % 60)<< "s                                                                 ";
+      //Rcpp::Rcout << "\n" << message.str();
     }
     // fin benchmark
   }
@@ -366,7 +366,7 @@ NumericMatrix rcppLissageMedianGrappe(
     std::vector<int> vNoGrappe;
     arma::Mat<int> mGrappes = constituerGrappes(iMinObsGrappe, mEffectifs2n, vNoGrappe);
 
-    Rcout << "number of clusters: " << vNoGrappe.size() << std::endl;
+    //Rcout << "number of clusters: " << vNoGrappe.size() << std::endl;
     // Rcout << mGrappes;
             
     // NumericMatrix mResultatFinal(iNbCentroides, iNbVar * iNbQuantiles + 2 + 1); // liste des colonnes: nbObs, V1q1 V1q2.. V1qn, ..., Vnq1, Vnq2, ...Vnqn, x, y

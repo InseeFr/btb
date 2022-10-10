@@ -5,11 +5,13 @@
 * Change `kernelSmoothing` name (to `btb_smooth`)
 * Allow `btb_ptsToGrid` to use simple feature points as input
 * New function to link points to their centroid in a grid (`btb_add_centroides`)
+* Updates messages when smoothing removed (dirty in RcppLissage.cpp)
 * Old functions `dfToGrid` and `kernelSmoothing` replaced by warnings
 * Possibility to use Inspire naming for grid cells (with `btb_add_inspire` function) 
 * Roxygen documentation
 * testthat compatible tests
 * New tests
+* New vignette
 
 # btb 0.1.19
 
