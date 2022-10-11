@@ -71,9 +71,9 @@ NumericMatrix rcppLissage(
   // fin cast pour threadsafety 
   
   // debut benchmark
-  clock_t timeBegin = clock();
-  double dTempsPasse;
-  double dTempsTotal = 0;
+  //clock_t timeBegin = clock();
+  //double dTempsPasse;
+  //double dTempsTotal = 0;
   //int iTempsRestant = 0;
   int iPourcentageEffectue;
   int iPourcentageEffectuePrecedent = 0;
@@ -150,11 +150,11 @@ NumericMatrix rcppLissage(
     }
     
     // debut benchmark
-    dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
+    //dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
     iPourcentageEffectue = 100 * iIndiceObsCourante / iNbObs;
     if(iPourcentageEffectuePrecedent != iPourcentageEffectue)  
     {
-      dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
+      //dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
       //iTempsRestant = ceil(dTempsTotal - dTempsPasse);
       iPourcentageEffectuePrecedent = iPourcentageEffectue;
       //message.str("");
