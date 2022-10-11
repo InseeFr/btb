@@ -160,6 +160,11 @@ mapsf::mf_map(x = smooth_density,
        leg_val_rnd = 1)
 ```
 
+Note that `btb_smooth` is *conservative* : 
+
+* Number of gas stations in `pts_density` : `r sum(pts_density$stations_density)`
+* Number of gas station in `smooth_density` : `r sum(smooth_density$stations_density)`
+
 ## Smoothing means : gas mean price
 
 Smoothing a ratio works almost the same way.
@@ -201,7 +206,8 @@ Cstack_info()
 ## Quantile smoothing : smooth the distribution of gas prices
 
 Quantile smoothing is a different methodology. 
-Its major benefits are : 
+Its major benefits are :
+
   * less sensitive to outliers
   * gives information on the distribution of your data
 
@@ -244,12 +250,14 @@ mapsf::mf_map(x = smooth_quantiles,
 Here, we use fiscal data in La Réunion island.
 Each point is the centroid of the grid used to publish aggregated data (1\ 000 meters pixels).
 
-Let's smooth the proportion of poors among households. 
+Let's smooth the proportion of poors among households with an **automatic grid** (`iNeighbor` parameter absent in `btb_smooth` function). 
 
 In the following example, note that the `btb_smooth` function accepts sf points in input (also the case with `btb_ptsToGrid`). 
 
 
 ```{r ratesmooth}
+
+# Load data
 data("reunion")
 head(reunion)
 
@@ -257,12 +265,13 @@ head(reunion)
 sfreunion <- sf::st_as_sf(reunion,coords= c("x","y"), crs = 3727)
 plot(sfreunion$geometry)
 
-# btb_smooth works with sf points
+# btb_smooth with an automatic grid
 smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 5000)
 
 # Calculate the ratio
 smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
 
+# map
 mapsf::mf_map(x = smooth_reunion,
        type = "choro",
        var="prop_poors",
@@ -271,6 +280,8 @@ mapsf::mf_map(x = smooth_reunion,
        border = NA,
        leg_val_rnd = 1)
 ```
+
+Now, let's smooth the same ratio, with the same smoothing specifications (`iBandwidth` and `iCellSize`) but with **iNeighbor = 0**. In this case, the automatic grid only uses pixels that contain at least 1 data point (here, at least 1 household). The result is quite different.
 
 ```{r neighboors}
 smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 5000, iNeighbor = 0)
@@ -285,105 +296,34 @@ mapsf::mf_map(x = smooth_reunion,
        leg_val_rnd = 1)
 ```
 
-```{r inpire}
+## Inspire naming
+
+Using the [Inspire norm](https://inspire.ec.europa.eu/), `btb_smooth` and `btb_ptsToGrid` allow you to name your pixels in a proper way. It could be useful for reuse purpose, merge operations, etc.
+
+You just need to use `inspire = T` : 
+
+```{r inspire}
 smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 2000, iNeighbor = 0,inspire = T)
 smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
 head(smooth_reunion)
 
 ```
 
+Then, to export your geometric data, you can use the `sf::write_sf` function.
+
 ```{r export, eval=F}
 sf::write_sf("MY/REPOSITORY/myfile.gpkg")
 ```
 
-```{r, eval = F}
-data(dfPrix_SP95_2016)
-dfObservations <- dfPrix_SP95_2016
-dfObservations$nbObs <- 1L
-dfObservations$SP95 <- as.integer(100*dfObservations$SP95)
 
-#### Affichage des donnes carroyes relles (nouvelle fonction KIM / 
-# devra tre probablement la premire tape de la fonction kernelSmoothing) 
-
-carroyage <- function(dfObservations,xOffset=0,yOffset=0, iCellSize=200L, var){
-  
-  dfSortie <- dfObservations
-  dfSortie$col <- as.integer(floor((dfSortie$x - xOffset[1]) / iCellSize) - floor(min(dfSortie$x / iCellSize)) + 1)
-  dfSortie$row <- as.integer(floor((dfSortie$y - yOffset[1]) / iCellSize) - floor(min(dfSortie$y / iCellSize)) + 1)
-dfSortie <- dfSortie[order(dfSortie$row,dfSortie$col),] #tri par ligne puis col
-  dfCentroids <- data.frame( x = as.integer(floor(dfSortie$x / iCellSize) * iCellSize + (iCellSize / 2)),
-                             y = as.integer(floor(dfSortie$y / iCellSize) * iCellSize + (iCellSize / 2))
-  )
-  
-  # Si on veut faire ajouter la colonne des carreaux, il faut fait cela
-  # dfSortie <- cbind(dfSortie[, !names(dfSortie) %in% c("col","row")], 
-  #               sf::st_geometry(dfToGrid(df = dfCentroids, sEPSG = "2154", iCellSize = iCellSize))
-  # )
-  
-      # Sinon si on veut agreger par carreaux...
-  mEffectifs <- constituerMatriceEffectifs2(dfSortie$row - 1,
-                                              dfSortie$col - 1,
-                                              dfSortie[[var]])
-      
-  dfSortie_mini <- dfToGrid(df = dfCentroids[!duplicated(dfCentroids[,c("x","y")]),],
-           sEPSG = "2154",iCellSize = iCellSize)
-  effectifs <- as.vector(t(mEffectifs)) #transpose quand on remplit par ligne puis colonne
-  dfSortie_mini[[var]] <- effectifs[which(effectifs!=0)]
-  dfSortie_mini <- dfSortie_mini[, !names(dfSortie_mini) %in% c("x","y")]
-  return(dfSortie_mini) 
-  
-}
-
-cellsize = 20000L
-donnees_carroyees <- cbind(carroyage(dfObservations,xOffset=0,yOffset=0, iCellSize=cellsize,var="SP95"),
-      sf::st_drop_geometry(carroyage(dfObservations,xOffset=0,yOffset=0, iCellSize=cellsize,var="nbObs"))
-)
-donnees_carroyees$prix95 <- donnees_carroyees$SP95 / donnees_carroyees$nbObs
-
-library(cartography)
-choroLayer(donnees_carroyees,
-, var = "prix95"
-, nclass = 5
-, method = "fisher-jenks"
-, border = NA
-, legend.title.txt = "prix du SP95 en centimes\n(non liss)")
-
-  
-# Faire des grappes (expliquer ce que c'est... srement en lien avec le krigeage. Reprsenter ce que a veut dire aussi sur une carte)
-mGrappes <- constituerGrappes(1, mEffectifs)
-mGrappes
-
-# Appliquer l'ensemble du krigeage (reprend une partie des fonctions ci-dessus)
-for(bw in c(15000,50000,100000)){
-  dfSmoothed <- kernelSmoothing(dfObservations =dfObservations,
-                                sEPSG = "2154", iCellSize = cellsize,
-                                iBandwidth = bw)
-  dfSmoothed$prix95 <- dfSmoothed$SP95 / dfSmoothed$nbObs
-  library(cartography)
-  choroLayer(dfSmoothed
-             , var = "prix95"
-             , nclass = 5
-             , method = "fisher-jenks"
-             , border = NA
-             , legend.title.txt = paste0("prix du SP95 en centimes\n(liss avec bw=",bw,")"))
-  
-}
-
-
-#### TODO faire des tests avec plusieurs bornes possibles, comme l'exemple qui est fait sur la doc pour la runion. 
-```
-
-## TODO 2
-
-- Penser  reprendre aussi des exemples issus du module `btb` de la formation Analyse Urbaine et les intgrer au fil de la vignette
-- Supprimer le suggest cartography et adopter les exemples en mapsf
-- changer le format des donnes en export pour inciter les utilisateurs  exporter en gpkg et non en shapefiles.
 
 ## References :
 
 - https://inseefrlab.github.io/formation-r-lissage-spatial/tuto.html
+- Formation lissage théorique
+- 
 
-## Quelques exemples d'utilisation de `btb`
+## Some interesting usecases 
 
 - https://mobile.twitter.com/DavidZumbach/status/1373166163497213952
 - http://r.iresmi.net/2019/05/11/kernel-spatial-smoothing-transforming-points-pattern-to-continuous-coverage/
