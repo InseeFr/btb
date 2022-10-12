@@ -19,6 +19,9 @@
 #' @param add (**boolean**)
 #'   - If TRUE : returns pts + centroids coordinates
 #'   - Si TRUE : retourne pts + les coordonnées des centroïdes
+#' @param offset (**numeric vector of size 2**)
+#'   - Offset for a grid non centered on the geographical referential origin
+#'   - Décalage si utilisation d'une grille non centrée sur l'origine du référentiel géographique
 #' @return 
 #'   - `pts` table with additional centroids coordinates `x_centro` and `y_centro` (`df` of `sf` object)
 #'   - Table `pts` avec les coordonnées des centroïdes `x_centro` and `y_centro` (objet `df` of `sf` )
@@ -37,12 +40,13 @@
 
 
 
-btb_add_centroids <- function(pts,iCellSize,names_coords=c("x","y"),names_centro=c("x_centro","y_centro"),add=T){
+btb_add_centroids <- function(pts,iCellSize,offset=c(0L,0L),names_coords=c("x","y"),names_centro=c("x_centro","y_centro"),add=T){
   
   # Checks *************
   
   stopifnot("Incorrect cells size"=is.numeric(iCellSize))
   stopifnot("Cells size non-positive"=iCellSize>0)
+  stopifnot("Offset must be inferior thant iCellSize"=identical(offset<iCellSize,c(T,T)))
   
   if("sf" %in% class(pts)){
     stopifnot("Polygons must be points !"=unique(as.vector(sf::st_geometry_type(pts)))=="POINT")
@@ -64,8 +68,8 @@ btb_add_centroids <- function(pts,iCellSize,names_coords=c("x","y"),names_centro
     names_coords <- colnames(coord_numeric)
   }
   
-  centroids <- data.frame(pts[[names_coords[1]]] - (pts[[names_coords[1]]] %% iCellSize) + (iCellSize / 2),
-                          pts[[names_coords[2]]] - (pts[[names_coords[2]]] %% iCellSize) + (iCellSize / 2))
+  centroids <- data.frame(pts[[names_coords[1]]] - ((pts[[names_coords[1]]]-offset[1]) %% iCellSize) + (iCellSize / 2),
+                          pts[[names_coords[2]]] - ((pts[[names_coords[2]]]-offset[2]) %% iCellSize) + (iCellSize / 2))
   colnames(centroids) <- names_centro
   
   if(add){

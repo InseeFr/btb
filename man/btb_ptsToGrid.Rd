@@ -9,7 +9,7 @@ btb_ptsToGrid(
   pts,
   sEPSG = NA,
   iCellSize = NULL,
-  names_centro = c("x_centroide", "y_centroide"),
+  names_centro = c("x_centro", "y_centro"),
   inspire = F
 )
 }
@@ -28,8 +28,8 @@ btb_ptsToGrid(
 
 \item{names_centro}{(\strong{character vector})
 \itemize{
-\item vector of names for longitude/latitude variables. Default c("x_centroide","y_centroide").
-\item vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centroide","y_centroide")
+\item vector of names for longitude/latitude variables. Default c("x_centro","y_centro").
+\item vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centro","y_centro")
 }}
 
 \item{inspire}{(boolean) : if TRUE, returns a column for Inspire grid names.}
@@ -47,8 +47,8 @@ Function to compute a grid (regular or not) from centroid points.
 \examples{
  
 # example 1 - regular grid
-pts <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
-y_centroide = c(100, 300, 100, 300, 100))
+pts <- data.frame(x_centro = c(100, 100, 300, 300, 500), 
+y_centro = c(100, 300, 100, 300, 100))
 carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 # write_sf(obj = carResult, dsn = "regularGrid.shp", delete_layer = TRUE)
 

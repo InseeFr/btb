@@ -42,6 +42,12 @@ test_that("btb_add_centroids works", {
   testthat::expect_error(btb::btb_add_centroids(squares,iCellSize = 200))
   
   
+  # Offsets ? ******************************
+  iCellSize=1000
+  pts_offset <- data.frame(x=c(1050,1200),y=c(1700,1850))
+  expected_res <- data.frame(x_centro=c(650,1650),y_centro=c(1300,2300))
+  testthat::expect_identical(btb::btb_add_centroids(pts_offset,iCellSize = iCellSize,offset=c(150,800),add=F),
+                             expected_res)
   
-  
+  testthat::expect_error(btb::btb_add_centroids(pts_offset,iCellSize = iCellSize,offset=c(1150,1800),add=F))
 })

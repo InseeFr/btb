@@ -17,16 +17,16 @@
 #' @param pts_centro (**df object**) : table of centroids.  
 #' @param sEPSG (**integer or character**) : epsg code.
 #' @param iCellSize (**integer**) : cells size(s) in meters. Can be a vector for irregular grids
-#' @param names_centro (**character vector**) : vector of names for longitude/latitude variables. Default c("x_centroide","y_centroide").
+#' @param names_centro (**character vector**) : vector of names for longitude/latitude variables. Default c("x_centro","y_centro").
 #'
 #' @return (**df**) pts_centro table with additional *idInspire* variable
 #' @export
 #' @examples
-#' pts_centro <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
-#' y_centroide = c(100, 300, 100, 300, 100))
+#' pts_centro <- data.frame(x_centro = c(100, 100, 300, 300, 500), 
+#' y_centro = c(100, 300, 100, 300, 100))
 #' btb_add_inspire(pts_centro, sEPSG = 2154, iCellSize = 200)
 
-btb_add_inspire <- function(pts_centro, sEPSG, iCellSize, names_centro = c("x_centroide","y_centroide")){
+btb_add_inspire <- function(pts_centro, sEPSG, iCellSize, names_centro = c("x_centro","y_centro")){
   
   # Checks : 
   stopifnot("Problem with centroid df" = nrow(pts_centro)>0) 
@@ -34,11 +34,11 @@ btb_add_inspire <- function(pts_centro, sEPSG, iCellSize, names_centro = c("x_ce
   stopifnot("sEPSG invalid" = nchar(as.character(sEPSG)) >= 4L)
   stopifnot("iCellSize invalid" = length(iCellSize) %in% c(1,nrow(pts_centro))) 
   
-  nb_lines_checked <- min(15,nrow(pts_centro))
-  res_modulo_x <- pts_centro[1:nb_lines_checked,names_centro[1]] %% iCellSize
-  res_modulo_y <- pts_centro[1:nb_lines_checked,names_centro[2]] %% iCellSize
-  stopifnot("Mismatch beetween centroids coordinates and iCellSize"=identical(length(unique(res_modulo_x)),1L) ) 
-  stopifnot("Mismatch beetween centroids coordinates and iCellSize"=identical(length(unique(res_modulo_y)),1L) ) 
+  # nb_lines_checked <- min(15,nrow(pts_centro))
+  # res_modulo_x <- pts_centro[1:nb_lines_checked,names_centro[1]] %% iCellSize
+  # res_modulo_y <- pts_centro[1:nb_lines_checked,names_centro[2]] %% iCellSize
+  # stopifnot("Mismatch beetween centroids coordinates and iCellSize"=identical(length(unique(res_modulo_x)),1L) ) 
+  # stopifnot("Mismatch beetween centroids coordinates and iCellSize"=identical(length(unique(res_modulo_y)),1L) ) 
   
   # Code : 
   pts_centro$idInspire <- paste0(

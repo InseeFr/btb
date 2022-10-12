@@ -7,6 +7,7 @@
 btb_add_centroids(
   pts,
   iCellSize,
+  offset = c(0L, 0L),
   names_coords = c("x", "y"),
   names_centro = c("x_centro", "y_centro"),
   add = T
@@ -19,6 +20,12 @@ btb_add_centroids(
 \itemize{
 \item size of the square cells (\strong{meters})
 \item Taille des côtés des carreaux (\strong{mètres})
+}}
+
+\item{offset}{(\strong{numeric vector of size 2})
+\itemize{
+\item Offset for a grid non centered on the geographical referential origin
+\item Décalage si utilisation d'une grille non centrée sur l'origine du référentiel géographique
 }}
 
 \item{names_coords}{:

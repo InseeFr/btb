@@ -23,8 +23,8 @@
 #' 
 #' (Taille des carreaux de la grille. Si cet argument est fourni, la grille est régulière.)
 #' @param names_centro  (**character vector**)
-#'  - vector of names for longitude/latitude variables. Default c("x_centroide","y_centroide").
-#'  - vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centroide","y_centroide")
+#'  - vector of names for longitude/latitude variables. Default c("x_centro","y_centro").
+#'  - vecteur des noms des variables de longitude/latitude. Par défaut :  c("x_centro","y_centro")
 #' @param inspire (boolean) : if TRUE, returns a column for Inspire grid names.
 #'
 #' @return 
@@ -34,8 +34,8 @@
 #' 
 #' @examples  
 #' # example 1 - regular grid
-#' pts <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
-#' y_centroide = c(100, 300, 100, 300, 100))
+#' pts <- data.frame(x_centro = c(100, 100, 300, 300, 500), 
+#' y_centro = c(100, 300, 100, 300, 100))
 #' carResult <- btb_ptsToGrid(pts = pts, sEPSG = "2154", iCellSize = 200)
 #' # write_sf(obj = carResult, dsn = "regularGrid.shp", delete_layer = TRUE)
 #' 
@@ -61,7 +61,7 @@
 
 
 
-btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_centroide","y_centroide"), inspire = F)
+btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_centro","y_centro"), inspire = F)
 {
   # Test of parameters
   stopifnot("pts must be a df object"= is.data.frame(pts))

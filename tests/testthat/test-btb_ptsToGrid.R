@@ -1,7 +1,7 @@
 test_that("btb_ptsToGrid works", {
 
-  pts1 <- data.frame(x_centroide = c(100, 100, 300, 300, 500), y_centroide = c(100, 300, 100, 300, 100))
-  sfpts1 <- sf::st_as_sf(pts1,coords=c("x_centroide","y_centroide"),crs=2154)
+  pts1 <- data.frame(x_centro = c(100, 100, 300, 300, 500), y_centro = c(100, 300, 100, 300, 100))
+  sfpts1 <- sf::st_as_sf(pts1,coords=c("x_centro","y_centro"),crs=2154)
   
   result0 <- btb::btb_ptsToGrid(pts = pts1, iCellSize = 200)
   result1 <- btb_ptsToGrid(pts = pts1, sEPSG = "2154", iCellSize = 200)

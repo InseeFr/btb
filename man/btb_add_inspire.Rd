@@ -8,7 +8,7 @@ btb_add_inspire(
   pts_centro,
   sEPSG,
   iCellSize,
-  names_centro = c("x_centroide", "y_centroide")
+  names_centro = c("x_centro", "y_centro")
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ btb_add_inspire(
 
 \item{iCellSize}{(\strong{integer}) : cells size(s) in meters. Can be a vector for irregular grids}
 
-\item{names_centro}{(\strong{character vector}) : vector of names for longitude/latitude variables. Default c("x_centroide","y_centroide").}
+\item{names_centro}{(\strong{character vector}) : vector of names for longitude/latitude variables. Default c("x_centro","y_centro").}
 }
 \value{
 (\strong{df}) pts_centro table with additional \emph{idInspire} variable
@@ -39,7 +39,7 @@ Creates Inpire names for a grid defined with :
 }
 }
 \examples{
-pts_centro <- data.frame(x_centroide = c(100, 100, 300, 300, 500), 
-y_centroide = c(100, 300, 100, 300, 100))
+pts_centro <- data.frame(x_centro = c(100, 100, 300, 300, 500), 
+y_centro = c(100, 300, 100, 300, 100))
 btb_add_inspire(pts_centro, sEPSG = 2154, iCellSize = 200)
 }
