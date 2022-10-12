@@ -66,7 +66,7 @@ btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_c
   # Test of parameters
   stopifnot("pts must be a df object"= is.data.frame(pts))
   stopifnot("No size for cells"= !is.null(iCellSize) | !is.null(pts[["iCellSize"]]))
-  stopifnot("sEPSG not valid "= is.na(sEPSG) | identical(nchar(as.character(sEPSG)),4L))
+  stopifnot("sEPSG not valid "= is.na(sEPSG) | nchar(as.character(sEPSG)) >= 4L )
   
   # If pts is a sf objet
   if("sf" %in% class(pts)){

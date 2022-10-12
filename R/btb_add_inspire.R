@@ -31,7 +31,7 @@ btb_add_inspire <- function(pts_centro, sEPSG, iCellSize, names_centro = c("x_ce
   # Checks : 
   stopifnot("Problem with centroid df" = nrow(pts_centro)>0) 
   stopifnot("Problem with centroids coordinates names" = sum(names_centro %in% colnames(pts_centro)) == 2) 
-  stopifnot("sEPSG invalid" = identical(nchar(as.character(sEPSG)),4L)) 
+  stopifnot("sEPSG invalid" = nchar(as.character(sEPSG)) >= 4L)
   stopifnot("iCellSize invalid" = length(iCellSize) %in% c(1,nrow(pts_centro))) 
   
   nb_lines_checked <- min(15,nrow(pts_centro))
