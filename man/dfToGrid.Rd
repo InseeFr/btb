@@ -4,13 +4,17 @@
 \alias{dfToGrid}
 \title{dfToGrid}
 \usage{
-dfToGrid(...)
+dfToGrid(df, sEPSG, iCellSize = NULL)
 }
 \arguments{
-\item{...}{whatever}
+\item{df}{centroid points}
+
+\item{sEPSG}{epsg code}
+
+\item{iCellSize}{cell size}
 }
 \value{
-a warning message
+a grid
 }
 \description{
 Function dfToGrid has been replaced by btb_ptsToGrid

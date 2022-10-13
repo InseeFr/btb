@@ -4,10 +4,36 @@
 \alias{kernelSmoothing}
 \title{kernelSmoothing}
 \usage{
-kernelSmoothing(...)
+kernelSmoothing(
+  dfObservations,
+  sEPSG,
+  iCellSize,
+  iBandwidth,
+  vQuantiles = NULL,
+  dfCentroids = NULL,
+  fUpdateProgress = NULL,
+  iNeighbor = NULL,
+  iNbObsMin = 250
+)
 }
 \arguments{
-\item{...}{whatever}
+\item{dfObservations}{points}
+
+\item{sEPSG}{epsg code}
+
+\item{iCellSize}{cell size}
+
+\item{iBandwidth}{smoothing bandwidth}
+
+\item{vQuantiles}{quantiles}
+
+\item{dfCentroids}{user grid}
+
+\item{fUpdateProgress}{message parameter}
+
+\item{iNeighbor}{number of neighbors pixels}
+
+\item{iNbObsMin}{technical parameter}
 }
 \value{
 a warning message

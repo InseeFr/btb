@@ -40,13 +40,14 @@ Details on how to use the package can be found in its [documentation](man). Some
 
 Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 
-Authors and contributors:
-- Arlindo DOS SANTOS [aut],
-- François SEMECURBE [aut],
+Creators, authors and contributors:
+- Arlindo DOS SANTOS [cre],
+- François SEMECURBE [cre],
+- Julien PRAMIL [aut]
 - Auriane RENAUD [ctb],
 - Farida MAROUCHI [ctb]
 - Joachim TIMOTEO [ctb]
-- Julien PRAMIL [ctb]
+
 
 ## References
 
