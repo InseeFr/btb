@@ -1,5 +1,9 @@
 # Beyond the Border <img src="man/figures/logo.png" width=200 align="right" />
 
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/jpramil/btb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jpramil/btb/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
 [![CRAN_Status](http://www.r-pkg.org/badges/version/btb)](https://cran.r-project.org/package=btb)
 
 `btb` ("Beyond the Border - Kernel Density Estimation for Urban Geography") is an R package which provides functions dedicated to urban analysis and density estimation using the KDE (kernel density estimator) method. 
