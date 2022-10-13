@@ -62,14 +62,6 @@
 #' - "Geographically weighted summary statistics : a framework for localised exploratory data analysis", C.Brunsdon & al., in Computers, Environment and Urban Systems 2002
 #' - Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, 2003, pp. 83-86
 #' 
-#' @author 
-#' - Psar Analyse Urbaine Insee 
-#' - Thierry Cornely
-#' - Laure Genebes
-#' - Arlindo Dos Santos
-#' - Cynthia Faivre
-#' - Auriane Renaud 
-#' - Francois Semecurbe
 #' 
 #' @export
 #' 
