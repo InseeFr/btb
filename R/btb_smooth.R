@@ -230,7 +230,15 @@ btb_smooth <-
     {
       if (min(vQuantiles) <= 0 || max(vQuantiles) >= 1)
         stop("Invalid quantiles values")
-    }    
+    }
+    
+    # Absence de variables characters
+    vartest <- colnames(pts)[!colnames(pts) %in% c("x","y")]
+    if(length(vartest)>0){
+      nb_charvar <- pts[,vartest] %>% lapply(is.character) %>% unlist() %>% sum()
+      stopifnot("No character variables permitted"=identical(nb_charvar,0L))
+    }
+ 
     
     
     # *********************************************************
