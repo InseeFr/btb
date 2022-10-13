@@ -134,14 +134,3 @@ choroLayer(reunionSmoothed, var = "houhold_05", nclass = 5, method = "fisher-jen
 \item Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, 2003, pp. 83-86
 }
 }
-\author{
-\itemize{
-\item Psar Analyse Urbaine Insee
-\item Thierry Cornely
-\item Laure Genebes
-\item Arlindo Dos Santos
-\item Cynthia Faivre
-\item Auriane Renaud
-\item Francois Semecurbe
-}
-}
