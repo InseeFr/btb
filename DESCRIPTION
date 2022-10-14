@@ -27,12 +27,12 @@ Depends:
     dplyr,
     mapsf
 Author: 
-  Arlindo Dos Santos [aut],
-  Francois Semecurbe [aut],
-  Auriane Renaud [ctb],
-  Cynthia Faivre [ctb],
-  Thierry Cornely [ctb],
-  Farida Marouchi [ctb],
+  Arlindo DOS SANTOS [cre],
+  François SEMECURBE [cre],
+  Julien PRAMIL [aut]
+  Auriane RENAUD [ctb],
+  Farida MAROUCHI [ctb]
+  Joachim TIMOTEO [ctb]
   Institut national de la statistique et des études économiques [cph]
 Maintainer: 
   Kim Antunez <antuki.kim+cran@gmail.com>
