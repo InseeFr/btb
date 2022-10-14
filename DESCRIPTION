@@ -29,8 +29,8 @@ Depends:
 Author: 
   Arlindo DOS SANTOS [cre],
   François SEMECURBE [cre],
-  Kim ANTUNEZ [aut],
   Julien PRAMIL [aut],
+  Kim ANTUNEZ [ctb],
   Auriane RENAUD [ctb],
   Farida MAROUCHI [ctb]
   Joachim TIMOTEO [ctb]
@@ -43,7 +43,8 @@ LinkingTo:
     BH (>= 1.60.0-1), 
     RcppArmadillo
 LazyData: true
-URL: https://github.com/InseeFr/btb
+URL: https://github.com/InseeFr/btb,
+    https://jpramil.github.io/btb/
 BugReports: https://github.com/InseeFr/btb/issues
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
