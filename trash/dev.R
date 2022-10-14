@@ -78,3 +78,7 @@ Rcpp::compileAttributes()
 
 usethis::use_vignette("vignette_btb")
 build_rmd("vignettes/vignette_btb.Rmd")
+
+# pkgdown website
+usethis::use_pkgdown()
+pkgdown::build_site()

@@ -43,6 +43,7 @@ Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 Creators, authors and contributors:
 - Arlindo DOS SANTOS [cre],
 - François SEMECURBE [cre],
+- Kim ANTUNEZ [aut],
 - Julien PRAMIL [aut]
 - Auriane RENAUD [ctb],
 - Farida MAROUCHI [ctb]
