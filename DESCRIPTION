@@ -44,7 +44,7 @@ LinkingTo:
     RcppArmadillo
 LazyData: true
 URL: https://github.com/InseeFr/btb,
-    https://jpramil.github.io/btb/
+    https://inseefr.github.io/btb/
 BugReports: https://github.com/InseeFr/btb/issues
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
