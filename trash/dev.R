@@ -81,4 +81,8 @@ build_rmd("vignettes/vignette_btb.Rmd")
 
 # pkgdown website
 usethis::use_pkgdown()
+gitcreds::gitcreds_set("https://github.com/jpramil/btb")
+gitcreds::gitcreds_set()
+usethis::use_pkgdown_github_pages()
+gh_token_help()
 pkgdown::build_site()
