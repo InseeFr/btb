@@ -1,7 +1,7 @@
 # Beyond the Border <img src="man/figures/logo.png" width=200 align="right" />
 
 <!-- badges: start -->
-  [![R-CMD-check](https://github.com/jpramil/btb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jpramil/btb/actions/workflows/R-CMD-check.yaml)
+  [![R-CMD-check](https://github.com/InseeFr/btb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/InseeFr/btb/actions/workflows/R-CMD-check.yaml)
   <!-- badges: end -->
 
 [![CRAN_Status](http://www.r-pkg.org/badges/version/btb)](https://cran.r-project.org/package=btb)
@@ -12,12 +12,13 @@ A partial transposition of the package in Python is also available: [btbpy](http
 
 ## Description
 
- The btb_smooth() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
 
-- The first call mode is btb_smooth(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
-- The second call mode is btb_smooth(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
-- The third call mode is btb_smooth(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
-- The fourth call mode is btb_smooth(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
+The `btb_smooth()` function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
+
+- The first call mode is `btb_smooth(obs, epsg, cellsize, bandwith)` for a classical kernel smoothing and automatic grid.
+- The second call mode is `btb_smooth(obs, epsg, cellsize, bandwith, quantiles)` for a geographically weighted median and automatic grid.
+- The third call mode is `btb_smooth(obs, epsg, cellsize, bandwith, centroids)` for a classical kernel smoothing and user grid.
+- The fourth call mode is `btb_smooth(obs, epsg, cellsize, bandwith, quantiles, centroids)` for a geographically weighted median and user grid.
 
 ## Installation
 
@@ -26,7 +27,8 @@ A partial transposition of the package in Python is also available: [btbpy](http
 install.packages("btb")
 ```
 
-It is also possible to install it from the GitHub repository using `devtools`
+To get a bug fix or to use a feature from the development version, you can install the development version of from GitHub :
+
 ```
 install.packages("devtools")
 devtools::install_github("InseeFr/btb")
@@ -34,17 +36,18 @@ devtools::install_github("InseeFr/btb")
 
 ## Usage 
 
-Details on how to use the package can be found in its [documentation](man). Some applications for spatial smoothing are presented in [chapter 8](https://www.insee.fr/en/statistiques/fichier/3635545/imet131-l-chapitre-8.pdf) of the [Handbook of Spatial Analysis](https://www.insee.fr/en/information/3635545) published by Insee.
+Details on how to use the package can be found in its [documentation](man). Some applications for spatial smoothing are presented in [chapter 8](https://www.insee.fr/en/statistiques/fichier/3635545/imet131-l-chapitre-8.pdf) of the [Handbook of Spatial Analysis](https://www.insee.fr/en/information/3635545) published by Insee. You advise you to start by consulting the [vignette](https://inseefr.github.io/btb/articles/btb.html) of the package
 
 ## Contributions
 
 Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 
-Creators, authors and contributors:
+Creators, authors and contributors: 
+
 - Arlindo DOS SANTOS [cre],
 - François SEMECURBE [cre],
-- Kim ANTUNEZ [aut],
 - Julien PRAMIL [aut]
+- Kim ANTUNEZ [ctb],
 - Auriane RENAUD [ctb],
 - Farida MAROUCHI [ctb]
 - Joachim TIMOTEO [ctb]

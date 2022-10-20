@@ -15,7 +15,9 @@
 #' @export
 
 kernelSmoothing <- function(dfObservations,sEPSG, iCellSize, iBandwidth, vQuantiles = NULL, dfCentroids = NULL, fUpdateProgress = NULL, iNeighbor = NULL, iNbObsMin = 250){
-  warning("Function kernelSmoothing is deprecated : please use btb_smooth instead")
+  
+  warning("`btb::kernelSmoothing()` was deprecated in btb 0.2.0. Please use `btb::btb_smooth())` instead.",
+          immediate. = TRUE) 
   return(btb::btb_smooth(pts = dfObservations, 
                          sEPSG = sEPSG,
                          iCellSize = iCellSize ,

@@ -10,12 +10,15 @@
 #'
 
 dfToGrid <- function(df, sEPSG, iCellSize = NULL){
-  warning("Function dfToGrid is deprecated : please use btb_ptsToGrid instead")
+  
+  warning("`btb::dfToGrid()` was deprecated in btb 0.2.0. Please use `btb::btb_ptsToGrid())` instead.",
+          immediate. = TRUE) 
+  
   return(
     btb::btb_ptsToGrid(pts = df,
                        sEPSG = sEPSG,
                        iCellSize = iCellSize,
                        names_centro = c("x","y"),
-                       inspire = F)
+                       inspire = FALSE)
     )
 }

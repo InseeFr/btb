@@ -10,7 +10,7 @@ btb_add_centroids(
   offset = c(0L, 0L),
   names_coords = c("x", "y"),
   names_centro = c("x_centro", "y_centro"),
-  add = T
+  add = TRUE
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ btb_add_centroids(
 
 \item{iCellSize}{:
 \itemize{
-\item size of the square cells (\strong{meters})
+\item Size of the square cells (\strong{meters})
 \item Taille des côtés des carreaux (\strong{mètres})
 }}
 
@@ -66,8 +66,9 @@ Works with sf points but only with coordinates in meters (and not degrees !). Do
 pts <- data.frame(
 x = c(656913.1 , 348296.3 , 842276.3 , 716750.0 , 667418.2),
 y = c(6855995 , 6788073 , 6385680 , 7003984 , 6585793),
-val=1:5)
-btb_add_centroids(pts,100,names_centro=c("centroX","centroY"))
-pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
-btb_add_centroids(pts2,50)
+val = 1:5)
+btb_add_centroids(pts, 100, names_centro = c("centroX", "centroY"))
+btb_add_centroids(pts, 100, offset = c(50, 50), names_centro = c("centroX", "centroY"))
+pts2 <- sf::st_as_sf(pts, coords = c("x","y"), crs = 2154)
+btb_add_centroids(pts2, 50)
 }

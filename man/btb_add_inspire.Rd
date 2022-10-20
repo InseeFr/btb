@@ -27,15 +27,15 @@ btb_add_inspire(
 Creates Inpire names for a grid defined with :
 \itemize{
 \item centroids coordinates
-\item squares size(s)
+\item Squares size(s)
 \item Projection system
 }
 
-(Ajoute les noms des identifiants en norme Inspire des carreaux définis à partir de :
+Ajoute les noms des identifiants en norme Inspire des carreaux définis à partir :
 \itemize{
 \item des coordonnées de leurs centroides
-\item la taille de leur côté en mètres
-\item un système de projection)
+\item de la taille de leur côté en mètres
+\item d'un système de projection)
 }
 }
 \examples{

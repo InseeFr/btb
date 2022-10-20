@@ -8,7 +8,7 @@
 #'
 #' @param pts : points (`df` of `sf` object)
 #' @param iCellSize : 
-#'   - size of the square cells (**meters**)
+#'   - Size of the square cells (**meters**)
 #'   - Taille des côtés des carreaux (**mètres**)
 #' @param names_coords :
 #' - Names of the latitude-longitude variables (**character vector**)
@@ -33,20 +33,23 @@
 #' pts <- data.frame(
 #' x = c(656913.1 , 348296.3 , 842276.3 , 716750.0 , 667418.2),
 #' y = c(6855995 , 6788073 , 6385680 , 7003984 , 6585793),
-#' val=1:5)
-#' btb_add_centroids(pts,100,names_centro=c("centroX","centroY"))
-#' pts2 <- sf::st_as_sf(pts,coords=c("x","y"),crs=2154)
-#' btb_add_centroids(pts2,50)
+#' val = 1:5)
+#' btb_add_centroids(pts, 100, names_centro = c("centroX", "centroY"))
+#' btb_add_centroids(pts, 100, offset = c(50, 50), names_centro = c("centroX", "centroY"))
+#' pts2 <- sf::st_as_sf(pts, coords = c("x","y"), crs = 2154)
+#' btb_add_centroids(pts2, 50)
 
 
 
-btb_add_centroids <- function(pts,iCellSize,offset=c(0L,0L),names_coords=c("x","y"),names_centro=c("x_centro","y_centro"),add=T){
+btb_add_centroids <- function(pts, iCellSize, offset = c(0L,0L), 
+                              names_coords = c("x", "y"), names_centro = c("x_centro","y_centro"),
+                              add = TRUE){
   
   # Checks *************
   
   stopifnot("Incorrect cells size"=is.numeric(iCellSize))
   stopifnot("Cells size non-positive"=iCellSize>0)
-  stopifnot("Offset must be inferior thant iCellSize"=identical(offset<iCellSize,c(T,T)))
+  stopifnot("Offset must be inferior thant iCellSize"=identical(offset<iCellSize,c(TRUE,TRUE)))
   
   if("sf" %in% class(pts)){
     stopifnot("Polygons must be points !"=unique(as.vector(sf::st_geometry_type(pts)))=="POINT")

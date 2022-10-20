@@ -1,17 +1,32 @@
 # btb 0.2.0
 
+* Change of maintainer, new authors (november 2022)
 * Change `dfToGrid` name (to `btb_ptsToGrid`)
 * Allow `btb_ptsToGrid` to use simple feature points as input
 * Change `kernelSmoothing` name (to `btb_smooth`)
 * Allow `btb_ptsToGrid` to use simple feature points as input
 * New function to link points to their centroid in a grid (`btb_add_centroides`)
-* Updates messages when smoothing removed (dirty in RcppLissage.cpp)
+* Updates messages when smoothing removed (in RcppLissage.cpp)
 * Old functions `dfToGrid` and `kernelSmoothing` replaced by warnings
 * Possibility to use Inspire naming for grid cells (with `btb_add_inspire` function) 
 * Roxygen documentation
 * testthat compatible tests
 * New tests
-* New vignette
+* Add vignette
+* Add pkgdown website
+
+# btb 0.1.8
+
+* add `iNbObsMin` for classical smoothing
+* `smoothingToGrid` integrated in `kernelSmoothing`
+
+# btb 0.1.7
+
+* function `updateProgress` for `smoothingToGrid`
+
+# btb 0.1.6
+
+* `iNeighbor` parameter
 
 # btb 0.1.19
 
@@ -66,6 +81,18 @@
 * check if x and y are not null
 * encoding source files in UTF-8  
 
+# btb 0.1.1
+
+* small bugs correction
+
+# btb 0.1.0
+
+* `kernelSmoothingMedian` function
+
 # btb 0.0.7
 
 * initial release of the package
+
+
+
+

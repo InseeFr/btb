@@ -5,14 +5,14 @@
 #' Creates Inpire names for a grid defined with :
 #'   
 #'   - centroids coordinates
-#'   - squares size(s)
+#'   - Squares size(s)
 #'   - Projection system 
 #' 
-#' (Ajoute les noms des identifiants en norme Inspire des carreaux définis à partir de :
+#' Ajoute les noms des identifiants en norme Inspire des carreaux définis à partir :
 #'   
 #'   - des coordonnées de leurs centroides
-#'   - la taille de leur côté en mètres
-#'   - un système de projection)
+#'   - de la taille de leur côté en mètres
+#'   - d'un système de projection)
 #'
 #' @param pts_centro (**df object**) : table of centroids.  
 #' @param sEPSG (**integer or character**) : epsg code.
