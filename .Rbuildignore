@@ -1,2 +1,7 @@
 ^\.github$
 LICENSE
+^.*\.Rproj$
+^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

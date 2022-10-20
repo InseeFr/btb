@@ -6,9 +6,14 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // constituerGrappes
 arma::Mat<int> constituerGrappes(const unsigned int iNbObsMin, const arma::Mat<int>& mEffectifs);
-RcppExport SEXP btb_constituerGrappes(SEXP iNbObsMinSEXP, SEXP mEffectifsSEXP) {
+RcppExport SEXP _btb_constituerGrappes(SEXP iNbObsMinSEXP, SEXP mEffectifsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +25,7 @@ END_RCPP
 }
 // coordonneesGrappe
 std::vector<int> coordonneesGrappe(int iNiveauMax, int iNoGrappe);
-RcppExport SEXP btb_coordonneesGrappe(SEXP iNiveauMaxSEXP, SEXP iNoGrappeSEXP) {
+RcppExport SEXP _btb_coordonneesGrappe(SEXP iNiveauMaxSEXP, SEXP iNoGrappeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,7 +37,7 @@ END_RCPP
 }
 // constituerMatriceEffectifs
 arma::Mat<int> constituerMatriceEffectifs(IntegerVector vLigneObservation, IntegerVector vColonneObservation);
-RcppExport SEXP btb_constituerMatriceEffectifs(SEXP vLigneObservationSEXP, SEXP vColonneObservationSEXP) {
+RcppExport SEXP _btb_constituerMatriceEffectifs(SEXP vLigneObservationSEXP, SEXP vColonneObservationSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,7 +49,7 @@ END_RCPP
 }
 // calculeQuantiles
 std::vector<double> calculeQuantiles(std::vector<double>& vModalites, std::vector<double>& vPonderation, const std::vector<double> vQuantiles);
-RcppExport SEXP btb_calculeQuantiles(SEXP vModalitesSEXP, SEXP vPonderationSEXP, SEXP vQuantilesSEXP) {
+RcppExport SEXP _btb_calculeQuantiles(SEXP vModalitesSEXP, SEXP vPonderationSEXP, SEXP vQuantilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -57,7 +62,7 @@ END_RCPP
 }
 // rcppLissageMedian
 arma::mat rcppLissageMedian(std::vector<int> vXobservations, std::vector<int> vYobservations, int iRayon, arma::mat& mVar, std::vector<int> vXCentroides, std::vector<int> vYCentroides, std::vector<double> vQuantiles);
-RcppExport SEXP btb_rcppLissageMedian(SEXP vXobservationsSEXP, SEXP vYobservationsSEXP, SEXP iRayonSEXP, SEXP mVarSEXP, SEXP vXCentroidesSEXP, SEXP vYCentroidesSEXP, SEXP vQuantilesSEXP) {
+RcppExport SEXP _btb_rcppLissageMedian(SEXP vXobservationsSEXP, SEXP vYobservationsSEXP, SEXP iRayonSEXP, SEXP mVarSEXP, SEXP vXCentroidesSEXP, SEXP vYCentroidesSEXP, SEXP vQuantilesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -74,7 +79,7 @@ END_RCPP
 }
 // rcppLissage
 NumericMatrix rcppLissage(IntegerVector vXObservation, IntegerVector vYObservation, IntegerVector vLigneObservation, IntegerVector vColonneObservation, int iPas, int iRayon, int iNeighbor, NumericMatrix mVariables, int iNumberCols, int iNumberRows, int iMinXCentroide, int iMinYCentroide, IntegerMatrix mIcentroide, int iNbCentroides, Nullable <Function> updateProgress);
-RcppExport SEXP btb_rcppLissage(SEXP vXObservationSEXP, SEXP vYObservationSEXP, SEXP vLigneObservationSEXP, SEXP vColonneObservationSEXP, SEXP iPasSEXP, SEXP iRayonSEXP, SEXP iNeighborSEXP, SEXP mVariablesSEXP, SEXP iNumberColsSEXP, SEXP iNumberRowsSEXP, SEXP iMinXCentroideSEXP, SEXP iMinYCentroideSEXP, SEXP mIcentroideSEXP, SEXP iNbCentroidesSEXP, SEXP updateProgressSEXP) {
+RcppExport SEXP _btb_rcppLissage(SEXP vXObservationSEXP, SEXP vYObservationSEXP, SEXP vLigneObservationSEXP, SEXP vColonneObservationSEXP, SEXP iPasSEXP, SEXP iRayonSEXP, SEXP iNeighborSEXP, SEXP mVariablesSEXP, SEXP iNumberColsSEXP, SEXP iNumberRowsSEXP, SEXP iMinXCentroideSEXP, SEXP iMinYCentroideSEXP, SEXP mIcentroideSEXP, SEXP iNbCentroidesSEXP, SEXP updateProgressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -99,7 +104,7 @@ END_RCPP
 }
 // rcppLissageMedianGrappe
 NumericMatrix rcppLissageMedianGrappe(int iMinObsGrappe, IntegerVector vXObservation, IntegerVector vYObservation, IntegerVector vLigneObservation, IntegerVector vColonneObservation, int iPas, int iRayon, NumericMatrix mVariables, IntegerVector vXCentroide, IntegerVector vYCentroide, IntegerVector vLigneCentroide, IntegerVector vColonneCentroide, NumericVector vQuantile);
-RcppExport SEXP btb_rcppLissageMedianGrappe(SEXP iMinObsGrappeSEXP, SEXP vXObservationSEXP, SEXP vYObservationSEXP, SEXP vLigneObservationSEXP, SEXP vColonneObservationSEXP, SEXP iPasSEXP, SEXP iRayonSEXP, SEXP mVariablesSEXP, SEXP vXCentroideSEXP, SEXP vYCentroideSEXP, SEXP vLigneCentroideSEXP, SEXP vColonneCentroideSEXP, SEXP vQuantileSEXP) {
+RcppExport SEXP _btb_rcppLissageMedianGrappe(SEXP iMinObsGrappeSEXP, SEXP vXObservationSEXP, SEXP vYObservationSEXP, SEXP vLigneObservationSEXP, SEXP vColonneObservationSEXP, SEXP iPasSEXP, SEXP iRayonSEXP, SEXP mVariablesSEXP, SEXP vXCentroideSEXP, SEXP vYCentroideSEXP, SEXP vLigneCentroideSEXP, SEXP vColonneCentroideSEXP, SEXP vQuantileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

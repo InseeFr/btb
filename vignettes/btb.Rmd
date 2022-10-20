@@ -1,0 +1,348 @@
+---
+title: "Spatial smoothing with `btb` R package"
+author: "Julien PRAMIL"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Spatial smoothing with BTB R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.height = 5,
+  fig.width = 5,fig.align = 'center'
+  
+  
+)
+```
+
+
+This document will show you :
+
+* How to install `btb`
+* How to perform spatial smoothing :
+  * densities
+  * means
+  * rates
+  * quantiles smoothing
+
+Furthermore, it will introduce a way to map your results using `mapsf` package and how to save your smoothed spatial data using `sf`. 
+
+# Install `btb`
+
+`btb` is available on CRAN : 
+
+```{r setup , eval = FALSE}
+install.packages("btb")
+```
+
+To get a bug fix or to use a feature from the development version, you can install the development version of from GitHub :
+
+```{r, eval = F}
+install.packages("remotes")
+remotes::install_github("InseeFr/btb")
+```
+
+
+# Perform spatial smoothing
+
+## Warning with personal data 
+
+Spatial smoothing generally reduces individual data disclosure. 
+However, smoothed data can contain individual information.
+Please remain cautious in any case. 
+
+## Smoothing gas station prices
+
+### The data
+
+`btb` package provides several data tables.
+
+For every gas station in metropolitan France, the `dfPrix_SP95_2016` table gives :
+
+  * longitude / latitude coordinates (as numeric variables)
+  * annual mean price for unleaded gasoline in euros in 2016
+
+```{r seepoints , eval = T}
+library(btb)
+data(dfPrix_SP95_2016)
+head(dfPrix_SP95_2016)
+```
+
+Let's visualize these stations : 
+  
+  * First, use `sf` package to transform your data.frame as geometric points.
+  * Then, plot them
+
+```{r cartopoints}
+library(sf)
+sfPrix_SP95_2016 <- st_as_sf(dfPrix_SP95_2016,coords = c("x","y"), crs=2154)
+plot(sfPrix_SP95_2016$geometry)
+```
+
+## Optional step : from points to aggregate grids
+
+To figure out your spatial distribution before smoothing you data, it can be interesting to aggregate your points inside a grid (e.g : number of gas stations in 20 km pixels grid), because the smoothing is less time-consuming  
+
+`btb` provides the `btb_add_centroids` and the `btb_ptsToGrid` functions to make it easy : 
+
+* First, associate each point with the centroid of its pixel (`btb_add_centroids`). `x_centro` and `y_centro` are created in the table.^[By default, the grid is centered on the geographical referential origin. If you want to shift this origin, use the `offset` parameter.]
+
+```{r, addcentro}
+dfPrix_SP95_2016 <- btb_add_centroids(dfPrix_SP95_2016, 
+                                      iCellSize = 20000,
+                                      names_coords = c("x","y"))
+head(dfPrix_SP95_2016)
+```
+
+* Second, aggregate your data by centroids
+
+```{r checkgrid, warning=FALSE}
+library(dplyr)
+centro_values <- dfPrix_SP95_2016 %>%
+  group_by(x_centro, y_centro) %>%
+  summarise(pricemean=mean(SP95, rm.na = TRUE))
+```
+
+* Finally, associate each centroid coordinates with its geometric polygon (`btb_ptsToGrid`)
+
+```{r checkgrid2}
+grid_values <- btb_ptsToGrid(centro_values, sEPSG = 2154,
+                             iCellSize = 20000, 
+                             names_centro = c("x_centro","y_centro"))
+nrow(grid_values)
+head(grid_values)
+
+```
+
+Once you have your polygons and your aggregated data, you can map it.
+Here, we use the `mapsf` package to do so.
+
+```{r seegrid}
+library(mapsf)
+
+mapsf::mf_map(x = grid_values,
+       type = "choro",
+       var="pricemean",
+       breaks = "quantile",
+       nbreaks = 5,
+       lwd=1,
+       leg_val_rnd = 1)
+```
+
+This map represents your aggregated (mean price) but is not smoothed yet. 
+
+Despite its patchwork aspect, this map is a good first step to better understand your data.
+
+## First smoothing : the density of gas stations
+
+On the example below, we smooth the density of gas stations using 5\~000 km pixels and a 100 km bandwidth. 
+Note that we need to create a new dummy variable (equals to 1 for every station) to count the stations. 
+
+```{r smooth_density}
+
+pts_density <- dfPrix_SP95_2016[,c("x","y")]
+# Create dummy
+pts_density$stations_density <- 1L
+head(pts_density)
+
+# Smoothing
+smooth_density <- btb_smooth(
+  pts = pts_density,
+  sEPSG = 2154,
+  iBandwidth = 100000,
+  iCellSize = 5000)
+
+head(smooth_density)
+
+# Map
+mapsf::mf_map(x = smooth_density,
+       type = "choro",
+       var="stations_density",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+Note that `btb_smooth` is *conservative* : 
+
+* Number of gas stations in `pts_density` : `r sum(pts_density$stations_density)`
+* Number of gas station in `smooth_density` : `r sum(smooth_density$stations_density)`
+
+## Smoothing means : gas mean price
+
+Smoothing a ratio works almost the same way :
+
+- First, you need to smooth both numerator and denominator.
+- Then, to calculate a proper smoothed ratio, you must smooth separately numerator and denominator and then calculate the ratio. You must not smooth directly the ratio.
+
+Note that the `btb_smooth` function smoothes by default all numeric variables in the input points table (parameter `pts`).
+
+
+```{r smooth_mean_price}
+# Prepare your data
+pts_meanprice <- dfPrix_SP95_2016[,c("x","y","SP95")]
+pts_meanprice$stations_density <- 1L
+head(pts_meanprice)
+
+# Smooth both prices and station density
+smooth_density <- btb_smooth(
+  pts = pts_meanprice,
+  sEPSG = 2154,
+  iBandwidth = 100000,
+  iCellSize = 5000)
+
+head(smooth_density)
+
+# Calculate the smoothed mean (from smoothed nominator and denominator)
+smooth_density <- smooth_density %>% mutate(meanprice=SP95/stations_density)
+mapsf::mf_map(x = smooth_density,
+       type = "choro",
+       var="meanprice",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+```{r,include=F}
+Cstack_info()
+```
+
+## Quantile smoothing : smooth the distribution of gas prices
+
+Quantile smoothing is a different methodology. 
+
+Its major benefits are :
+
+  * less sensitive to outliers
+  * gives information on the distribution of your data
+
+<!-- For more theorical information, please see XXXXXX. -->
+
+
+```{r quantile_smooth}
+
+pts_quantiles <- dfPrix_SP95_2016[,c("x","y","SP95")]
+head(pts_quantiles)
+
+smooth_quantiles <- btb_smooth(pts = pts_quantiles, 
+                               sEPSG = 2154, iBandwidth = 100000,
+                               iCellSize = 5000,vQuantiles = c(0.5,0.9))
+
+head(smooth_quantiles)
+
+# Median smoothing : 
+mapsf::mf_map(x = smooth_quantiles,
+       type = "choro",
+       var="SP95_05",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+# Smooth the 9th decile :
+mapsf::mf_map(x = smooth_quantiles,
+       type = "choro",
+       var="SP95_09",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+
+```
+
+
+## The iNeighbor parameter
+
+Here, we use data which indicates the number of poor households in squared data (200 meters) of an island called "La Réunion".
+
+Each point is the centroid of the grid used to publish aggregated data (1\ 000 meters pixels).
+
+Let's smooth the proportion of poors among households with an **automatic grid** (`iNeighbor` parameter absent in `btb_smooth` function). 
+
+In the following example, note that the `btb_smooth` function accepts sf points in input (also the case with `btb_ptsToGrid`). 
+
+
+```{r ratesmooth}
+
+# Load data
+data("reunion")
+head(reunion)
+
+# Optional : transform as sf points
+sfreunion <- sf::st_as_sf(reunion,coords= c("x","y"), crs = 3727)
+plot(sfreunion$geometry)
+
+# btb_smooth with an automatic grid
+smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 5000)
+
+# Calculate the ratio
+smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
+
+# map
+mapsf::mf_map(x = smooth_reunion,
+       type = "choro",
+       var="prop_poors",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+Now, let's smooth the same ratio, with the same smoothing specifications (`iBandwidth` and `iCellSize`) but with `iNeighbor = 0`. In this case, the automatic grid only uses pixels that contain at least one data point (here, at least one household). The result is quite different.
+
+```{r neighboors}
+smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,iBandwidth = 5000, iNeighbor = 0)
+smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
+
+mapsf::mf_map(x = smooth_reunion,
+       type = "choro",
+       var="prop_poors",
+       breaks = "quantile",
+       nbreaks = 5,
+       border = NA,
+       leg_val_rnd = 1)
+```
+
+## Inspire naming
+
+Using the [Inspire norm](https://inspire.ec.europa.eu/), `btb_smooth` and `btb_ptsToGrid` allow you to name your pixels in a proper international way. It could be useful for reuse purpose, merge operations, etc.
+
+You just need to use `inspire = TRUE` : 
+
+```{r inspire}
+smooth_reunion <- btb_smooth(sfreunion,iCellSize = 500,
+                             iBandwidth = 2000, iNeighbor = 0, inspire = TRUE)
+smooth_reunion <- smooth_reunion %>% mutate(prop_poors = 100 * phouhold / houhold)
+head(smooth_reunion)
+
+```
+
+Then, to export your geometric data, you can use the `sf::write_sf` function.
+
+```{r export, eval=FALSE}
+sf::write_sf("MY/REPOSITORY/myfile.gpkg")
+```
+
+
+
+## References :
+
+
+- Geographically weighted summary statistics : a framework for localised exploratory data analysis, C.Brunsdon & al., in Computers, Environment and Urban Systems C.Brunsdon & al. (2002) [doi:10.1016/S0198-9715(01)00009-6](https://doi.org/10.1016/S0198-9715(01)00009-6) 
+- Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, pp. 83-86, (2003) [doi:10.1080/13658816.2014.937718](https://doi.org/10.1080/13658816.2014.937718).
+- https://inseefrlab.github.io/formation-r-lissage-spatial/tuto.html
+<!-- - Formation lissage théorique -->
+
+
+## Some interesting use cases 
+
+- https://mobile.twitter.com/DavidZumbach/status/1373166163497213952
+- http://r.iresmi.net/2019/05/11/kernel-spatial-smoothing-transforming-points-pattern-to-continuous-coverage/
+- https://semba-blog.netlify.app/06/30/2020/kernel-smoothin-of-spatial-data/
+- https://mobile.twitter.com/raffverduzco/status/1128075094524350464?lang=bg
+- https://githubmemory.com/repo/SNStatComp/awesome-official-statistics-software

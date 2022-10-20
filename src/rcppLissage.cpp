@@ -71,10 +71,10 @@ NumericMatrix rcppLissage(
   // fin cast pour threadsafety 
   
   // debut benchmark
-  clock_t timeBegin = clock();
-  double dTempsPasse;
-  double dTempsTotal = 0;
-  int iTempsRestant = 0;
+  //clock_t timeBegin = clock();
+  //double dTempsPasse;
+  //double dTempsTotal = 0;
+  //int iTempsRestant = 0;
   int iPourcentageEffectue;
   int iPourcentageEffectuePrecedent = 0;
   std::stringstream message;
@@ -150,30 +150,30 @@ NumericMatrix rcppLissage(
     }
     
     // debut benchmark
-    dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
+    //dTempsPasse = (clock() - timeBegin) / CLOCKS_PER_SEC;
     iPourcentageEffectue = 100 * iIndiceObsCourante / iNbObs;
     if(iPourcentageEffectuePrecedent != iPourcentageEffectue)  
     {
-      dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
-      iTempsRestant = ceil(dTempsTotal - dTempsPasse);
+      //dTempsTotal = dTempsPasse * 100 / iPourcentageEffectue;
+      //iTempsRestant = ceil(dTempsTotal - dTempsPasse);
       iPourcentageEffectuePrecedent = iPourcentageEffectue;
-      message.str("");
-      message << "Smoothing progress: " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s";
-      if(updateProgress.isNotNull())
-        as<Function>(updateProgress)(iPourcentageEffectue, message.str());
-      else
-        Rcpp::Rcout << "\r" << message.str();
+      //message.str("");
+      //message << "Smoothing progress: " << iPourcentageEffectue << "% - minimum remaining time: " << (iTempsRestant / 60) << "m " << (iTempsRestant % 60) << "s";
+      //if(updateProgress.isNotNull())
+      //  as<Function>(updateProgress)(iPourcentageEffectue, message.str());
+      //else
+      //  Rcpp::Rcout << "\r" << message.str();
     }
     // fin benchmark
   }
   
   // debut benchmark
-  message.str("");
-  message << "Smoothing duration: " << floor(dTempsTotal / 60) << "m " << ((int)dTempsTotal % 60) << "s                                                                                           ";
-  if(updateProgress.isNotNull())
-    as<Function>(updateProgress)(iPourcentageEffectue, message.str());
-  else
-    Rcpp::Rcout << "\n" << message.str();
+  //message.str("");
+  //message << "Smoothing duration: " << floor(dTempsTotal / 60) << "m " << ((int)dTempsTotal % 60) << "s                                                                                           ";
+  //if(updateProgress.isNotNull())
+  //  as<Function>(updateProgress)(iPourcentageEffectue, message.str());
+  //else
+  //  Rcpp::Rcout << "\n" << message.str();
   // fin benchmark
   
   return(wrap(mVariablesLissees));
