@@ -26,11 +26,11 @@ Depends:
     R (>= 3.3.0),
     dplyr,
     mapsf
-Authors@R: c(
-    person("Arlindo", "Dos Santos", role = c("aut", "cre")),
-    person("François", "Sémécurbe", role = c("aut", "cre")),
+Authors@R: c( 
+    person("Arlindo", "Dos Santos", role = c("aut")),
+    person("François", "Sémécurbe", role = c("aut")),
     person("Julien", "Pramil", role = c("aut")),
-    person("Kim", "Antunez", role = c("ctb")),
+    person("Kim", "Antunez", role = c("cre", "ctb"), email = "antuki.kim+cran@gmail.com"),
     person("Auriane", "Renaud", role = c("ctb")),
     person("Farida", "Marouchi", role = c("ctb")),
     person("Joachim", "Timotéo", role = c("ctb")),
