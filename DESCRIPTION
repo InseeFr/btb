@@ -26,15 +26,16 @@ Depends:
     R (>= 3.3.0),
     dplyr,
     mapsf
-Author: 
-  Arlindo DOS SANTOS [cre],
-  François SEMECURBE [cre],
-  Julien PRAMIL [aut],
-  Kim ANTUNEZ [ctb],
-  Auriane RENAUD [ctb],
-  Farida MAROUCHI [ctb]
-  Joachim TIMOTEO [ctb]
-  Institut national de la statistique et des études économiques [cph]
+Authors@R: c(
+    person("Arlindo", "Dos Santos", role = c("aut", "cre")),
+    person("François", "Sémécurbe", role = c("aut", "cre")),
+    person("Julien", "Pramil", role = c("aut")),
+    person("Kim", "Antunez", role = c("ctb")),
+    person("Auriane", "Renaud", role = c("ctb")),
+    person("Farida", "Marouchi", role = c("ctb")),
+    person("Joachim", "Timotéo", role = c("ctb")),
+    person("Institut national de la statistique et des études économiques", role = c("cph"))
+  )
 Maintainer: 
   Kim Antunez <antuki.kim+cran@gmail.com>
 LinkingTo: 
