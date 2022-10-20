@@ -44,10 +44,10 @@ Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
 
 Creators, authors and contributors: 
 
-- Arlindo DOS SANTOS [cre],
-- François SEMECURBE [cre],
+- Arlindo DOS SANTOS [aut],
+- François SEMECURBE [aut],
 - Julien PRAMIL [aut]
-- Kim ANTUNEZ [ctb],
+- Kim ANTUNEZ [cre, ctb],
 - Auriane RENAUD [ctb],
 - Farida MAROUCHI [ctb]
 - Joachim TIMOTEO [ctb]
