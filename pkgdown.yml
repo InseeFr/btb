@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   btb: btb.html
-last_built: 2022-10-20T19:24Z
+last_built: 2022-10-20T20:59Z
 urls:
   reference: https://inseefr.github.io/btb/reference
   article: https://inseefr.github.io/btb/articles
