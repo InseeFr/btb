@@ -3,7 +3,7 @@
 \docType{data}
 \name{dfRestaurantParis}
 \alias{dfRestaurantParis}
-\title{Unleaded 95 price in France in 2016  (Prix du sans plomb 95 en france en 2016)}
+\title{Parisian restaurants}
 \format{
 \subsection{\code{dfRestaurantParis}}{
 

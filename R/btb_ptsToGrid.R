@@ -1,5 +1,5 @@
-#' @title  btb_ptsToGrid
-#' 
+#' @title Compute a grid from centroid points
+#' @name btb_ptsToGrid
 #' @encoding UTF-8
 #' 
 #' @description 

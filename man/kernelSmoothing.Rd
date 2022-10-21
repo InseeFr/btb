@@ -2,7 +2,7 @@
 % Please edit documentation in R/kernelSmoothing.R
 \name{kernelSmoothing}
 \alias{kernelSmoothing}
-\title{kernelSmoothing}
+\title{Depreciated function of btb_smooth}
 \usage{
 kernelSmoothing(
   dfObservations,

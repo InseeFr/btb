@@ -2,7 +2,7 @@
 % Please edit documentation in R/btb_add_centroids.R
 \name{btb_add_centroids}
 \alias{btb_add_centroids}
-\title{btb_add_centroids}
+\title{Link points to their centroids}
 \usage{
 btb_add_centroids(
   pts,

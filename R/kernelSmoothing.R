@@ -1,6 +1,6 @@
-#' kernelSmoothing
+#' @title Depreciated function of btb_smooth
+#' @name kernelSmoothing
 #' @description Function kernelSmoothing has been replaced by `btb_smooth`
-#' 
 #' @param dfObservations points
 #' @param sEPSG epsg code
 #' @param iCellSize cell size

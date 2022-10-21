@@ -3,7 +3,7 @@
 \docType{data}
 \name{pixel_france}
 \alias{pixel_france}
-\title{Unleaded 95 price in France in 2016  (Prix du sans plomb 95 en france en 2016)}
+\title{France grid with 1km square tiles}
 \format{
 \subsection{\code{pixel_france}}{
 

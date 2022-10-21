@@ -1,6 +1,5 @@
-
-#' btb_add_centroids
-#' 
+#' @title Link points to their centroids
+#' @name btb_add_centroids
 #' @description 
 #' 
 #' - Link some points to their centroids in a grid segmentation

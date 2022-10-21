@@ -1,6 +1,7 @@
-#' Households of Reunion (Menages de La Reunion) 
-#'
+#' @title Households of Reunion
+#' @name reunion
 #' @description 
+#' Households of Reunion (Menages de La Reunion)
 #' Gridded database with a grid cell resolution of 200 meters. (Données carroyées à 200 mètres).
 #'
 #' @format ## `reunion`

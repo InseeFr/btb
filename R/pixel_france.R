@@ -1,5 +1,5 @@
-#' Unleaded 95 price in France in 2016  (Prix du sans plomb 95 en france en 2016)
-#'
+#' @title France grid with 1km square tiles
+#' @name pixel_france
 #' @description 
 #' Whole France grid with 1km square tiles. Lambert 93 projection.
 #' 

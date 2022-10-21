@@ -2,7 +2,7 @@
 % Please edit documentation in R/dfToGrid.R
 \name{dfToGrid}
 \alias{dfToGrid}
-\title{dfToGrid}
+\title{Depreciated function of btb_ptsToGrid}
 \usage{
 dfToGrid(df, sEPSG, iCellSize = NULL)
 }
