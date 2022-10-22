@@ -6,10 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
-        The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
-        The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
-        The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
-        The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
+        The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth) for a classical kernel smoothing and automatic grid.
+        The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth, quantiles) for a geographically weighted median and automatic grid.
+        The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth, centroids) for a classical kernel smoothing and user grid.
+        The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth, quantiles, centroids) for a geographically weighted median and user grid.
         Geographically weighted summary statistics : a framework for localised exploratory data analysis, C.Brunsdon &amp; al., in Computers, Environment and Urban Systems C.Brunsdon &amp; al. (2002) &lt;doi:10.1016/S0198-9715(01)00009-6&gt;, 
         Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, pp. 83-86, (2003) &lt;doi:10.1080/13658816.2014.937718&gt;.">
 <title>Beyond the Border - Kernel Density Estimation for Urban Geography • btb</title>
@@ -25,10 +25,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Beyond the Border - Kernel Density Estimation for Urban Geography">
 <meta property="og:description" content="The kernelSmoothing() function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function. 
-        The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwith) for a classical kernel smoothing and automatic grid.
-        The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles) for a geographically weighted median and automatic grid.
-        The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, centroids) for a classical kernel smoothing and user grid.
-        The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwith, quantiles, centroids) for a geographically weighted median and user grid.
+        The first call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth) for a classical kernel smoothing and automatic grid.
+        The second call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth, quantiles) for a geographically weighted median and automatic grid.
+        The third call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth, centroids) for a classical kernel smoothing and user grid.
+        The fourth call mode is kernelSmoothing(obs, epsg, cellsize, bandwidth, quantiles, centroids) for a geographically weighted median and user grid.
         Geographically weighted summary statistics : a framework for localised exploratory data analysis, C.Brunsdon &amp; al., in Computers, Environment and Urban Systems C.Brunsdon &amp; al. (2002) &lt;doi:10.1016/S0198-9715(01)00009-6&gt;, 
         Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, pp. 83-86, (2003) &lt;doi:10.1080/13658816.2014.937718&gt;.">
 <meta property="og:image" content="https://inseefr.github.io/btb/logo.png">
@@ -59,6 +59,12 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/logo.html">Smoothed logo created with `btb` !</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="news/index.html">Changelog</a>
@@ -96,10 +102,10 @@
 </h2>
 <p>The <code><a href="reference/btb_smooth.html">btb_smooth()</a></code> function allows you to square and smooth geolocated data. It calculates a classical kernel smoothing (conservative) or a geographically weighted median. There are four major call modes of the function.</p>
 <ul>
-<li>The first call mode is <code>btb_smooth(obs, epsg, cellsize, bandwith)</code> for a classical kernel smoothing and automatic grid.</li>
-<li>The second call mode is <code>btb_smooth(obs, epsg, cellsize, bandwith, quantiles)</code> for a geographically weighted median and automatic grid.</li>
-<li>The third call mode is <code>btb_smooth(obs, epsg, cellsize, bandwith, centroids)</code> for a classical kernel smoothing and user grid.</li>
-<li>The fourth call mode is <code>btb_smooth(obs, epsg, cellsize, bandwith, quantiles, centroids)</code> for a geographically weighted median and user grid.</li>
+<li>The first call mode is <code>btb_smooth(obs, epsg, cellsize, bandwidth)</code> for a classical kernel smoothing and automatic grid.</li>
+<li>The second call mode is <code>btb_smooth(obs, epsg, cellsize, bandwidth, quantiles)</code> for a geographically weighted median and automatic grid.</li>
+<li>The third call mode is <code>btb_smooth(obs, epsg, cellsize, bandwidth, centroids)</code> for a classical kernel smoothing and user grid.</li>
+<li>The fourth call mode is <code>btb_smooth(obs, epsg, cellsize, bandwidth, quantiles, centroids)</code> for a geographically weighted median and user grid.</li>
 </ul>
 </div>
 <div class="section level2">
