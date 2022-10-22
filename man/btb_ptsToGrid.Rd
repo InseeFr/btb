@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{btb_ptsToGrid}
 \alias{btb_ptsToGrid}
-\title{btb_ptsToGrid}
+\title{Compute a grid from centroid points}
 \usage{
 btb_ptsToGrid(
   pts,

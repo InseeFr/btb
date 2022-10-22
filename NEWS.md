@@ -15,8 +15,8 @@
 * Add vignette
 * Add pkgdown website
 
+<!---
 # btb 0.1.8
-
 * add `iNbObsMin` for classical smoothing
 * `smoothingToGrid` integrated in `kernelSmoothing`
 
@@ -27,6 +27,10 @@
 # btb 0.1.6
 
 * `iNeighbor` parameter
+-->
+
+# btb 0.1.30.3 
+* New CRAN version (last version submitted by Arlindo)
 
 # btb 0.1.19
 

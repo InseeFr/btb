@@ -3,7 +3,7 @@
 \docType{data}
 \name{reunion}
 \alias{reunion}
-\title{Households of Reunion (Menages de La Reunion)}
+\title{Households of Reunion}
 \format{
 \subsection{\code{reunion}}{
 
@@ -25,6 +25,7 @@ Source : Insee, Revenus Fiscaux Localisés (RFL) au 31 decembre 2010 et Taxe d'h
 reunion
 }
 \description{
+Households of Reunion (Menages de La Reunion)
 Gridded database with a grid cell resolution of 200 meters. (Données carroyées à 200 mètres).
 }
 \keyword{datasets}

@@ -1,5 +1,5 @@
-#' @title btb_smooth 
-#' 
+#' @title Smoothing with a bisquare kernel or median
+#' @name btb_smooth 
 #' @description 
 #' Smoothing function with a bisquare kernel or median.
 #' 
@@ -68,64 +68,78 @@
 #' 
 #' @examples 
 #' \dontrun{
-#' Example 1 =============================
+#' # Example 1
 #' data(dfPrix_SP95_2016)
 #' dfPrix_SP95_2016$nbObs <- 1L
-#' dfSmoothed <- btb::btb_smooth(pts = dfPrix_SP95_2016
-#'                               , sEPSG = "2154"
-#'                               , iCellSize = 5000L
-#'                               , iBandwidth = 30000L, 
-#'                               inspire = T)
+#' dfSmoothed <- btb::btb_smooth(pts = dfPrix_SP95_2016,
+#'                               sEPSG = "2154",
+#'                               iCellSize = 5000L,
+#'                               iBandwidth = 30000L, 
+#'                               inspire = TRUE)
 #' dfSmoothed$prix95 <- dfSmoothed$SP95 / dfSmoothed$nbObs * 100
-#' library(cartography)
-#' choroLayer(dfSmoothed
-#'            , var = "prix95"
-#'            , nclass = 5
-#'            , method = "fisher-jenks"
-#'            , border = NA
-#'            , legend.title.txt = "prix du SP95 en centimes")
-#'            
-#' ######### example 2 #########
-#' library(sp)
-#' library(cartography)
+#' library(mapsf)
+#' mf_map(dfSmoothed,
+#'       type = "choro",
+#'       var = "prix95",
+#'       breaks = "fisher",
+#'       nbreaks = 5,
+#'       border = NA,
+#'       leg_title = "prix du SP95 en centimes")
+#' # Example 2
 #' data(reunion)
-#' # Smoothing all variables for Reunion (Lissage de toutes les variables pour la Reunion)
 #' # Call mode 1: classic smoothing - automatic grid
-#' reunionSmoothed <- btb_smooth( pts = reunion
-#'                                     , sEPSG = "32740"
-#'                                     , iCellSize = 200L
-#'                                     , iBandwidth = 400L)
-#' # preview (Apercu)
-#' choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
+#' reunionSmoothed <- btb_smooth( pts = reunion,
+#'                                     sEPSG = "32740",
+#'                                     iCellSize = 200L,
+#'                                     iBandwidth = 400L)
+#' library(mapsf)
+#' mf_map(reunionSmoothed,
+#'       type = "choro",
+#'       var = "houhold",
+#'       breaks = "fisher",
+#'       nbreaks = 5,
+#'       border = NA)
 #' # Call mode 2: median smoothing - automatic grid
-#' reunionSmoothed <- btb_smooth( pts = reunion
-#'                                     , sEPSG = "32740"
-#'                                     , iCellSize = 200L
-#'                                     , iBandwidth = 400L
-#'                                     , vQuantiles = c(0.1, 0.5, 0.9))
-#' # preview (Apercu)
-#' choroLayer(reunionSmoothed, var = "houhold_05", nclass = 5, method = "fisher-jenks", border = NA)
+#' reunionSmoothed <- btb_smooth( pts = reunion,
+#'                                      sEPSG = "32740",
+#'                                      iCellSize = 200L,
+#'                                      iBandwidth = 400L,
+#'                                      vQuantiles = c(0.1, 0.5, 0.9))
+#' mf_map(reunionSmoothed,
+#'       type = "choro",
+#'       var = "houhold_05",
+#'       breaks = "fisher",
+#'       nbreaks = 5,
+#'       border = NA)
 #' # Call mode 3: classic smoothing - user grid
-#' dfCentroidsUser <- merge( x = seq(from =  314400L, to =  378800L, by = 200L)
-#'                           , y = seq(from = 7634000L, to = 7691200L, by = 200L))
-#' reunionSmoothed <- btb_smooth( pts = reunion
-#'                                     , sEPSG = "32740"
-#'                                     , iCellSize = 200L
-#'                                     , iBandwidth = 400L
-#'                                     , dfCentroids = dfCentroidsUser)
-#' # preview (Apercu)
+#' dfCentroidsUser <- merge( x = seq(from =  314400L, to =  378800L, by = 200L),
+#'                           y = seq(from = 7634000L, to = 7691200L, by = 200L))
+#' reunionSmoothed <- btb_smooth( pts = reunion,
+#'                                     sEPSG = "32740",
+#'                                     iCellSize = 200L,
+#'                                     iBandwidth = 400L,
+#'                                     dfCentroids = dfCentroidsUser)
 #' reunionSmoothed <- reunionSmoothed[reunionSmoothed$houhold > 0, ]
-#' choroLayer(reunionSmoothed, var = "houhold", nclass = 5, method = "fisher-jenks", border = NA)
+#' mf_map(reunionSmoothed,
+#'       type = "choro",
+#'       var = "houhold",
+#'       breaks = "fisher",
+#'       nbreaks = 5,
+#'       border = NA)
 #' # Call mode 4: median smoothing - user grid
-#' reunionSmoothed <- btb_smooth( pts = reunion
-#'                                     , sEPSG = "32740"
-#'                                     , iCellSize = 200L
-#'                                     , iBandwidth = 400L
-#'                                     , vQuantiles = c(0.1, 0.5, 0.9)
-#'                                     , dfCentroids = dfCentroidsUser)
-#' # preview (Apercu)
+#' reunionSmoothed <- btb_smooth( pts = reunion,
+#'                                     sEPSG = "32740",
+#'                                     iCellSize = 200L,
+#'                                     iBandwidth = 400L,
+#'                                     vQuantiles = c(0.1, 0.5, 0.9),
+#'                                     dfCentroids = dfCentroidsUser)
 #' reunionSmoothed <- reunionSmoothed[reunionSmoothed$nbObs > 0, ]
-#' choroLayer(reunionSmoothed, var = "houhold_05", nclass = 5, method = "fisher-jenks", border = NA)
+#' mf_map(reunionSmoothed,
+#'       type = "choro",
+#'       var = "houhold_05",
+#'       breaks = "fisher",
+#'       nbreaks = 5,
+#'       border = NA)
 #' }
 
 

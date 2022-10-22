@@ -3,7 +3,7 @@ title: "Spatial smoothing with `btb` R package"
 author: "Julien PRAMIL"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Spatial smoothing with BTB R package}
+  %\VignetteIndexEntry{Spatial smoothing with `btb` R package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

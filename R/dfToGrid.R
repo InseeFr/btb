@@ -1,5 +1,5 @@
-#' dfToGrid
-#' 
+#' @title Depreciated function of btb_ptsToGrid
+#' @name dfToGrid
 #' @description Function dfToGrid has been replaced by btb_ptsToGrid
 #' @param df centroid points
 #' @param sEPSG epsg code

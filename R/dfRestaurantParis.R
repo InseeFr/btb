@@ -1,5 +1,5 @@
-#' Unleaded 95 price in France in 2016  (Prix du sans plomb 95 en france en 2016)
-#'
+#' @title Parisian restaurants
+#' @name dfRestaurantParis
 #' @description 
 #' Parisian restaurants (Restaurants parisiens) 
 #'

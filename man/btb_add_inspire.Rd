@@ -2,7 +2,7 @@
 % Please edit documentation in R/btb_add_inspire.R
 \name{btb_add_inspire}
 \alias{btb_add_inspire}
-\title{btb_add_inspire}
+\title{Creates Inpire names for a grid}
 \usage{
 btb_add_inspire(
   pts_centro,

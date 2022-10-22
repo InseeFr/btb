@@ -1,5 +1,5 @@
-#' btb_add_inspire
-#' 
+#' @title Creates Inpire names for a grid
+#' @name btb_add_inspire
 #' @description 
 #' 
 #' Creates Inpire names for a grid defined with :
