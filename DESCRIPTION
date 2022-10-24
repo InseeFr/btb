@@ -11,7 +11,7 @@ Description: The kernelSmoothing() function allows you to square and smooth geol
         Statistical Analysis of Spatial and Spatio-Temporal Point Patterns, Third Edition, Diggle, pp. 83-86, (2003) <doi:10.1080/13658816.2014.937718>.
 Version: 0.2.0
 License: GPL (>= 2)
-Date: 2022-09-20
+Date: 2022-10-24
 Imports: 
     methods,
     Rcpp (>= 1.0.9),
