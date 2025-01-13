@@ -118,11 +118,9 @@ sfCarrLiss <- btb::kernelSmoothing(dfObservations = sample,
 
 ```{r}
 mf_theme(bg = "#FFFFFFFF")
-mf_init(x = hexagon)
- mf_map(x = hexagon, 
+mf_map(x = hexagon, 
         border="#7D0025",
-        col="#7D0025",
-        add = TRUE)
+        col="#7D0025")
  mf_map(x = hexagon_int, 
         border="#e8f4f8",
         col="#e8f4f8",
