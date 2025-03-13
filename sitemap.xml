@@ -1,69 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://inseefr.github.io/btb/404.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/articles/btb.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/articles/logo.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/index.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/btb.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/btb_add_centroids.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/btb_add_inspire.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/btb_ptsToGrid.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/btb_smooth.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/constituerGrappes.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/constituerMatriceEffectifs.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/dfPrix_SP95_2016.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/dfRestaurantParis.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/dfToGrid.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/kernelSmoothing.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/pixel_france.html</loc>
-  </url>
-  <url>
-    <loc>https://inseefr.github.io/btb/reference/reunion.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://inseefr.github.io/btb/404.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/articles/btb.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/articles/index.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/articles/logo.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/authors.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/index.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/news/index.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/btb.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/btb_add_centroids.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/btb_add_inspire.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/btb_ptsToGrid.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/btb_smooth.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/constituerGrappes.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/constituerMatriceEffectifs.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/dfPrix_SP95_2016.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/dfRestaurantParis.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/dfToGrid.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/index.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/kernelSmoothing.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/pipe.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/pixel_france.html</loc></url>
+<url><loc>https://inseefr.github.io/btb/reference/reunion.html</loc></url>
 </urlset>
+
