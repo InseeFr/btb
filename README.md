@@ -40,14 +40,15 @@ Details on how to use the package can be found in its [documentation](man). Some
 
 ## Contributions
 
-Maintainer: Kim Antunez <antuki.kim+cran@gmail.com>
+Maintainer: Solène Colin <solene.colin@insee.fr>
 
 Creators, authors and contributors: 
 
 - Arlindo DOS SANTOS [aut],
 - François SEMECURBE [aut],
 - Julien PRAMIL [aut]
-- Kim ANTUNEZ [cre, ctb],
+- Solène COLIN [cre, ctb],
+- Kim ANTUNEZ [ctb],
 - Auriane RENAUD [ctb],
 - Farida MAROUCHI [ctb]
 - Joachim TIMOTEO [ctb]
