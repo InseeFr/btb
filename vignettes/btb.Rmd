@@ -310,7 +310,7 @@ mapsf::mf_map(x = smooth_reunion,
 
 ## Inspire naming
 
-Using the [Inspire norm](https://inspire.ec.europa.eu/), `btb_smooth` and `btb_ptsToGrid` allow you to name your pixels in a proper international way. It could be useful for reuse purpose, merge operations, etc.
+Using the [Inspire norm](https://knowledge-base.inspire.ec.europa.eu/index_en), `btb_smooth` and `btb_ptsToGrid` allow you to name your pixels in a proper international way. It could be useful for reuse purpose, merge operations, etc.
 
 You just need to use `inspire = TRUE` : 
 
@@ -341,8 +341,5 @@ sf::write_sf("MY/REPOSITORY/myfile.gpkg")
 
 ## Some interesting use cases 
 
-- https://mobile.twitter.com/DavidZumbach/status/1373166163497213952
-- http://r.iresmi.net/2019/05/11/kernel-spatial-smoothing-transforming-points-pattern-to-continuous-coverage/
+- https://r.iresmi.net/posts/2019/kernel_spatial_smoothing_transforming_points_pattern_to_continuous_coverage/
 - https://semba-blog.netlify.app/06/30/2020/kernel-smoothin-of-spatial-data/
-- https://mobile.twitter.com/raffverduzco/status/1128075094524350464?lang=bg
-- https://githubmemory.com/repo/SNStatComp/awesome-official-statistics-software
