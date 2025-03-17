@@ -54,7 +54,7 @@
 <span>  vQuantiles <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dfCentroids <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  iNeighbor <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  inspire <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  inspire <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  iNbObsMin <span class="op">=</span> <span class="fl">250</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -109,6 +109,11 @@
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>Returns an object inheriting from the <code>data.frame</code> class.
+(Retourne un objet qui se comporte comme un <code>data.frame</code>, par heritage.)</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Returns an object inheriting from the <code>data.frame</code> class. (Retourne un objet qui se comporte comme un <code>data.frame</code>, par heritage.)</p><ul><li><p>Smoothing covers a set of methods to extract pertinent and structuring information from noisy data.  In the field of spatial analysis, and most widely in quantitative geography, smoothing is used to modelise density variations of a population distribution in geographical space. Kernel smoothing methods are widely used.
 In this method, for each location x, we count the number of events of a process within a distance h of x, and weighted by the square reciprocal of the radius h. We apply a edge-correction to deal with edge-effects. So the method is conservative..</p></li>
@@ -124,7 +129,7 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Example 1</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dfPrix_SP95_2016</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dfPrix_SP95_2016</span><span class="op">$</span><span class="va">nbObs</span> <span class="op">&lt;-</span> <span class="fl">1L</span></span></span>
@@ -142,6 +147,8 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 <span class="r-in"><span>      nbreaks <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>      border <span class="op">=</span> <span class="cn">NA</span>,</span></span>
 <span class="r-in"><span>      leg_title <span class="op">=</span> <span class="st">"prix du SP95 en centimes"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>N is large, and some styles will run very slowly; sampling imposed</span>
+<span class="r-plt img"><img src="btb_smooth-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Example 2</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reunion</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Call mode 1: classic smoothing - automatic grid</span></span></span>
@@ -156,6 +163,8 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 <span class="r-in"><span>      breaks <span class="op">=</span> <span class="st">"fisher"</span>,</span></span>
 <span class="r-in"><span>      nbreaks <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>      border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>N is large, and some styles will run very slowly; sampling imposed</span>
+<span class="r-plt img"><img src="btb_smooth-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Call mode 2: median smoothing - automatic grid</span></span></span>
 <span class="r-in"><span><span class="va">reunionSmoothed</span> <span class="op">&lt;-</span> <span class="fu">btb_smooth</span><span class="op">(</span> pts <span class="op">=</span> <span class="va">reunion</span>,</span></span>
 <span class="r-in"><span>                                     sEPSG <span class="op">=</span> <span class="st">"32740"</span>,</span></span>
@@ -168,6 +177,8 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 <span class="r-in"><span>      breaks <span class="op">=</span> <span class="st">"fisher"</span>,</span></span>
 <span class="r-in"><span>      nbreaks <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>      border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>N is large, and some styles will run very slowly; sampling imposed</span>
+<span class="r-plt img"><img src="btb_smooth-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Call mode 3: classic smoothing - user grid</span></span></span>
 <span class="r-in"><span><span class="va">dfCentroidsUser</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span> x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span>  <span class="fl">314400L</span>, to <span class="op">=</span>  <span class="fl">378800L</span>, by <span class="op">=</span> <span class="fl">200L</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                          y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">7634000L</span>, to <span class="op">=</span> <span class="fl">7691200L</span>, by <span class="op">=</span> <span class="fl">200L</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -183,6 +194,8 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 <span class="r-in"><span>      breaks <span class="op">=</span> <span class="st">"fisher"</span>,</span></span>
 <span class="r-in"><span>      nbreaks <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>      border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>N is large, and some styles will run very slowly; sampling imposed</span>
+<span class="r-plt img"><img src="btb_smooth-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Call mode 4: median smoothing - user grid</span></span></span>
 <span class="r-in"><span><span class="va">reunionSmoothed</span> <span class="op">&lt;-</span> <span class="fu">btb_smooth</span><span class="op">(</span> pts <span class="op">=</span> <span class="va">reunion</span>,</span></span>
 <span class="r-in"><span>                                    sEPSG <span class="op">=</span> <span class="st">"32740"</span>,</span></span>
@@ -197,7 +210,9 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 <span class="r-in"><span>      breaks <span class="op">=</span> <span class="st">"fisher"</span>,</span></span>
 <span class="r-in"><span>      nbreaks <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>      border <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>N is large, and some styles will run very slowly; sampling imposed</span>
+<span class="r-plt img"><img src="btb_smooth-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
