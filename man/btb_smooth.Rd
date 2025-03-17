@@ -12,7 +12,7 @@ btb_smooth(
   vQuantiles = NULL,
   dfCentroids = NULL,
   iNeighbor = NULL,
-  inspire = F,
+  inspire = FALSE,
   iNbObsMin = 250
 )
 }
@@ -52,6 +52,10 @@ btb_smooth(
 
 (Taille minimale des grappes constituées pour le lissage "médian" (géographiquement pondéré). (\code{integer}))}
 }
+\value{
+Returns an object inheriting from the \code{data.frame} class.
+(Retourne un objet qui se comporte comme un \code{data.frame}, par heritage.)
+}
 \description{
 Smoothing function with a bisquare kernel or median.
 
@@ -67,7 +71,7 @@ Il s'agit ici, pour chaque point x, de comptabliser le nombre d' "évènements" 
 }
 }
 \examples{
-\dontrun{
+\donttest{
 # Example 1
 data(dfPrix_SP95_2016)
 dfPrix_SP95_2016$nbObs <- 1L

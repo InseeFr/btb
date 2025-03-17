@@ -61,7 +61,7 @@
 
 
 
-btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_centro","y_centro"), inspire = F)
+btb_ptsToGrid <- function(pts, sEPSG=NA, iCellSize = NULL, names_centro = c("x_centro","y_centro"), inspire = FALSE)
 {
   # Test of parameters
   stopifnot("pts must be a df object"= is.data.frame(pts))

@@ -48,7 +48,7 @@ LazyData: true
 URL: https://github.com/InseeFr/btb,
     https://inseefr.github.io/btb/
 BugReports: https://github.com/InseeFr/btb/issues
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 VignetteBuilder: knitr

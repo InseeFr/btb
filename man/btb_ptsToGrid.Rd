@@ -10,7 +10,7 @@ btb_ptsToGrid(
   sEPSG = NA,
   iCellSize = NULL,
   names_centro = c("x_centro", "y_centro"),
-  inspire = F
+  inspire = FALSE
 )
 }
 \arguments{
