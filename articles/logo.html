@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Smoothed logo created with `btb` ! • btb</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -90,7 +89,7 @@ Antunez</h4>
 <span><span class="va">b2</span> <span class="op">&lt;-</span> <span class="st">"POLYGON ((-9376233 5319120, -9180555 5328904, -8828333 5201712,-8662006 4986466, -8691358 4683163, -8779413 4438565, -9082715 4311374,-9748023 4340726, -9689319 6229026, -9317530 6229026, -9376233 5319120),(-9464208 4569828, -9095932 4579271, -8963730 4692586, -8982616 4938104,-9445322 5060862, -9464208 4569828))"</span> </span>
 <span><span class="va">letters</span> <span class="op">=</span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>geom<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">b1</span>,<span class="va">t</span>,<span class="va">b2</span><span class="op">)</span><span class="op">)</span>, wkt <span class="op">=</span> <span class="st">"geom"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_set_crs</a></span><span class="op">(</span><span class="fl">3857</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span></span></code></pre></div>
-<p><img src="logo_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="logo_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Create the hex logo</li>
 </ol>
@@ -104,7 +103,7 @@ Antunez</h4>
 <span><span class="va">corners</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">corners</span>, <span class="va">corners</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">hexagon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_polygon</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">corners</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">hexagon_int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">st_buffer</a></span><span class="op">(</span><span class="va">hexagon</span>,<span class="op">-</span><span class="fl">150000</span><span class="op">)</span></span>
-<span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_graticule.html" class="external-link">st_graticule</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">hexagon</span><span class="op">)</span>,lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">32</span>,<span class="fl">80</span>,<span class="fl">8</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">2154</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_graticule.html" class="external-link">st_graticule</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sfc.html" class="external-link">st_as_sfc</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="va">hexagon</span><span class="op">)</span><span class="op">)</span>,lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">32</span>,<span class="fl">80</span>,<span class="fl">8</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">2154</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_binary_ops.html" class="external-link">st_intersection</a></span><span class="op">(</span><span class="va">lines</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_set_crs</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>,<span class="va">hexagon_int</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout</span></span>
 <span><span class="co">#&gt; all geometries</span></span>
@@ -113,7 +112,7 @@ Antunez</h4>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lines</span>, col<span class="op">=</span><span class="st">"black"</span>,add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in plot.sf(lines, col = "black", add = TRUE): ignoring all but the</span></span>
 <span><span class="co">#&gt; first attribute</span></span></code></pre></div>
-<p><img src="logo_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="logo_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Sample points inside the letters</li>
 </ol>
@@ -124,7 +123,7 @@ Antunez</h4>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">letters</span>,add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">lines</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"black"</span>,add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">sample</span><span class="op">)</span>,add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="logo_files/figure-html/unnamed-chunk-7-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="logo_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
 <ol start="5" style="list-style-type: decimal">
 <li>Spatial smoothing</li>
 </ol>
@@ -142,6 +141,8 @@ Antunez</h4>
 </ol>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://riatelab.github.io/mapsf/reference/mf_theme.html" class="external-link">mf_theme</a></span><span class="op">(</span>bg <span class="op">=</span> <span class="st">"#FFFFFFFF"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'bg', 'fg', 'tab', 'pos', 'inner', 'line', 'cex' and 'font' are deprecated.</span></span>
+<span><span class="co">#&gt; See the Note section in the help page.</span></span>
 <span><span class="fu"><a href="https://riatelab.github.io/mapsf/reference/mf_map.html" class="external-link">mf_map</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hexagon</span>, </span>
 <span>        border<span class="op">=</span><span class="st">"#7D0025"</span>,</span>
 <span>        col<span class="op">=</span><span class="st">"#7D0025"</span><span class="op">)</span></span>
@@ -163,7 +164,7 @@ Antunez</h4>
 <span>       border<span class="op">=</span><span class="cn">NA</span>,</span>
 <span>       leg_pos<span class="op">=</span><span class="cn">NA</span>,</span>
 <span>       add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="logo_files/figure-html/unnamed-chunk-11-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="logo_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="480" style="display: block; margin: auto;"></p>
   </main>
 </div>
 
@@ -174,7 +175,7 @@ Antunez</h4>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
