@@ -71,7 +71,7 @@ corners <- tibble(x = coords_hex$x + letters_bbox[["xmin"]] + dx,
 corners <- rbind(corners, corners[1,])
 hexagon <- st_polygon(list(as.matrix(corners)))
 hexagon_int <- st_buffer(hexagon,-150000)
-lines <- st_as_sf(st_graticule(st_bbox(hexagon),lat = seq(-32,80,8), crs = 2154)) 
+lines <- st_as_sf(st_graticule(st_as_sfc(st_bbox(hexagon)),lat = seq(-32,80,8), crs = 2154)) 
 lines <- st_intersection(lines %>% st_set_crs(NA),hexagon_int)
 plot(hexagon)
 plot(hexagon_int, add=TRUE)
