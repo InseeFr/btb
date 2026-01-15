@@ -1,3 +1,13 @@
+# btb 0.2.2
+
+* Minor change for logo (st_graticule issue)
+
+
+# btb 0.2.1
+
+* Fixing Rcpp dependencies issues (see !9)
+
+
 # btb 0.2.0
 
 * Change of maintainer, new authors (november 2022)
