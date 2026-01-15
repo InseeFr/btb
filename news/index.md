@@ -1,5 +1,15 @@
 # Changelog
 
+## btb 0.2.2
+
+- Minor change for logo (st_graticule issue)
+
+## btb 0.2.1
+
+CRAN release: 2025-03-17
+
+- Fixing Rcpp dependencies issues (see !9)
+
 ## btb 0.2.0
 
 CRAN release: 2022-10-24
